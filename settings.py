@@ -9,8 +9,8 @@ def init():
     answers = arr.array('i', [])
 
     ftype = '.png'
-    mdFile = 'logic.md'
-    pic = 'pictures/bd1'
+    mdFile = 'react.md'
+    pic = 'pictures/bd'
     home = str(Path.home())
     mdDat = os.path.join(os.path.dirname(__file__), mdFile)
     pics = os.path.abspath(os.path.join(home, pic))

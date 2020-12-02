@@ -35,9 +35,10 @@ def image():
             if file.lower().endswith(settings.ftype):
                 img = Image.open(file)
                 text = pytesseract.image_to_string(img)
-                f.write(text)
-                # print(file)
+                # f.write(text)
+                print(file)
                 # print(text)
+
 
 def md():
 

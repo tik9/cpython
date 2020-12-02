@@ -5,7 +5,7 @@ import settings
 import re
 
 
-splitter = 1
+splitter = 2
 
 
 def does_string_match(str_):
@@ -22,7 +22,7 @@ def cp():
             # unbenannt.png28.png
             str = file.split('.')
             str = str[1][len(str[1])-splitter:]
-            str = f'unbenannt{str}.png'
+            str = f'unbenannt{str}{settings.ftype}'
             path = os.path.dirname(full_file_name)
             file = os.path.join(path, str)
             shutil.move(full_file_name, file)

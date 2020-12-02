@@ -587,6 +587,7 @@ $a = array(
 
 echo count($a), "\n";
 ```Answer:
+A table that has been deleted with DROP TABLE can?
 
 � Be restored using COMMIT
 � Can't be restored
@@ -594,35 +595,23 @@ echo count($a), "\n";
 � Be restored with ALTER TABLE
 � Be restored with a ROLLBLACK
 
-A table that has been deleted with DROP TABLE can:
 Answer:
-
-� DISTINCTIVE
-� DISTINCT
-� DIFFERENT
-� UNIQUE
-
 Which SQL reserved word is used to retrieve unique values?
-(not repeated)
+
+� DISTINCT
+
  
+Considering the employees table, how would you bring the 3 employees with the highest salary?
 
-Nombre |Apellido Salario Fecha Nacimiente
 
-Pafsan [pcre sooo] 1704709
-|__2|Pablo__|sanchez__�_�|__�5500]__15/09/1984]
-| 4|Mariana_iudrez | 2500] 13/11/1981]
-|_S[Maria [Calabro [| 8200[ NULL
-
-|_6|Pauia[Sensini_ | 7500] 16/05/1988]
-|__7[Romina [vidal | 9900] 05/02/1986]
-|__8[Natalia_[Spalafucchetti_[ 1900[ NULL]
-|__9Roberto [Cantalapietra | 4300] 26/04/1985
+ID|Nombre |Apellido |Salario| Fecha Nacimiente
+--|-------|---------|-------|----------------
+2|Pablo|sanchez|5500]15/09/1984]
+4|Mariana_iudrez | 2500] 13/11/1981
+5|Maria Calabro | 8200|1/1/1990
+6|Pauia Sensini | 7500| 16/05/1988
 
  
-
-Considering the employees table, how would you bring the 3
-employees with the highest salary?
-
 Answer:
 
 oO SELECT TOP 3 Employees ORDER BY Salario DESC
@@ -633,23 +622,16 @@ oO SELECT TOP 3 * FROM Employees ORDER BY Salario
 oO SELECT * FROM Employees WHERE Salario >= 7500
 
 oO SELECT TOP 3 FROM Employees ORDER BY Salario DESC
-O_Id OrderDate OrderPrice Customer
 
-1 12/11/2008 1000 Hansen
-2 23/10/2008 1600 Nilsen
-3 02/09/2008 700 Hansen
-4 03/09/2008 300 Hansen
-5 30/08/2008 2000 Jensen
-6 04/10/2008 100 Nilsen
-5 01/09/2008 1200 Gates
-6 09/10/2008 800 Jobs
 
-5 11/08/2008 2500 Gates
-6 17/10/2008 400 Jobs
+OId | OrderDate | OrderPrice | Customer
+----|:----------:|-----------:|----------
+1 |12/11/2008| 1000 |Hansen
+2 |23/10/2008 |1600| Nilsen
+3 |02/09/2008 |700| Hansen
 
-Given this table, how do we do to obtain the name and
-the sum of all their orders only to those clients whose
-sum of orders is less than 2000?
+
+Given this table, how do we do to obtain the name and the sum of all their orders only to those clients whose sum of orders is less than 2000?
 
 Answer:
 
@@ -658,6 +640,7 @@ oO SELECT Customer, SUM(OrderPrice) FROM Orders WHERE SUM(OrderPrice) < 2000 GRO
 oO SELECT Customer, SUM(OrderPrice) FROM Orders GROUP BY O_Id HAVING SUM(OrderPrice) < 2000
 
 oO SELECT Customer, SUM(OrderPrice) FROM Orders WHERE SUM(OrderPrice) < 2000 GROUP BY O_Id
+
 Tabla Personas
 P_Id
 
@@ -705,20 +688,9 @@ Sandnes
 Sandnes
 Stavanger
 
-Given both tables above, we want to list all the people and their orders. If they don't
-have orders, we also want them to show in the list.
+Given both tables above, we want to list all the people and their orders. If they don't have orders, we also want them to show in the list.
 
 Answer:
-
-oO SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo FROM Persons JOIN Orders ON Persons.P_Id=Orders.P_Id
-
-SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo FROM Persons INNER JOIN Orders ON Persons.P_Id=Orders.P_Id
-
-ORDER BY Persons.LastName
-
-SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo FROM Persons RIGHT JOIN Orders ON Persons.P_Id=Orders.P_Id
-
-ORDER BY Persons.LastName
 
 SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo FROM Persons LEFT JOIN Orders ON Persons.P_Id=Orders.P_Id
 
@@ -748,7 +720,7 @@ O With TRUNCATE you can't do ROLLBACK of the deleted data in a transaction and w
 
 Answer:
 
-CO Itallows you to select different values
+CO It allows you to select different values
 
 O It allows you to specify a search condition for the aggregate function
 O It allows you yo make the JOIN of 2 or more tables
@@ -756,21 +728,19 @@ O It allows you yo make the JOIN of 2 or more tables
 CO t's like the WHERE clause
 Answer:
 
+?In SQL it's possible to create:
+
 � CONSTRAINTs only for the columns
 � CONSTRAINTs only for the tables
 
 � CONSTRAINTs for columns and tables
 � None of the above
-
-In SQL it's possible to create:
-A current client of BairesDev is having difficulty deploying applications quickly into their production environment. Without knowing all of the details, what would
-be an initial solution to propose?
+?A current client of BairesDev is having difficulty deploying applications quickly into their production environment. Without knowing all of the details, what would be an initial solution to propose
 
 Answer:
 oO Present a DevOps Engineer to extend their current team to evaluate their current CI/CD and improve it
 
-� Propose a two-week discovery to analyze their current roadmap and technology ecosystem, look for improvement opportunities
-and then propose a team
+� Propose a two-week discovery to analyze their current roadmap and technology ecosystem, look for improvement opportunities and then propose a team
 
 � A and B only
 oO Convert their current platform into a new platform, and propose a new technology stack to support it
@@ -778,14 +748,14 @@ oO Convert their current platform into a new platform, and propose a new technol
 � All of the above
  
 
-A potential US client is evaluating nearshore outsourcing with BairesDev. Which of the following is NOT a benefit that nearshore outsourcing in Latin America provides?
+A potential US client is evaluating nearshore outsourcing with BDev. Which of the following is NOT a benefit that nearshore outsourcing in Latin America provides?
 
 Answer:
 
 oO Time zone alignment, to allow real-time communication
 
 oO Competitive rates, approximately 40-50% lower than local hiring markets
-oO Awide pool of engineering talent due to broad geographical reach
+oO A wide pool of engineering talent due to broad geographical reach
 
 oO The ability to do follow-the-sun technical support on a 24-hour basis
 
@@ -804,18 +774,11 @@ O Google
 
 
 Answer:
-� 20
-� 40
+� 
+how many programming languages exist for currently used applications?
 � 1500
 
-� 100000
-
-O 6nillion
-
-Approximately, how many programming languages
-exist for currently used applications?
-How many LinkedIn connections do you think a mid-level IT
-Recruiter with 3 years of experience would usually have?
+How many LinkedIn connections do you think a mid-level IT Recruiter with 3 years of experience would usually have?
 
 Answer:
 � 100
@@ -826,6 +789,9 @@ Answer:
 � 15000
 Answer:
 
+
+There is a type of test known as Unit Test. This test is usually performed by...
+
 � Users
 
 � Customers
@@ -835,10 +801,10 @@ O Testers
 � Developers
 
 oO Unity department
-
-There is a type of test known as Unit Test
-This test is usually performed by...
 Answer:
+
+
+?If you had to build a team of 20 bilingual Android Developers in a single location in order to provide services to a client in the United States, which of the following locations would you say is the best to set up the team
 
 oO Montevideo, Uruguay
 oO Florianopolis, Brazil
@@ -848,11 +814,10 @@ oO La Paz, Bolivia
 
 oO Paramaribo, Suriname
 
-If you had to build a team of 20 bilingual Android
+Answer:
 
-Developers in a single location in order to provide services to
-a client in the United States, which of the following locations
-would you say is the best to set up the team?
+
+In theory, which one of the following types of projects would be expected to have higher gross margins?
 Answer:
 
 O Fixed Price Projects
@@ -863,10 +828,7 @@ oO Detopropinos Projects
 
 � PHP Projects
 
-In theory, which one of the following types of projects would
-be expected to have higher gross margins?
-Answer:
-
+Which of the following tools used currently to manage the development team tasks backlog is more popular?
 O SharePoint
 O Jira
 
@@ -874,18 +836,10 @@ O Jira
 
 � Outlook
 O TaskRabbit
-
-Which of the following tools used currently to manage the
-development team tasks backlog is more popular?
-What is the gross margin of a project whose revenue is
-$6000 a month and cost is $4000 a month?
+What is the gross margin of a project whose revenue is $6000 a month and cost is $4000 a month?
 
 Answer:
 � 66%
-� 30%
-� 25%
-
-� None of the above
 
 � 150%
 What does the concept of business farming mean?
@@ -900,8 +854,7 @@ oO That the project's team works overtime
 oO To rotate the project's team with some frequency
 
 O To increment the close ratio for new prospects
-Which of the following roles would usually be considered the
-most commercial role in a Software Company?
+Which of the following roles would usually be considered the most commercial role in a Software Company?
 
 Answer:
 
@@ -915,6 +868,9 @@ OC Engagement Manager
 � Lead Developer
 Answer:
 
+There is a Testing method usually used to verify a code, among other things. How is this Testing method called?
+Question:
+
 oO Gray box testing
 
 � Black box testing
@@ -922,51 +878,28 @@ oO Gray box testing
 oO Compatibility testing
 � Performance testing
 
-There is a Testing method usually used to verify a code,
-among other things.
-How is this Testing method called?
-Question:
+Answer:
+What's the temporary complexity of the Merge Sort algorithm in the worst case?
+
+� o(n^2)
+O o(n)
+
+oO O(n logn)
+oO O(n^n)
+
+
+What method would you use to search a number in an organized array of numbers
 
 Answer:
 
-� on'2)
-O on)
-
-oO O(n log n)
-oO O(n4n)
-
-What's the temporary complexity of the Merge Sort
-algorithm in the worst case?
-What method would you use to search a
-number in an organized array of numbers
-
-Answer:
-
-C) Lineal Search
-
-C) Fill in a hash table and then search by that hash
-C) Fill in a binary tree and then search in the tree
-�) Binary Search
-What method would you use to search a
-number in an organized array of numbers
-
-Answer:
-
-� Lineal Search
+� Linear Search
 
 CO Fillin a hash table and then search by that hash
 CO Fill in a binary tree and then search in the tree
 � Binary Search
-Assuming that the executing time of an algorithm
-has a quadratic growth rate. For an input size of
-1000 it has an execution time of 20 ms. Which
-would be your estimate time of execution for an
-input of size 10000?
+?Assuming that the executing time of an algorithm has a quadratic growth rate. For an input size of 1000 it has an execution time of 20 ms. Which
+would be your estimate time of execution for an input of size 10000
 
 Answer:
 
-� 400 ms
-� 4000 ms
-� 200ms
 � 2000 ms
-
