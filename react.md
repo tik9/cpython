@@ -1,33 +1,25 @@
-Which of the following statements is true regarding React.js?
+1. Which of the following statements is true regarding React.js?
 
-Answer:
+    - [ ] React is just another MVC framework
+    - [ ] Every React component is stateless
+    - [ ] Shallow rendering in React allows you to render a single component completely
+    - [ ] TDD is not allowed when writing React components
 
-� React is just another MVC framework
-
-oO Every React component is stateless
-
-oO Shallow rendering in React allows you to render a single component completely
-
-� TDD is not allowed when writing React components
-Which of the following statements is true regarding the following component?
-```
+2. Which of the following statements is true regarding the following component?
+```javascript
 class MyComponent extends React.Component {
  render()}{
   return (This is a component);
  }
 }
 ```
-Answer:
+    - [ ] Render should not be a function
+    - [ ] Render method is not required
+    - [ ] The return should be any React element, null or false
+    - [ ] Class should be replaced by className
 
-� Render should not be a function
-
-� Render method is not required
-
-O The return should be any React element, null or false
-
-O Class should be replaced by className
-Which statement is true regarding component definition in React
-```
+3. Which statement is true regarding component definition in React?
+```javascript
 function SayHi(props) {
  return <h1>Hi, {props.name}</h1>;
 }
@@ -39,37 +31,27 @@ function SayHi(props) {
  
  }
 ```
-Answer:
+    - [ ] Both codes are equivalent from React's point of view
+    - [ ] The most simple and concise way to define a component is the first one but classes have some additional features
+    - [ ] This function is a valid React component because it accepts a single `props` object argument with data and returns a React
+    - [ ] All of the above 
 
-oO Both codes are equivalent from React's point of view
+4. What is true for ReactJS components defined as pure JS functions?
 
-oO The most simple and concise way to define a component is the first one but classes have some additional features
+    - [ ] Pure function components do not have lifecycle methods
+    - [ ] It is not possible to set defaultProps or propTypes for pure function components
+    - [ ] Pure function component have not render method defined
+    - [ ] A pure function is a function that may alter any external state
 
-Oo This funetion is a valid React component because it accepts a single �props� object argument with data and returns a React
+5. How set a custom html inside ReactUs component:
 
-� Allof the above
-What is true for ReactJS components defined as pure JS functions?
+    - [ ] `<div innerHTML={'Some custom HTML'}/>`
+    - [ ] `<div dangerouslySetInnerHTML={{__html:'Some custom HTML'}}/>`
+    - [ ] `<div innerHTML={{__html:'Some custom HTML'}}/>`
+    - [ ] `<div dangerouslySetInnerHTML={'Some custom HTML'}/>`
 
-Answer:
-
-oO Pure function components do not have lifecycle methods
-
-oO Itis not possible to set defaultProps or propTypes for pure function components
-� Pure function component have not render method defined
-
-oO A pure function is a function that may alter any external state
-How set a custom html inside ReactUs component:
-
-Answer:
-
-oO <div innerHTML={'Some custom HTML'}/>
-
-oO <div dangerouslySetInnerHTML={{__html:'Some custom HTML'}}/>
-oO <div innerHTML={{__html:'Some custom HTML'}}/>
-
-oO <div dangerouslySetInnerHTML={'Some custom HTML'}/>
-Considering the following codes:
-```
+6. Considering the following codes:
+```javascript
 var MessageBox = React.createClass({
 getlnitialState: function() {
 return {nmameWithQualifier: 'Mr. ' + this.props.name};
@@ -89,101 +71,74 @@ return <div>{'Mr. ' + this. props.name}</div>;
 })
 
 ReactDOM.render(<MessageBox name=""Rogers"/>, mountNode);
+```
+    - [ ] They are both exactly equivalent
+    - [ ] The first one is better than the second one because the second one violates the basic principle of the single source of truth
+    - [ ] The second one is better than the first one because the first one violates the basic principle of the single source of truth
+    - [ ] None of the above
 
-Answer:
+7. What will happen if parent component will fire render function?
 
-O They are both exactly equivalent
+    - [ ] Child components will fire render functions too
+    - [ ] Child components will fire shouldComponentUpdate
+    - [ ] Child components will always fire componentDidUpdate
+    - [ ] Child components will fire no event
 
-O The first one is better than the second one because the second one violates the basic principle of the single source of truth
-O The second one is better than the first one because the first one violates the basic principle of the single source of truth
+Considering the following HTML example
 
-� None of the above
-What will happen if parent component will fire render function?
-
-Answer:
-
-� Child components will fire render functions too
-
-oO Child components will fire shouldComponentUpdate
-oO Child components will always fire componentDidUpdate
-
-� Child components will fire no event
-Considering the following HTML example
-
- 
-
+```html
 <a href="#" onclick=""console.log('The link was clicked.');return false>Click me</a>
+```
 
 The same component in React:
 
-Answer:
+    - [ ] Is the same but with the event on click written in camelCase (i.e. onClick)
+    - [ ] You must call preventDefault explicitly
+    - [ ] Cannot be built because you cannot return false
+    - [ ] None of the above
 
-oO Is the same but with the event on click written in camelCase (i.e. onClick)
-oO You must call preventDefault explicitly
+8. Which statement is true regarding state and props in React?
 
-� Cannot be built because you cannot return false
+    - [ ] They are not related
+    - [ ] The state can�t be updated by the parent while props can
+    - [ ] Both props and state changes trigger a render update
+    - [ ] The parent's props becomes the child's state value
 
-� None of the above
-Which statement is true regarding state and props in React?
+9. Which is the correct function to render ReactUS component at server side as static html page?
 
-Answer:
+    - [ ] ReactDOMServer.renderToString
+    - [ ] ReactDOM.render
+    - [ ] ReactDOM.renderStaticOnServer
+    - [ ] ReactDOMServer.renderToStaticMarkup
 
-� They are not related
+10. Which function is invoked just before render during initial render?
 
-oO The state can�t be updated by the parent while props can
-oO Both props and state changes trigger a render update
+    - [ ] componentWillUpdate()
+    - [ ] componentBeforeOccur()
+    - [ ] componentWillReceiveMount()
+    - [ ] componentWillMount()
 
-oO The parent's props becomes the child's state value
-Which is the correct function to render ReactUS component at server side as static
-html page?
+11. PropTypes can be used for...
 
-Answer:
+    - [ ] Validation
+    - [ ] getPropsValue
+    - [ ] Typechecking
+    - [ ] Both (a) and (c) are correct
 
-� ReactDOMServer.renderToString
+12. Which of the following statements is incorrect regarding Flux concept:
 
-� ReactDOM.render
+- [ ] Propose a single directional data flow
+- [ ] The reducer is a function that specifies the changes that actions trigger
+- [ ] The stores are responsible of re-rendering the app
+- [ ] The view recieves the data that the dispatcher sends to the stores
 
-� ReactDOM.renderStaticOnServer
+13. Regarding the following code:
 
-� ReactDOMServer.renderToStaticMarkup
- 
-
-Which function is invoked just before render during initial render?
-
-Answer:
-
-oO componentWillUpdate()
-
-oO componentBeforeOccur()
-
-oO componentWillReceiveMount()
-oO componentWillMount()
-Answer:
-
-� Validation
-
-oO getPropsValue
-
-oO Typechecking
-
-oO Both (a) and (c) are correct
-
-PropTypes can be used for...
-Which of the following statements is incorrect regarding Flux concept:
-
-Answer:
-
-oO Propose a single directional data flow
-
-oO The reducer is a function that specifies the changes that actions trigger
-oO The stores are responsible of re-rendering the app
-
-� The view recieves the data that the dispatcher sends to the stores
-Regarding the following code:
+```javascript
 import React from 'react';
 
 var newData = {
-data: �Data from COMP...�,
+data: Data from COMP...,
 
 var MyCOMP = ComposedComponent ? class extends React. Component {
 
@@ -193,7 +148,7 @@ data: newData.data
 yi
 }
 
-render(){ .
+render(){ 
 return <ComposedComponent {...this.props} {...this.state} />;
 }
 i
@@ -202,21 +157,18 @@ class MyComponent extends React.Component {
 render() {
 return (
 <div>
-<h1>{this. props data}</h1>
+<h1>{this.props.data}</h1>
 </div>
 )
 }
 }
 
 export default MyYCOMP(MyComponent);
+```
 
-Which statement is false?
-The MyCOMP is a higher order function that is used only to pass data to MyComponent
+14. Which statement is false?
 
-The function MyCOMP takes MyComponent, enhances it with newData and returns the enhanced component that will be rendered
-on screen
-
-MyComponent should extends React. PureComponent in order to the code to be correct
-
-If we run the app, we will see "Data from COMP...�
-
+    - [ ] The MyCOMP is a higher order function that is used only to pass data to MyComponent
+    - [ ] The function MyCOMP takes MyComponent, enhances it with newData and returns the enhanced component that will be rendered on screen
+    - [ ] MyComponent should extends React. PureComponent in order to the code to be correct
+    - [ ] If we run the app, we will see "Data from COMP...
