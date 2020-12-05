@@ -43,17 +43,17 @@ def image():
                       if e.is_file()), key=lambda e: e.stat().st_mtime)
     files = [e.path for e in entries]
 
-    with open(settings.mdDat, "a") as f:
+    with open(settings.mdDat, settings.fmode) as f:
         for file in files:
             if file.lower().endswith(settings.ftype):
                 img = Image.open(file)
                 text = pytesseract.image_to_string(img)
                 f.write(text)
-                # print(file)
+                print(file)
                 # print(text)
 
 
-def md():
+def mdFormat():
 
     with open(settings.mdDat, 'r', encoding="utf8") as f:
         counter = 1
@@ -62,9 +62,6 @@ def md():
         needles_re = re.compile("|".join(map(re.escape, needles)))
         code = False
         for line in f:
-
-            if 'Answer:' in line or 'Question:' in line:
-                continue
 
             if line in ' \n':
                 continue
@@ -101,7 +98,7 @@ def md():
             # if counter == 10:
                 # break
 
-        print(str)
+        # print(str)
 
     with open(settings.mdDat, 'w', encoding='utf8') as f:
         f.write(str)
@@ -143,15 +140,14 @@ def qa():
                 # break
             str += line
     # print(str)
-    with open(settings.mdDat, 'w') as f:
-        f.write(str)
+    with open(settings.mdDat, 'w') as f:        f.write(str)
 
 
 settings.init()
 # cp()
 # image()
-# md()
-# qa()
+# mdFormat()
+qa()
 
 
 def prep():
@@ -160,13 +156,13 @@ def prep():
     with open(settings.mdDat, 'r', encoding='utf8') as f:
         for line in f:
             if '##' in line:
-                str += f'\n\n{line}\n'
+                # line = line.replace('#### ')
+                line= re.sub('#### \d+\.', '', line)
+                str+=f'#### {counter} {line}' 
+                counter += 1
                 continue
-            str += line.replace('\n', '')
-
-            counter += 1
+            str += line
         # print(str)
-    with open(settings.mdDat, 'w', encoding='utf8') as f: f.write(str)
+    with open(settings.mdDat, 'w', encoding='utf8') as f:f.write(str)
 
-
-prep()
+# prep()
