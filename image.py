@@ -7,12 +7,9 @@ import shutil
 import sys
 
 
-splitter = 2
-
-
 def does_string_match(str_):
     # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match('unbenannt\.png\d{'+str(splitter)+'}\.png$', str_)
+    mat = re.match('unbenannt\.png\d{'+str(settings.splitter)+'}\.png$', str_)
     return mat is not None
 
 
@@ -23,7 +20,7 @@ def cp():
         if does_string_match(file.lower()):
             # unbenannt.png28.png
             str = file.split('.')
-            str = str[1][len(str[1])-splitter:]
+            str = str[1][len(str[1])-settings.splitter:]
             str = f'unbenannt{str}{settings.ftype}'
             path = os.path.dirname(full_file_name)
             file = os.path.join(path, str)
@@ -63,9 +60,9 @@ def mdFormat():
         code = False
         for line in f:
 
-            if line in ' \n':
+            if line in ' \n' or 'swer:' in line:
                 continue
-
+            
             for m in needles_re.finditer(line):
                 # print(m.group(0))
                 line = line.replace(m.group(0), '')
@@ -140,29 +137,12 @@ def qa():
                 # break
             str += line
     # print(str)
-    with open(settings.mdDat, 'w') as f:        f.write(str)
+    with open(settings.mdDat, 'w') as f:
+        f.write(str)
 
 
 settings.init()
-# cp()
-# image()
+cp()
+image()
 # mdFormat()
-qa()
-
-
-def prep():
-    str = ''
-    counter = 1
-    with open(settings.mdDat, 'r', encoding='utf8') as f:
-        for line in f:
-            if '##' in line:
-                # line = line.replace('#### ')
-                line= re.sub('#### \d+\.', '', line)
-                str+=f'#### {counter} {line}' 
-                counter += 1
-                continue
-            str += line
-        # print(str)
-    with open(settings.mdDat, 'w', encoding='utf8') as f:f.write(str)
-
-# prep()
+# qa()
