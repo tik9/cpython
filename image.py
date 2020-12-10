@@ -2,9 +2,11 @@ from PIL import Image
 import os
 import pytesseract
 import re
-import settings
 import shutil
 import sys
+
+import settings
+import prep
 
 
 def does_string_match(str_):
@@ -36,16 +38,13 @@ def image():
 
     # pytesseract.pytesseract.tesseract_cmd = pytes
 
-    entries = sorted((e for e in os.scandir(settings.pics)
-                      if e.is_file()), key=lambda e: e.stat().st_mtime)
-    files = [e.path for e in entries]
-
+    files=prep.sortfiles(settings.pics)
     with open(settings.mdDat, settings.fmode) as f:
         for file in files:
             if file.lower().endswith(settings.ftype):
-                img = Image.open(file)
-                text = pytesseract.image_to_string(img)
-                f.write(text)
+                # img = Image.open(file)
+                # text = pytesseract.image_to_string(img)
+                # f.write(text)
                 print(file)
                 # print(text)
 
@@ -142,7 +141,7 @@ def qa():
 
 
 settings.init()
-cp()
+# cp()
 image()
 # mdFormat()
 # qa()

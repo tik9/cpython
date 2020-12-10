@@ -5,9 +5,9 @@ This repo serves for **batch processing all images of a folder to text**
 
 ### Contents
 
-- [OCR with](image.py) **[Tesseract](https://github.com/tesseract-ocr/tesseract)**
+- [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition) with **[Tesseract](https://github.com/tesseract-ocr/tesseract)**
 - [make the **text formatted**](image.py#L56) including [] for correct answers (**[x]**)
-- [add answers **to questions**](image.py#L109) which are stored in an [python array](settings.py)
+- [add answers **to questions**](image.py#L109) which are stored in a [python array](settings.py#L9)
 
 &nbsp;
 
