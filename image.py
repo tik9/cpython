@@ -9,24 +9,27 @@ import settings
 import prep
 
 
-def does_string_match(str_):
+def does_string_match(str):
     # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match('unbenannt\.png\d{'+str(settings.splitter)+'}\.png$', str_)
+    mat = re.match('unbenannt\.png\d{1,2}\.png$', str)
     return mat is not None
 
 
 def cp():
 
     for file in os.listdir(settings.pics):
-        full_file_name = os.path.join(settings.pics, file)
+        fullFileName = os.path.join(settings.pics, file)
+        # print(fullFileName)
         if does_string_match(file.lower()):
             # unbenannt.png28.png
             str = file.split('.')
-            str = str[1][len(str[1])-settings.splitter:]
+            numbers = sum(c.isdigit() for c in str[1])
+            # print(numbers)
+            str = str[1][len(str[1])-numbers:]
             str = f'unbenannt{str}{settings.ftype}'
-            path = os.path.dirname(full_file_name)
+            path = os.path.dirname(fullFileName)
             file = os.path.join(path, str)
-            shutil.move(full_file_name, file)
+            shutil.move(fullFileName, file)
             print('file', file)
 
 
@@ -34,17 +37,13 @@ def image():
 
     # print('ftype','pics','mddat',settings.ftype,settings.pics,settings.mdDat)
 
-    # pytes = r'C:\program files\Tesseract-OCR\tesseract.exe'
-
-    # pytesseract.pytesseract.tesseract_cmd = pytes
-
-    files=prep.sortfiles(settings.pics)
+    files = prep.sortfiles(settings.pics)
     with open(settings.mdDat, settings.fmode) as f:
         for file in files:
             if file.lower().endswith(settings.ftype):
-                # img = Image.open(file)
-                # text = pytesseract.image_to_string(img)
-                # f.write(text)
+                img = Image.open(file)
+                text = pytesseract.image_to_string(img)
+                f.write(text)
                 print(file)
                 # print(text)
 
@@ -61,7 +60,7 @@ def mdFormat():
 
             if line in ' \n' or 'swer:' in line:
                 continue
-            
+
             for m in needles_re.finditer(line):
                 # print(m.group(0))
                 line = line.replace(m.group(0), '')

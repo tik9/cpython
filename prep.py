@@ -1,6 +1,9 @@
 import settings
 import os
+import sys
 import fnmatch
+import string
+import re
 
 
 def check():
@@ -17,16 +20,17 @@ def check():
         for name in files:
             if name.endswith('.md') and name.lower() != 'readme.md' and name.lower() != 'contributing.md':
                 file = os.path.join(root, name)
-                print(file)
-                if counter == 3:
-                    break
+                # print(file)
+                # if counter == 3:sys.exit()
                 counter += 1
-                with open(file, 'r') as f:
+                # print(counter)
+                with open(file, 'r', encoding='UTF8') as f:
+                    str = ''
                     for line in f:
-                        # if '####' in line:
-                        if not any(map(line.__contains__, contains))
-                        print(line, file)
-                        # break
+                        str += line
+
+                    if not '####' in str:
+                        print(file)
 
 
 def sortfiles(folder):
@@ -35,23 +39,48 @@ def sortfiles(folder):
     return [e.path for e in entries]
 
 
+def prep2():
+    str = ''
+    counter = 1
+    answers = ['a)', 'b)', 'c)', 'd']
+    with open(settings.mdDat, 'r') as f:
+        for line in f:
+            if line.startswith('Q'):
+                str += f'#### {line}'
+                continue
+            if any(answer in line for answer in answers):
+                chara = line.lstrip()[:2]
+                str += line.replace(chara, '- []')
+                # print(line)
+
+            # str += line
+        print(str)
+    with open(settings.copy, 'w') as f:    f.write(str)    
+
+
 def prep():
     str = ''
     counter = 1
-    with open(settings.mdDat, 'r', encoding='utf8') as f:
+    with open(settings.mdDat, 'r') as f:
         for line in f:
-            if '##' in line:
-                # line = line.replace('#### ')
-                line = re.sub('#### \d+\.', '', line)
-                str += f'#### {counter} {line}'
-                counter += 1
+            counter += 1
+            if '�' in line or '' in line:
+                line = line.replace('�', '').replace('', '')
+                # print('�')
+
+            if 'Answ' in line:
                 continue
-            str += line
-        # print(str)
-    with open(settings.mdDat, 'w', encoding='utf8') as f:
+
+            if line.startswith('-') or not line.strip():
+                str += line
+                continue
+            str += line.replace('\n', '')
+        print(str)
+
+    with open(settings.mdDat, 'w') as f:
         f.write(str)
 
 
 settings.init()
-check()
-# prep()
+# check()
+prep2()
