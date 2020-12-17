@@ -48,20 +48,21 @@ def image():
                 # print(text)
 
 
+
 def mdFormat():
 
     with open(settings.mdDat, 'r', encoding="utf8") as f:
         counter = 1
         str = ''
-        needles = ['CO', '', ' ', '�', '� ', 'oO', 'O', 'S', '©']
-        needles_re = re.compile("|".join(map(re.escape, needles)))
+        
         code = False
         for line in f:
 
             if line in ' \n' or 'swer:' in line:
                 continue
 
-            for m in needles_re.finditer(line):
+            # for m in needles_re.finditer(line):
+            for m in needles().finditer(line):
                 # print(m.group(0))
                 line = line.replace(m.group(0), '')
 
