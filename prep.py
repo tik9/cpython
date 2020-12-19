@@ -1,9 +1,6 @@
 import settings
 import os
 import sys
-import fnmatch
-import string
-import re
 
 
 def check():
@@ -20,7 +17,7 @@ def check():
         for name in files:
             if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
                 file = os.path.join(root, name)
-                # if counter == 3:sys.exit()
+                # if counter == 10:sys.exit()
                 counter += 1
                 with open(file, 'r', encoding='UTF8') as f:
                     str = ''
@@ -29,71 +26,64 @@ def check():
 
                     if not '####' in str:
                         print(file)
-                        prep2(file)
+                        # prep2(file)
 
 
-def sortfiles(folder):
-    entries = sorted((e for e in os.scandir(folder)
-                      if e.is_file()), key=lambda e: e.stat().st_mtime)
-    return [e.path for e in entries]
-
-
-def prep2():
+def prep():
     str = ''
-    counter = 1
-    answers = ['a)', 'b)', 'c)', 'd)']
-    code = False
-    # with open(settings.mdDat, 'r') as f:
-    with open(file, 'r') as f:
+    with open(settings.mdDat, 'r') as f:
         for line in f:
+            str += line
+    return str
+
+
+def qa():
+    str = ''
+    answers = ['a)', 'b)', 'c)', 'd)', '-']
+    code = False
+    correct = ' << Correct'
+    correct = '👍'
+    with open(settings.mdDat, 'r', encoding='UTF8') as f:
+        for line in f:
+            if 'Q43' in line:
+                break
+
             if line.startswith('Q'):
                 str += f'#### {line}'
                 continue
             if any(answer in line for answer in answers):
                 chara = line.lstrip()[:2]
-                str += line.replace(chara, '- []')
-                # print(line)
-                continue
+                if correct in line:
+                    line = line.replace(chara, '- [x] ')
+                    str += line
+                    continue
 
-            if '```' in line and not code:
-                str += '\n```\n'
-                code = True
-                continue
-            if '```' in line and code:
-                str += '```\n'
-                code = False
+                str += line.replace(chara, '- [] ')
+
                 continue
 
             str += line
-        print(str)
-    # with open(settings.mdFile, 'w') as f:f.write(str)
+        return str
 
 
-def prep():
+def code():
     str = ''
-    counter = 1
+    code = False
     with open(settings.mdDat, 'r') as f:
         for line in f:
-            counter += 1
-            # if '�' in line or '' in line:
-            #     line = line.replace('�', '').replace('', '')
-            # print('�')
-            for m in settings.needles().finditer(line):
-                line = line.replace(m.group(0), '')
 
-            if 'Answ' in line or 'Quest' in line:
+            if line == '```\n':
+                str, code = settings.code(str=str, code=code, lang='python')
+                print (line)
                 continue
 
-            if line.startswith('-') or not line.strip():
-                str += line
-                continue
-            str += line.replace('\n', '')
-        print(str)
-
-    with open(settings.mdDat, 'w') as f:
-        f.write(str)
+            str += line
+        return str
 
 
 settings.init()
 # check()
-prep()
+# str = qa()
+str = code()
+# print(str)
+with open(settings.mdDat, 'w',encoding='UTF8') as f:f.write(str)

@@ -48,13 +48,12 @@ def image():
                 # print(text)
 
 
-
 def mdFormat():
 
     with open(settings.mdDat, 'r', encoding="utf8") as f:
         counter = 1
         str = ''
-        
+
         code = False
         for line in f:
 
@@ -62,7 +61,7 @@ def mdFormat():
                 continue
 
             # for m in needles_re.finditer(line):
-            for m in needles().finditer(line):
+            for m in settings.needles(line):
                 # print(m.group(0))
                 line = line.replace(m.group(0), '')
 
@@ -77,27 +76,22 @@ def mdFormat():
                 counter += 1
                 continue
 
-            if '```' in line and not code:
-                str += '\n'
-                code = True
-                continue
-            if '```' in line and code:
-                str += '\n'
-                code = False
-                continue
-
-            if not code:
-                str += f"- [] {line}"
-            else:
+            code()
+            
+            if code or line.startswith('-'):
+                line = line.replace('-', '')
                 str += line
+
+            else:
+                str += f"- [] {line}"
 
             # if counter == 10:
                 # break
 
         # print(str)
 
-    with open(settings.mdDat, 'w', encoding='utf8') as f:
-        f.write(str)
+    # with open(settings.mdDat, 'w', encoding='utf8') as f:
+        # f.write(str)
 
 
 def qa():
@@ -142,6 +136,6 @@ def qa():
 
 settings.init()
 # cp()
-image()
+# image()
 # mdFormat()
-# qa()
+qa()

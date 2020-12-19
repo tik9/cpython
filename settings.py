@@ -14,8 +14,8 @@ def init():
     folder = 'lt'
     ftype = '.png'
     # ftype = '.jpg'
-    mdFile = 'python_data_analysis.md'
-    mdFile = 'css.md'
+    mdFile = 'angularjs-quiz.md'
+    mdFile = 'django-quiz.md'
     copy = 'copy'+mdFile
     pic = 'pictures'
     home = str(Path.home())
@@ -25,7 +25,24 @@ def init():
     pics = os.path.abspath(os.path.join(home, pic))
     # pics = home
 
-def needles():
-    needles = ['CO', '', '�', 'oO', 'O', 'S', '©']
-    return re.compile("|".join(map(re.escape, needles)))
+def needles(line):
+    needles = [ '', '�', 'oO', '©']
+    nre=re.compile("|".join(map(re.escape, needles)))
+    obj=[]
+    for needle in nre.finditer(line):
+         obj.append(needle)
+    return obj
+
+def code(str,code,lang=None):
+    if not code:
+        str += f'\n```{lang}\n'
+        code = True
+    else:
+        str += '```\n'
+        code = False
+    return str,code
     
+def sortfiles(folder):
+    entries = sorted((e for e in os.scandir(folder)
+                      if e.is_file()), key=lambda e: e.stat().st_mtime)
+    return [e.path for e in entries]
