@@ -6,7 +6,6 @@ import shutil
 import sys
 
 import settings
-import prep
 
 
 def does_string_match(str):
@@ -30,27 +29,24 @@ def cp():
             path = os.path.dirname(fullFileName)
             file = os.path.join(path, str)
             shutil.move(fullFileName, file)
-            print('file', file)
+            # print('file', file)
 
 
 def image():
 
-    # print('ftype','pics','mddat',settings.ftype,settings.pics,settings.mdDat)
-
-    files = prep.sortfiles(settings.pics)
-    with open(settings.mdDat, settings.fmode) as f:
+    files = settings.sortfiles(settings.pics)
+    with open(settings.mdDat, 'w') as f:
         for file in files:
             if file.lower().endswith(settings.ftype):
                 img = Image.open(file)
                 text = pytesseract.image_to_string(img)
                 f.write(text)
-                print(file)
-                # print(text)
+                # print(file)
+                print(text)
 
 
 def mdFormat():
-
-    with open(settings.mdDat, 'r', encoding="utf8") as f:
+    with open(settings.mdDat, 'r') as f:
         counter = 1
         str = ''
 
@@ -60,24 +56,17 @@ def mdFormat():
             if line in ' \n' or 'swer:' in line:
                 continue
 
-            # for m in needles_re.finditer(line):
-            for m in settings.needles(line):
-                # print(m.group(0))
-                line = line.replace(m.group(0), '')
+            line = settings.needles(line)
 
-            if line.startswith('?'):
-                line = line.replace('?', '')
-                str += f"\n\n#### {counter}. {line}"
-                counter += 1
+            if line.startswith('?') or '?' in line:
+
+                str, counter = settings.header(str, line, counter)
                 continue
 
-            if '?' in line and not code:
-                str += f"\n\n#### {counter}. {line}"
-                counter += 1
+            if '```' in line:
+                str, code = settings.code(str, code, lang='vb')
                 continue
 
-            code()
-            
             if code or line.startswith('-'):
                 line = line.replace('-', '')
                 str += line
@@ -88,10 +77,7 @@ def mdFormat():
             # if counter == 10:
                 # break
 
-        # print(str)
-
-    # with open(settings.mdDat, 'w', encoding='utf8') as f:
-        # f.write(str)
+    return str
 
 
 def qa():
@@ -130,12 +116,13 @@ def qa():
                 # break
             str += line
     # print(str)
-    with open(settings.mdDat, 'w') as f:
-        f.write(str)
 
 
 settings.init()
 # cp()
 # image()
-# mdFormat()
-qa()
+str = mdFormat()
+# qa()
+# print(str)
+with open(settings.mdDat, 'w') as f:
+    f.write(str)

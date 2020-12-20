@@ -74,7 +74,6 @@ def code():
 
             if line == '```\n':
                 str, code = settings.code(str=str, code=code, lang='python')
-                print (line)
                 continue
 
             str += line
