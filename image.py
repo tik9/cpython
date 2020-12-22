@@ -2,109 +2,76 @@ from PIL import Image
 import os
 import pytesseract
 import re
-import shutil
-import sys
 
-import settings
-import prep
+from settings import *
+from helper import *
 
 
-def does_string_match(str):
-    # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match('unbenannt\.png\d{1,2}\.png$', str)
-    return mat is not None
-
-
-def cp():
-
-    for file in os.listdir(settings.pics):
-        fullFileName = os.path.join(settings.pics, file)
-        # print(fullFileName)
-        if does_string_match(file.lower()):
-            # unbenannt.png28.png
-            str = file.split('.')
-            numbers = sum(c.isdigit() for c in str[1])
-            # print(numbers)
-            str = str[1][len(str[1])-numbers:]
-            str = f'unbenannt{str}{settings.ftype}'
-            path = os.path.dirname(fullFileName)
-            file = os.path.join(path, str)
-            shutil.move(fullFileName, file)
-            print('file', file)
+def main():
+    
+    init()
+    # cp()
+    # image()
+    str = mdFormat()
+    # qa()
+    # print(str)
+    # with open(mdDat, 'w') as f:
+    #     f.write(str)
 
 
 def image():
 
-    # print('ftype','pics','mddat',settings.ftype,settings.pics,settings.mdDat)
-
-    files = prep.sortfiles(settings.pics)
-    with open(settings.mdDat, settings.fmode) as f:
+    files = sortfiles(pics)
+    with open(mdDat, 'w') as f:
         for file in files:
-            if file.lower().endswith(settings.ftype):
+            if file.lower().endswith(ftype):
                 img = Image.open(file)
                 text = pytesseract.image_to_string(img)
                 f.write(text)
-                print(file)
-                # print(text)
-
+                # print(file)
+                print(text)
 
 
 def mdFormat():
-
-    with open(settings.mdDat, 'r', encoding="utf8") as f:
+    with open(mdDat, 'r') as f:
         counter = 1
         str = ''
-        
+
         code = False
         for line in f:
 
             if line in ' \n' or 'swer:' in line:
                 continue
 
-            # for m in needles_re.finditer(line):
-            for m in needles().finditer(line):
-                # print(m.group(0))
-                line = line.replace(m.group(0), '')
+            line = needles(line)
 
-            if line.startswith('?'):
-                line = line.replace('?', '')
-                str += f"\n\n#### {counter}. {line}"
-                counter += 1
+            if line.startswith('?') or '?' in line:
+
+                str, counter = header(str, line, counter)
                 continue
 
-            if '?' in line and not code:
-                str += f"\n\n#### {counter}. {line}"
-                counter += 1
+            if '```' in line:
+                str, code = code(str, code, lang='vb')
                 continue
 
-            if '```' in line and not code:
-                str += '\n'
-                code = True
-                continue
-            if '```' in line and code:
-                str += '\n'
-                code = False
-                continue
-
-            if not code:
-                str += f"- [] {line}"
-            else:
+            if code or line.startswith('-'):
+                line = line.replace('-', '')
                 str += line
+
+            else:
+                str += f"- [] {line}"
 
             # if counter == 10:
                 # break
 
-        # print(str)
-
-    with open(settings.mdDat, 'w', encoding='utf8') as f:
-        f.write(str)
+    return str
 
 
 def qa():
     counta = 0
     countq = 0
 
-    with open(settings.mdDat, "r") as f:
+    with open(mdDat, "r") as f:
         str = ''
         for line in f:
 
@@ -115,12 +82,12 @@ def qa():
                 # print(countq)
                 str += '\n\n' + line
 
-                if countq >= len(settings.answers):
+                if countq >= len(answers):
                     print('no auto solution', countq)
                     countq += 1
                     continue
 
-                answer = settings.answers[countq]
+                answer = answers[countq]
                 countq += 1
                 counta = 0
                 continue
@@ -128,7 +95,7 @@ def qa():
             if '- []' in line:
                 counta += 1
 
-            if counta == answer and countq <= len(settings.answers) and '- []' in line:
+            if counta == answer and countq <= len(answers) and '- []' in line:
                 str += '- [x] '+line[5:]
                 continue
 
@@ -136,12 +103,8 @@ def qa():
                 # break
             str += line
     # print(str)
-    with open(settings.mdDat, 'w') as f:
-        f.write(str)
 
 
-settings.init()
-# cp()
-image()
-# mdFormat()
-# qa()
+if __name__ == '__main__':
+    main()
+        
