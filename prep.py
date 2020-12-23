@@ -6,41 +6,40 @@ import sys
 import shutil
 
 def main():
-    # init()
-    # fileGen()
-    cp()
+    fname,lang,str=fileGen('')
+    # cp()
     # check()
     # str = code()
     # str = qa()
+    # with open(mdDat, 'a',encoding='UTF8') as f:f.write(str)
     # print(str)
-    # with open(mdDat, 'w',encoding='UTF8') as f:f.write(str)
+    with open(fname, 'a+') as f:
+        f.write(f'## {lang}')
+    
 
-
-def fileGen():
-    lang = sys.argv[1:] or ['App', 'Py']
+def fileGen(str):
+    lang = sys.argv[1:] or ['Applied', 'Datamining with Py']
     lang = ' '.join(lang)
 
     fname = lang.lower().replace(' ', '_')
-    str = ''
+    
     with open('settings.py', 'r') as f:
         for line in f:
-            # if ']\r\n' in line:
+            if 'answers =' in line:
+                str+= f'answers = arr.array(\'i\', [ ])'
+                continue
             if 'mdFile =' in line:
-                str += f'mdFile =\'{fname}.md\'\n'
+                # str += f'mdFile =\'{fname}.md\'\n'
+                str+=line
                 continue
             if re.search(r'\]\n', line):
                 # line = line.replace(']', f',\'{lang}\'\n]')
-                str += f',\'{lang}\'\n]'
-                print(line)
+                # str += f',\'{lang}\'\n]'
+                str+=line
                 continue
             str += line
-
-    print(str)
-    # with open('settings.py', 'w') as f:
-    # f.write(str)
-    # with open(fname, 'a+') as f:
-    # f.write(f'## {lang}')
-
+    return fname,lang, str
+    
 
 def cp():
     for file in os.listdir(pics):
@@ -83,16 +82,13 @@ def check():
                         # prep2(file)
 
 
-def qa():
-    str = ''
+def qa(str):
     answers = ['a)', 'b)', 'c)', 'd)', '-']
     code = False
     correct = ' << Correct'
     correct = '👍'
     with open(mdDat, 'r', encoding='UTF8') as f:
         for line in f:
-            if 'Q43' in line:
-                break
 
             if line.startswith('Q'):
                 str += f'#### {line}'
@@ -109,11 +105,10 @@ def qa():
                 continue
 
             str += line
-        return str
+    return str
 
 
-def code():
-    str = ''
+def code(str):
     code = False
     with open(mdDat, 'r') as f:
         for line in f:
@@ -123,7 +118,7 @@ def code():
                 continue
 
             str += line
-        return str
+    return str
 
 
 if __name__ == "__main__":

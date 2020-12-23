@@ -4,13 +4,10 @@ import array as arr
 import re
 
 
-# global answers, ftype, home, homew, langs, mdDat, pics
-
-answers = arr.array('i', [3, 4, 4, 2, 1, 4, 4, 4,
-                          4, 1, 4, 1, 2, 2, 4, 2, 3, 1])
-
+answers = arr.array('i', [4,1,2,3,1,1,1,1,4,2,3,1,4,1,4,3,1,3 ])
 ftype = '.png'
 mdFile = 'applied_data_mining_with_python.md'
+# mdFile='settings.py'
 pic = 'pictures'
 home = str(Path.home())
 homew = os.path.dirname(os.path.dirname(__file__))
@@ -34,4 +31,4 @@ langs = [
 
 
 if __name__ == "__main__":
-    print('langs', langs)
+    print('answ', answers)

@@ -8,34 +8,32 @@ from helper import *
 
 
 def main():
-    
-    init()
+    str = ''
+
     # cp()
-    # image()
-    str = mdFormat()
+    str = image(str)
+    # str = mdFormat()
     # qa()
-    # print(str)
-    # with open(mdDat, 'w') as f:
-    #     f.write(str)
+    print(str)
+    with open(mdDat, 'w') as f:
+        f.write(str)
 
 
-def image():
+def image(str):
 
     files = sortfiles(pics)
-    with open(mdDat, 'w') as f:
-        for file in files:
-            if file.lower().endswith(ftype):
-                img = Image.open(file)
-                text = pytesseract.image_to_string(img)
-                f.write(text)
-                # print(file)
-                print(text)
+    # with open(mdDat, 'w') as f:
+    for file in files:
+        if file.lower().endswith(ftype):
+            img = Image.open(file)
+            str += pytesseract.image_to_string(img)
+            # print(file)
+    return str
 
 
-def mdFormat():
+def mdFormat(str):
     with open(mdDat, 'r') as f:
         counter = 1
-        str = ''
 
         code = False
         for line in f:
@@ -67,12 +65,11 @@ def mdFormat():
     return str
 
 
-def qa():
+def qa(str):
     counta = 0
     countq = 0
 
     with open(mdDat, "r") as f:
-        str = ''
         for line in f:
 
             if line in ' \n':
@@ -84,7 +81,6 @@ def qa():
 
                 if countq >= len(answers):
                     print('no auto solution', countq)
-                    countq += 1
                     continue
 
                 answer = answers[countq]
@@ -102,9 +98,8 @@ def qa():
             # if countq == 5:
                 # break
             str += line
-    # print(str)
+    return str
 
 
 if __name__ == '__main__':
     main()
-        
