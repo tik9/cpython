@@ -1,10 +1,37 @@
 from settings import *
 from helper import *
+from itertools import islice
+import sys
+import os
 
 
 def main():
-    random()
+    # random()
+    # str = check()
+    # print(str)
     # with open(settings.mdFile, 'w') as f:f.write(str)
+    trandom()
+
+
+def trandom():
+    for file in sorted(os.scandir(pics), key=lambda f: f.stat().st_mtime):
+        # if file.is_file():
+        if file.path.lower().endswith('.png'):
+            print(file.path)
+
+    sys.exit()
+
+    excludeFile = ['.git', 'camera roll', 'saved pictures']
+    for root, dirs, files in os.walk(pics):
+        dirs[:] = [d for d in dirs if d.lower() not in excludeFile]
+        # print(dirs)
+
+        if not any(exclude in root.lower() for exclude in excludeFile):
+            # print(root)
+            pass
+        for name in files:
+            if name.endswith('.png') and not any(exclude in name.lower() for exclude in excludeFile):
+                print(name)
 
 
 def random():
@@ -28,8 +55,9 @@ def random():
             str += line.replace('\n', '')
         return str
 
+
 def check():
-    folder = os.path.join(settings.homew, 'lt')
+    folder = os.path.join(homew, 'lt')
 
     excludeDir = ['.git', 'test']
     excludeFile = ['readme.md', 'contributing.md']
@@ -46,13 +74,15 @@ def check():
                 counter += 1
                 with open(file, 'r', encoding='UTF8') as f:
                     str = ''
-                    for line in f:
-                        str += line
+                    str += list(islice(file, 10))
+
+                    # for line in f:
+                    #     str += line
 
                     if not '####' in str:
                         print(file)
-                        prep2(file)
-    
+                        # prep2(file)
+
     return str
 
 

@@ -11,10 +11,10 @@ def main():
     str = ''
 
     # cp()
-    str = image(str)
-    # str = mdFormat()
-    # qa()
-    print(str)
+    # str = image(str)
+    # str=mdFormat(str)
+    str=qa(str)
+    # print(str)
     with open(mdDat, 'w') as f:
         f.write(str)
 
@@ -35,7 +35,7 @@ def mdFormat(str):
     with open(mdDat, 'r') as f:
         counter = 1
 
-        code = False
+        codepart = False
         for line in f:
 
             if line in ' \n' or 'swer:' in line:
@@ -49,10 +49,10 @@ def mdFormat(str):
                 continue
 
             if '```' in line:
-                str, code = code(str, code, lang='vb')
+                str, codepart = code(str, codepart, lang='python')
                 continue
 
-            if code or line.startswith('-'):
+            if codepart or line.startswith('-'):
                 line = line.replace('-', '')
                 str += line
 
@@ -68,14 +68,14 @@ def mdFormat(str):
 def qa(str):
     counta = 0
     countq = 0
-
+    answer=0
     with open(mdDat, "r") as f:
         for line in f:
 
             if line in ' \n':
                 continue
 
-            if '##' in line:
+            if '####' in line:
                 # print(countq)
                 str += '\n\n' + line
 
