@@ -11,9 +11,9 @@ def main():
     str = ''
 
     # cp()
-    # str = image(str)
+    str = image(str)
     # str=mdFormat(str)
-    str=qa(str)
+    # str=qa(str)
     # print(str)
     with open(mdDat, 'w') as f:
         f.write(str)

@@ -14,12 +14,6 @@ def main():
 
 
 def trandom():
-    for file in sorted(os.scandir(pics), key=lambda f: f.stat().st_mtime):
-        # if file.is_file():
-        if file.path.lower().endswith('.png'):
-            print(file.path)
-
-    sys.exit()
 
     excludeFile = ['.git', 'camera roll', 'saved pictures']
     for root, dirs, files in os.walk(pics):

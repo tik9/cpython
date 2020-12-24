@@ -7,15 +7,17 @@ import shutil
 
 
 def main():
-    fname, lang, str = fileGen('')
+
+    str = buildlist(str)
     # cp()
     # check()
     # str = code()
     # str = qa()
     # with open(mdDat, 'a',encoding='UTF8') as f:f.write(str)
-    print(fname)
-    # with open(fname, 'a+') as f:
-    #     f.write(f'## {lang}')
+    # print(str)
+
+    with open(fname, 'w') as f:
+        f.write(str)
 
 
 def fileGen(str):
@@ -32,8 +34,6 @@ def fileGen(str):
             if 'mdFile =' in line:
                 # str += f'mdFile =\'{fname}.md\'\n'
                 str += line
-                # fname = line.replace('mdFile = \'', '').replace(
-                    "'", '').replace('\n', '')
                 continue
             if re.search(r'\]\n', line):
                 # str += f',\'{lang}\'\n]'
@@ -57,7 +57,6 @@ def cp():
             file = os.path.join(path, str)
             shutil.move(fullFileName, file)
             print(file)
-
 
 
 def code(str):
