@@ -68,7 +68,7 @@ def header(str, line, counter):
 
 def does_string_match(str):
     # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match('unbenannt\.png\d{1,2}\.png$', str)
+    mat = re.match('^unbenannt\.png\d{1,2}\.png$', str)
     return mat is not None
 
 

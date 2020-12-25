@@ -4,43 +4,29 @@ import os
 import re
 import sys
 import shutil
+import glob
 
 
 def main():
 
-    str = buildlist(str)
     # cp()
+    delOldPic()
     # check()
     # str = code()
     # str = qa()
-    # with open(mdDat, 'a',encoding='UTF8') as f:f.write(str)
+    # with open(mdFile, 'a',encoding='UTF8') as f:f.write(str)
     # print(str)
 
-    with open(fname, 'w') as f:
-        f.write(str)
+    # with open(fname, 'w') as f:
+    #     f.write(str)
 
 
-def fileGen(str):
-    lang = sys.argv[1:] or ['Applied', 'Datamining with Py']
-    lang = ' '.join(lang)
+def delOldPic():
 
-    fname = lang.lower().replace(' ', '_')
-
-    with open('settings.py', 'r') as f:
-        for line in f:
-            if 'answers =' in line:
-                str += f'answers = arr.array(\'i\', [ ])'
-                continue
-            if 'mdFile =' in line:
-                # str += f'mdFile =\'{fname}.md\'\n'
-                str += line
-                continue
-            if re.search(r'\]\n', line):
-                # str += f',\'{lang}\'\n]'
-                str += line
-                continue
-            str += line
-    return fname, lang, str
+    files = glob.glob(f'{pics}/*.png')
+    for f in files:
+        os.remove(f)
+        print(f)
 
 
 def cp():
@@ -55,13 +41,13 @@ def cp():
             str = f'unbenannt{str}{ftype}'
             path = os.path.dirname(fullFileName)
             file = os.path.join(path, str)
-            shutil.move(fullFileName, file)
+            # shutil.move(fullFileName, file)
             print(file)
 
 
 def code(str):
     code = False
-    with open(mdDat, 'r') as f:
+    with open(mdFile, 'r') as f:
         for line in f:
 
             if line == '```\n':

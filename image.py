@@ -15,16 +15,16 @@ def main():
     # str=mdFormat(str)
     # str=qa(str)
     # print(str)
-    with open(mdDat, 'w') as f:
+    with open(mdFile, 'w') as f:
         f.write(str)
 
 
 def image(str):
 
     files = sortfiles(pics)
-    # with open(mdDat, 'w') as f:
+    # with open(mdFile, 'w') as f:
     for file in files:
-        if file.lower().endswith(ftype):
+        if file.lower().endswith(picType):
             img = Image.open(file)
             str += pytesseract.image_to_string(img)
             # print(file)
@@ -32,7 +32,7 @@ def image(str):
 
 
 def mdFormat(str):
-    with open(mdDat, 'r') as f:
+    with open(mdFile, 'r') as f:
         counter = 1
 
         codepart = False
@@ -69,7 +69,7 @@ def qa(str):
     counta = 0
     countq = 0
     answer=0
-    with open(mdDat, "r") as f:
+    with open(mdFile, "r") as f:
         for line in f:
 
             if line in ' \n':
