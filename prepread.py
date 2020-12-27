@@ -8,10 +8,10 @@ readme = os.path.join(pl, 'README.md')
 def main():
     str = ''
 
-    str = buildSettings(str)
+    # str = buildSettings(str)
 
-    with open(fileSettings, 'w') as f:
-        f.write(str)
+    # with open(fileSettings, 'w') as f:
+        # f.write(str)
 
     str = buildReadme('')
 

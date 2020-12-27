@@ -11,12 +11,12 @@ def main():
     str = ''
 
     # cp()
-    str = image(str)
-    # str=mdFormat(str)
+    # str = image(str)
+    str = mdFormat(str)
     # str=qa(str)
     # print(str)
-    with open(mdFile, 'w') as f:
-        f.write(str)
+    # with open(mdFile, 'w') as f:
+    # f.write(str)
 
 
 def image(str):
@@ -33,8 +33,9 @@ def image(str):
 
 def mdFormat(str):
     with open(mdFile, 'r') as f:
-        counter = 1
-
+        qcounter = 1
+        tmpqcount = 2
+        acount = 0
         codepart = False
         for line in f:
 
@@ -45,7 +46,7 @@ def mdFormat(str):
 
             if line.startswith('?') or '?' in line:
 
-                str, counter = header(str, line, counter)
+                str, qcounter = header(str, line, qcounter)
                 continue
 
             if '```' in line:
@@ -58,17 +59,18 @@ def mdFormat(str):
 
             else:
                 str += f"- [] {line}"
-
-            # if counter == 10:
-                # break
-
+                if qcounter > tmpqcount:
+                    tmpqcount = qcounter
+                    print('question', tmpqcount,'answers', acount)
+                    acount = 0
+                acount += 1
     return str
 
 
 def qa(str):
     counta = 0
     countq = 0
-    answer=0
+    answer = 0
     with open(mdFile, "r") as f:
         for line in f:
 

@@ -8,7 +8,7 @@ def main():
     print('file', __file__)
 
 
-answers = arr.array('i', [])
+answers = arr.array('i', [1,2,1,2,3,4,4,4,2,2,3,4,2,1,2,1,2,4])
 
 picType='.png'
 fileSettings = __file__
@@ -18,7 +18,7 @@ home = str(Path.home())
 homew = os.path.dirname(os.path.dirname(__file__))
 mdFile = os.path.join(os.path.dirname(__file__), mdFile)
 pics = os.path.abspath(os.path.join(home, pic))
-pl = os.path.join(homew, 'pl')
+pl = os.path.join(homew, 'pluralsight-skill-tests')
 # pics = home
 langs = [
     'Angular',
