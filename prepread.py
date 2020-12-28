@@ -2,6 +2,7 @@ import os
 import sys
 from settings import *
 
+
 readme = os.path.join(pl, 'README.md')
 
 
@@ -11,7 +12,7 @@ def main():
     # str = buildSettings(str)
 
     # with open(fileSettings, 'w') as f:
-        # f.write(str)
+    #     f.write(str)
 
     str = buildReadme('')
 
@@ -22,10 +23,10 @@ def main():
 
 
 def buildSettings(str):
-    lang = sys.argv[1:] or ['Python', 'Web Scraping']
+    lang = sys.argv[1:] or ['Python', 'Exploratory Data Analysis']
     lang = ' '.join(lang)
     # print('ft', ftype)
-    readme = lang.lower().replace(' ', '_')
+    file = lang.lower().replace(' ', '_')
     answerNextLine = False
     with open(fileSettings, 'r') as f:
         for line in f:
@@ -38,7 +39,7 @@ def buildSettings(str):
                 answerNextLine = True
                 continue
             if 'mdFile =' in line:
-                str += f'mdFile =\'{readme}.md\'\n'
+                str += f'mdFile =\'{file}.md\'\n'
                 # str += line
                 continue
             if re.search(r'\]\n', line):
@@ -56,9 +57,9 @@ def buildReadme(str):
     str += 'Table of Contents\n\n'
 
     for item in langs:
-        readme = item.lower().replace(' ', '_')
+        mdFile = item.lower().replace(' ', '_')
 
-        str += f'- [{item}]({readme}.md)\n'
+        str += f'- [{item}]({mdFile}.md)\n'
 
     str += '\n<br>\n\n### Going further\n\n- [Getting Started](https://github.com/tik9/tesseractToMarkdown) with Tesseract and Python\n\n- [**More** Skill tests not related to Pluralsight](https://github.com/tik9/further-skill-tests)'
 

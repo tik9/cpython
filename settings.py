@@ -3,20 +3,27 @@ import os
 import array as arr
 import re
 
+homew = os.path.dirname(os.path.dirname(__file__))
+
+gitdir = os.path.join(homew, 'git',)
+# os.chdir(gitdir)
+# import gitmanager
+
 
 def main():
-    print('file', __file__)
+    #  'gitmanager'
+    print(os.listdir())
+    # from gitdir import commit
+    # commit()
 
 
-answers = arr.array('i', [1,2,1,2,3,4,4,4,2,2,3,4,2,1,2,1,2,4])
-
-picType='.png'
+answers = arr.array('i', [1, 1, 1, 3, 1, 3, 1, 1,
+                          4, 4, 4, 1, 4, 2, 2, 3, 3, 4])
+picType = '.png'
 fileSettings = __file__
-mdFile = 'python_web_scraping.md'
 pic = 'pictures'
 home = str(Path.home())
-homew = os.path.dirname(os.path.dirname(__file__))
-mdFile = os.path.join(os.path.dirname(__file__), mdFile)
+mdFile = 'python_exploratory_data_analysis.md'
 pics = os.path.abspath(os.path.join(home, pic))
 pl = os.path.join(homew, 'pluralsight-skill-tests')
 # pics = home
@@ -33,8 +40,7 @@ langs = [
     'Powershell',
     'Python Core',
     'Python Data Analysis',
-    'Python applied Data Mining', 'Python Web Scraping'
+    'Python applied Data Mining', 'Python Web Scraping', 'Python Exploratory Data Analysis'
 ]
-
 if __name__ == "__main__":
     main()

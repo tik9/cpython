@@ -9,10 +9,9 @@ import glob
 
 def main():
 
-    # cp()
-    delOldPic()
+    cp()
+    # delOldPic()
     # check()
-    # str = code()
     # str = qa()
     # with open(mdFile, 'a',encoding='UTF8') as f:f.write(str)
     # print(str)
@@ -38,24 +37,11 @@ def cp():
             numbers = sum(c.isdigit() for c in str[1])
             # print(numbers)
             str = str[1][len(str[1])-numbers:]
-            str = f'unbenannt{str}{ftype}'
+            str = f'unbenannt{str}{picType}'
             path = os.path.dirname(fullFileName)
             file = os.path.join(path, str)
-            # shutil.move(fullFileName, file)
-            print(file)
-
-
-def code(str):
-    code = False
-    with open(mdFile, 'r') as f:
-        for line in f:
-
-            if line == '```\n':
-                str, code = code(str=str, code=code, lang='python')
-                continue
-
-            str += line
-    return str
+            shutil.move(fullFileName, file)
+            # print(file)
 
 
 if __name__ == "__main__":

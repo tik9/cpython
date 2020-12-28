@@ -13,7 +13,7 @@ cod = ('', False, 'python')
 
 
 def main():
-    unittest.main()
+    # unittest.main()
 
     # print('sort', sortfiles(dir))
     # entries = (e for e in os.scandir(dir))
@@ -32,10 +32,6 @@ class TestHelper(unittest.TestCase):
     def test_match(self):
         self.assertEqual(does_string_match(file), False, 'Be false')
 
-    def test_header(self):
-        self.assertEqual(header(*head),
-                         ('\n\n#### 1. Hello', 2), 'Head Return')
-
     def test_code(self):
         self.assertEqual(code(*cod), ('\n```python\n', True))
 
@@ -48,22 +44,14 @@ def sortfiles(folder):
     return [e.path for e in entries]
 
 
-def code(str, code, lang=None):
+def code(code, lang=None):
     if not code:
-        str += f'\n```{lang}\n'
+        line= f'\n```{lang}\n'
         code = True
     else:
-        str += '```\n'
+        line= '```\n'
         code = False
-    return str, code
-
-
-def header(str, line, counter):
-    if line.startswith('?'):
-        line = line.replace('?', '')
-    str += f'\n\n#### {counter}. {line}'
-    counter += 1
-    return str, counter
+    return line, code
 
 
 def does_string_match(str):

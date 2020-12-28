@@ -64,14 +64,10 @@ def check():
         for name in files:
             if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
                 file = os.path.join(root, name)
-                # if counter == 3:sys.exit()
                 counter += 1
                 with open(file, 'r', encoding='UTF8') as f:
                     str = ''
                     str += list(islice(file, 10))
-
-                    # for line in f:
-                    #     str += line
 
                     if not '####' in str:
                         print(file)
@@ -84,7 +80,7 @@ def prep2():
     str = ''
     counter = 1
     answers = ['a)', 'b)', 'c)', 'd)']
-    code = False
+    codepart = False
     # with open(settings.mdDat, 'r') as f:
     with open(file, 'r') as f:
         for line in f:
@@ -96,14 +92,9 @@ def prep2():
                 str += line.replace(chara, '- []')
                 # print(line)
                 continue
-
-            if '```' in line and not code:
-                str += '\n```\n'
-                code = True
-                continue
-            if '```' in line and code:
-                str += '```\n'
-                code = False
+            
+            if '```' in line:
+                str, codepart = code(str, codepart, lang='python')
                 continue
 
             str += line
