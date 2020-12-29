@@ -1,4 +1,4 @@
-## Convert images
+## OCR convert images
 
 This repo serves for **batch processing all images of a folder to text**
 &nbsp;
@@ -15,9 +15,9 @@ This repo serves for **batch processing all images of a folder to text**
 
 1. Prepare the [settings](settings.py)
 2. [Choose the function](image.py#L149)
-    - Start with **image()**
+    - Start with image()
     - Convert [images to text](image.py#L22) in image()
-3. See the [helper functions](helper.py) with **Unittests**
+3. See the [helper functions](helper.py) with Unittests
 &nbsp;
 
 ### What is the repo used for

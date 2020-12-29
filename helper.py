@@ -13,7 +13,7 @@ cod = ('', False, 'python')
 
 
 def main():
-    # unittest.main()
+    unittest.main()
 
     # print('sort', sortfiles(dir))
     # entries = (e for e in os.scandir(dir))

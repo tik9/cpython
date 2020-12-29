@@ -9,15 +9,15 @@ readme = os.path.join(pl, 'README.md')
 def main():
     str = ''
 
-    # str = buildSettings(str)
+    str = buildSettings(str)
 
-    # with open(fileSettings, 'w') as f:
-    #     f.write(str)
-
-    str = buildReadme('')
-
-    with open(readme, 'w') as f:
+    with open(fileSettings, 'w') as f:
         f.write(str)
+
+    # str = buildReadme('')
+
+    # with open(readme, 'w') as f:
+        # f.write(str)
 
     # print(str)
 
@@ -35,17 +35,12 @@ def buildSettings(str):
                 continue
 
             if 'answers =' in line:
-                str += f'answers = arr.array(\'i\', [ ])\n'
+                line = f'answers = arr.array(\'i\', [ ])\n'
                 answerNextLine = True
-                continue
-            if 'mdFile =' in line:
-                str += f'mdFile =\'{file}.md\'\n'
-                # str += line
-                continue
+            if 'mdf =' in line:
+                line = f'mdf =\'{file}.md\'\n'
             if re.search(r'\]\n', line):
-                str += f',\'{lang}\'\n]'
-                # str += line
-                continue
+                line = f',\'{lang}\'\n]\n\n'
             str += line
     return str
 

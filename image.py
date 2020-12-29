@@ -5,23 +5,24 @@ import re
 
 from settings import *
 from helper import *
-
+import webbrowser
 
 def main():
     str = ''
 
-    # cp()
-    # str = image(str)
-    str, teststr = mdFormat(str)
+    # str = image(str,pics)
+    str, teststr = mdFormat(str,example)
     print(str, teststr)
     # with open(mdFile, 'w') as f:
-    # f.write(str)
+        # f.write(str)
+    
+    # webbrowser.open(mdFile)    
+    # os.startfile(mdFile)
 
 
-def image(str):
+def image(str,pics):
 
     files = sortfiles(pics)
-    # with open(mdFile, 'w') as f:
     for file in files:
         if file.lower().endswith(picType):
             img = Image.open(file)
@@ -30,10 +31,10 @@ def image(str):
     return str
 
 
-def mdFormat(str):
+def mdFormat(str,mdFile):
     teststr = '\n\n'
     with open(mdFile, 'r') as f:
-        qcounter = 1
+        qcounter = 0
         tmpqcount = 1
         totacount = 0
         acount = 0
@@ -48,14 +49,15 @@ def mdFormat(str):
             if line.startswith('?') or '?' in line:
                 if line.startswith('?'):
                     line = line.replace('?', '')
-                line = f'\n\n#### {qcounter}. {line}'
+                line = f'\n\n#### {qcounter+1}. {line}'
 
-                answer = answers[qcounter-1]
+                answer = answers[qcounter]
                 qcounter += 1
                 acount = 0
                 str += line
                 continue
 
+            # if qcounter == 2:break
             if '```' in line:
                 line, codepart = code(codepart, lang='python')
             if codepart or line.startswith('-'):
