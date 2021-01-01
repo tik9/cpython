@@ -1,30 +1,48 @@
 from settings import *
-import os
+from os import path, walk
 import re
 import sys
 import unittest
 
 
-str1 = 'COTest'
-file = 'unbenannt.png.png'
-dir = os.path.join(pics, 'bd')
-head = ('', '?Hello', 1)
-cod = ('', False, 'python')
-
-
 def main():
-    unittest.main()
+    # unittest.main()
 
-    # print('sort', sortfiles(dir))
-    # entries = (e for e in os.scandir(dir))
-    # print([e.path for e in entries])
+    print('gitSpecialDirs',gitSpecialDirs)
+
+
+def walklevel():
+    num_sep = home.count(path.sep)
+    for root, dirs, files in walk(home):
+        yield root, dirs, files
+        dirs.sort()
+        num_sep_this = root.count(path.sep)
+        if num_sep + 1 <= num_sep_this:
+            del dirs[:]
+
+
+def gitFirstLevel():
+    slist = []
+    excludedirs = ['.oh-my-zsh', 'cv', 'doks', 'lt']
+    
+    for root, dirs, files in walklevel():
+
+        if '.git' in dirs:
+            if not(any(excl in root for excl in excludedirs)):
+                # print(color.BOLD+root+color.END)
+                slist.append(root)
+    return slist
 
 
 class TestHelper(unittest.TestCase):
+    str1 = 'COTest'
+    file = 'unbenannt.png.png'
+    dir = path.join(pics, '')
+    cod = ('', False, 'python')
 
     def test_sortfiles(self):
         self.assertEqual(sortfiles(dir), ['C:\\Users\\User\\pictures\\bd\\unbenannt17.PNG',
-                                          'C:\\Users\\User\\pictures\\bd\\unbenannt22.PNG', 'C:\\Users\\User\\pictures\\bd\\unbenannt1.txt'], 'Sort Dir')
+                                          'C:\\Users\\User\\pictures\\bd\\unbenannt22.PNG'], 'Sort Dir')
 
     def test_needle(self):
         self.assertEqual(needles(str1), 'Test', "Should remove")
@@ -46,10 +64,10 @@ def sortfiles(folder):
 
 def code(code, lang=None):
     if not code:
-        line= f'\n```{lang}\n'
+        line = f'\n```{lang}\n'
         code = True
     else:
-        line= '```\n'
+        line = '```\n'
         code = False
     return line, code
 

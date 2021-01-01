@@ -3,7 +3,7 @@ import sys
 from settings import *
 
 
-readme = os.path.join(pl, 'README.md')
+readme = os.path.join(pl, readme)
 
 
 def main():
