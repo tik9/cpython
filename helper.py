@@ -1,14 +1,73 @@
 from settings import *
-from os import path, walk
+from os import path, scandir, walk
 import re
 import sys
 import unittest
+import subprocess
 
 
 def main():
-    # unittest.main()
+    # print(tail(example))
+    listA = countqa(prodMd)
 
-    print('gitSpecialDirs',gitSpecialDirs)
+    # defexample()
+    print(listA)
+    print(tail(prodMd), len(listA))
+
+
+def countqa(mdFile):
+    countATotal = []
+    tailf = tail(mdFile)
+
+    with open(mdFile, 'r') as f:
+        # d=deque(f,maxlen=1)
+        qcounter = 0
+        acount = 0
+        for line in f:
+
+            if line in '\n' or line in ' \n':
+                continue
+
+            if '####' in line:
+
+                qcounter += 1
+                if qcounter == 2:
+                    countATotal.append(acount)
+                elif qcounter > 1:
+                    countATotal.append(acount)
+
+                acount = 0
+                continue
+            if '- []' in line or '- [x] ' in line:
+                acount += 1
+                if line == tailf:
+                    countATotal.append(acount)
+
+    return countATotal
+
+
+def tail2():
+    with open(example) as f:
+        print(f.readlines())
+    proc = subprocess.Popen(['tail', '-n', 1, example], stdout=subprocess.PIPE)
+    lines = proc.stdout.readlines()
+    return lines[:, -offset]
+
+
+def tail(file):
+    n = 1
+    with open(file) as f:
+        pos, lines = 2, []
+        while len(lines) <= n:
+            try:
+                f.seek(-pos, 2)
+            except IOError:
+                f.seek(0)
+                break
+            finally:
+                lines = list(f)
+            pos *= 2
+    return ''.join(lines[-n])
 
 
 def walklevel():
@@ -23,8 +82,8 @@ def walklevel():
 
 def gitFirstLevel():
     slist = []
-    excludedirs = ['.oh-my-zsh', 'cv', 'doks', 'lt']
-    
+    excludedirs = ['.oh-my-zsh', 'doks', 'lt']
+
     for root, dirs, files in walklevel():
 
         if '.git' in dirs:
@@ -34,30 +93,24 @@ def gitFirstLevel():
     return slist
 
 
-class TestHelper(unittest.TestCase):
-    str1 = 'COTest'
-    file = 'unbenannt.png.png'
-    dir = path.join(pics, '')
-    cod = ('', False, 'python')
+def lineAnswer(line, answer, acount):
+    if acount == answer:
+        line = f'- [x] {line}'
+    else:
+        line = f'- [] {line}'
+    return line
 
-    def test_sortfiles(self):
-        self.assertEqual(sortfiles(dir), ['C:\\Users\\User\\pictures\\bd\\unbenannt17.PNG',
-                                          'C:\\Users\\User\\pictures\\bd\\unbenannt22.PNG'], 'Sort Dir')
 
-    def test_needle(self):
-        self.assertEqual(needles(str1), 'Test', "Should remove")
-
-    def test_match(self):
-        self.assertEqual(does_string_match(file), False, 'Be false')
-
-    def test_code(self):
-        self.assertEqual(code(*cod), ('\n```python\n', True))
+def defexample():
+    with open(example, 'r') as f:
+        line = f.readline()
+    print(line)
 
 
 def sortfiles(folder):
     # entries = sorted((e for e in os.scandir(folder)),
     #  key=lambda f: f.name)
-    entries = sorted((e for e in os.scandir(folder)
+    entries = sorted((e for e in scandir(folder)
                       if e.is_file()), key=lambda e: e.stat().st_mtime)
     return [e.path for e in entries]
 

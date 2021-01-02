@@ -1,13 +1,14 @@
 from pathlib import Path
 from os import path
-import array as arr
 import re
 import subprocess
+
 
 class color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
+
 
 home = str(Path.home())
 
@@ -18,23 +19,23 @@ powershell = path.join(home, config, 'powershell')
 user_code = 'Code/User'
 user = path.join('C:/Users/User/AppData/Roaming', user_code)
 user = path.join(home, config, user_code)
-# gitSpecialDirs = [custom, powershell,user]
-gitSpecialDirs = [user]
+gitSpecialDirs = [custom, powershell, user]
 
-
-answers = arr.array('i', [1, 2
-                          ])
+answers = [2, 1, 2, 1, 1, 3, 1, 3,
+                          1, 4, 3, 2, 1, 2, 1, 2, 4, 3]
 picType = '.png'
+picType = '.jpg'
 fileSettings = __file__
 pic = 'pictures'
 pic = 'Bilder'
 
-example = 'example.md'
-mdf = ''
+example = path.join(path.dirname(fileSettings),'example.md')
+mdf = 'python_clean_data.md'
 plu = path.join(home, 'pluralsight-skill-tests')
-mdFile = path.join(plu, mdf)
+prodMd = path.join(plu, mdf)
 pics = path.join(home, pic)
-readme='README.md'
+pics = home
+readme = 'README.md'
 
 langs = [
     'Angular',
@@ -49,16 +50,14 @@ langs = [
     'Powershell',
     'Python Core',
     'Python Data Analysis',
-    'Python applied Data Mining', 'Python Web Scraping', 'Python Exploratory Data Analysis', 'Python Exploratory Data Analysis'
+    'Python applied Data Mining', 'Python Web Scraping', 'Python Exploratory Data Analysis', 'Python Clean Data'
 ]
 
 
 def main():
     #  'gitmanager'
-    print('home', home, gitSpecialDirs)
-    # subprocess.run('ls',pics)
-    # from gitdir import commit
-    # commit()
+    print('home', path.dirname(fileSettings))
+    # subprocess.run(['ls', pics])
 
 
 if __name__ == "__main__":

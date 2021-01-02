@@ -1,23 +1,19 @@
 from PIL import Image
-import os
 import pytesseract
-import re
-
+import os
 from settings import *
 from helper import *
-import webbrowser
+
 
 def main():
     str = ''
 
     # str = image(str,pics)
-    str, teststr = mdFormat(str,example)
-    print(str, teststr)
-    # with open(mdFile, 'w') as f:
-        # f.write(str)
+    str = mdFormat(str,prodMd)
+    print(str)
+
+    # with open(prodMd, 'w') as f:f.write(str)
     
-    # webbrowser.open(mdFile)    
-    # os.startfile(mdFile)
 
 
 def image(str,pics):
@@ -32,11 +28,9 @@ def image(str,pics):
 
 
 def mdFormat(str,mdFile):
-    teststr = '\n\n'
+
     with open(mdFile, 'r') as f:
         qcounter = 0
-        tmpqcount = 1
-        totacount = 0
         acount = 0
         codepart = False
         answer = 0
@@ -53,30 +47,23 @@ def mdFormat(str,mdFile):
 
                 answer = answers[qcounter]
                 qcounter += 1
+                
                 acount = 0
                 str += line
                 continue
 
-            # if qcounter == 2:break
             if '```' in line:
                 line, codepart = code(codepart, lang='python')
-            if codepart or line.startswith('-'):
+            elif codepart or line.startswith('-'):
                 if line.startswith('-'):
                     line = line.replace('-', '')
-            else:
+            else:                
                 acount += 1
-                totacount += 1
-                if acount == answer:
-                    line = f'- [x] {line}'
-                else:
-                    line = f'- [] {line}'
 
-                if qcounter > tmpqcount:
-                    teststr += f'question: {tmpqcount}, answers: {totacount}. '
-                    tmpqcount = qcounter
-                    totacount = 0
+                line=lineAnswer(line,answer,acount)
+                
             str += line
-    return str, teststr
+    return str
 
 
 if __name__ == '__main__':
