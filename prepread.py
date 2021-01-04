@@ -1,6 +1,8 @@
+import re
 import os
 import sys
 from settings import *
+import glob
 
 readme = os.path.join(plu, readme)
 
@@ -12,17 +14,21 @@ def main():
 
     # with open(fileSettings, 'w') as f:f.write(str)
 
-    str = buildReadme('')
+    # str = buildReadme('')
 
-    with open(readme, 'w') as f: f.write(str)
+    # with open(readme, 'w') as f: f.write(str)
 
     # print(str)
 
 
 def buildSettings(str):
-    lang = sys.argv[1:] or ['Python', 'Clean Data']
+    files = glob.glob(f'{pics}/*{picType}')
+    for f in files:
+        # os.remove(f)
+        print(f)
+
+    lang = sys.argv[1:] or ['Python', 'Data Visualization']
     lang = ' '.join(lang)
-    # print('ft', ftype)
     file = lang.lower().replace(' ', '_')
     answerNextLine = False
     with open(fileSettings, 'r') as f:
@@ -32,12 +38,12 @@ def buildSettings(str):
                 continue
 
             if 'answers =' in line:
-                line = f'answers = arr.array(\'i\', [ ])\n'
+                line = f'answers = [ ]\n'
                 answerNextLine = True
             if 'mdf =' in line:
                 line = f'mdf =\'{file}.md\'\n'
             if re.match(r']\n', line):
-            # if line in '\n]\n':
+                # if line in '\n]\n':
                 line = f',\'{lang}\'\n]\n'
             str += line
     return str

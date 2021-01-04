@@ -8,12 +8,49 @@ import subprocess
 
 def main():
     # print(tail(example))
-    listA = countqa(prodMd)
+    listA = countqa2(example)
 
-    # defexample()
     print(listA)
-    print(tail(prodMd), len(listA))
+    # print(tail(prodMd), len(listA))
 
+def countqa3():
+    txt='''\
+    #### Question 1?
+
+    This is the answer 1
+
+    second answer
+
+    #### Another question 2?
+
+    Another answer 2
+
+    #### Question 3?
+
+    Answer 1
+
+    Answer 2
+
+    The Answer 3'''
+
+    pat=re.compile(r'^####.*$\n([\s\S]*?)(?=^####|\Z)', flags=re.M)
+
+    [sum(bool(line.strip()) for line in m.group(1).splitlines()) for m in pat.finditer(txt)]
+
+
+def countqa2(mdFile):
+    with open(mdFile, 'r') as f:
+        file_content = f.read()
+    result = []
+
+    for line in file_content.split('\n'):
+        line = line.strip()
+        if line: # empty string is False
+            if line.startswith('####'):
+                result.append(0)
+            elif result: # empty list is also False
+                result[-1] += 1
+    return result
 
 def countqa(mdFile):
     countATotal = []
@@ -82,7 +119,8 @@ def walklevel():
 
 def gitFirstLevel():
     slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'lt']
+    # excludedirs = ['.oh-my-zsh', 'doks', 'lt']
+    excludedirs = ['.oh-my-zsh', 'doks', 'lt','cv','further-skill-tests','ghpage','my-github-projects','git','ml','pluralsight-skill-tests']
 
     for root, dirs, files in walklevel():
 
@@ -100,11 +138,6 @@ def lineAnswer(line, answer, acount):
         line = f'- [] {line}'
     return line
 
-
-def defexample():
-    with open(example, 'r') as f:
-        line = f.readline()
-    print(line)
 
 
 def sortfiles(folder):
@@ -127,7 +160,7 @@ def code(code, lang=None):
 
 def does_string_match(str):
     # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match('^unbenannt\.png\d{1,2}\.png$', str)
+    mat = re.match(f'^{picroot}\.{picType}\d{{1,2}}$', str)
     return mat is not None
 
 
