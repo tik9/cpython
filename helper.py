@@ -4,17 +4,32 @@ import re
 import sys
 import unittest
 import subprocess
+import fnmatch
 
 
 def main():
     # print(tail(example))
     listA = countqa2(example)
 
-    print(listA)
+    # print(listA)
     # print(tail(prodMd), len(listA))
+    print(find())
+
+
+def find():
+    str = '</pre>'
+    # str = '[12]'
+    link = re.compile(r'\[([^\]]+)\]')
+    link = re.compile(r'<[/]?pre>')
+    # res = link.findall(str)
+
+    regex = re.match('<[/]?pre>', str)
+    # return regex is not None
+    return res
+
 
 def countqa3():
-    txt='''\
+    txt = '''\
     #### Question 1?
 
     This is the answer 1
@@ -33,24 +48,25 @@ def countqa3():
 
     The Answer 3'''
 
-    pat=re.compile(r'^####.*$\n([\s\S]*?)(?=^####|\Z)', flags=re.M)
+    pat = re.compile(r'^####.*$\n([\s\S]*?)(?=^####|\Z)', flags=re.M)
 
-    [sum(bool(line.strip()) for line in m.group(1).splitlines()) for m in pat.finditer(txt)]
+    [sum(bool(line.strip()) for line in m.group(1).splitlines())
+     for m in pat.finditer(txt)]
 
 
 def countqa2(mdFile):
-    with open(mdFile, 'r') as f:
-        file_content = f.read()
     result = []
+    with open(mdFile, 'r') as f:
 
-    for line in file_content.split('\n'):
-        line = line.strip()
-        if line: # empty string is False
-            if line.startswith('####'):
-                result.append(0)
-            elif result: # empty list is also False
-                result[-1] += 1
+        for line in f:
+            line = line.strip()
+            if line:  # empty string is False
+                if line.startswith('####'):
+                    result.append(0)
+                elif result:  # empty list is also False
+                    result[-1] += 1
     return result
+
 
 def countqa(mdFile):
     countATotal = []
@@ -119,8 +135,8 @@ def walklevel():
 
 def gitFirstLevel():
     slist = []
-    # excludedirs = ['.oh-my-zsh', 'doks', 'lt']
-    excludedirs = ['.oh-my-zsh', 'doks', 'lt','cv','further-skill-tests','ghpage','my-github-projects','git','ml','pluralsight-skill-tests']
+    excludedirs = ['.oh-my-zsh', 'doks', 'git']
+    # excludedirs = ['.oh-my-zsh', 'doks', 'lt','cv','further-skill-tests','ghpage','my-github-projects','git','ml','pluralsight-skill-tests']
 
     for root, dirs, files in walklevel():
 
@@ -137,7 +153,6 @@ def lineAnswer(line, answer, acount):
     else:
         line = f'- [] {line}'
     return line
-
 
 
 def sortfiles(folder):
@@ -158,9 +173,11 @@ def code(code, lang=None):
     return line, code
 
 
-def does_string_match(str):
+def string_match(search,str):
     # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    mat = re.match(f'^{picroot}\.{picType}\d{{1,2}}$', str)
+    # mat = re.match(f'^{picroot}\.{picType}\d{{1,2}}$', str)
+    mat = re.match(search, str)
+
     return mat is not None
 
 

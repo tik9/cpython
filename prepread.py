@@ -4,20 +4,25 @@ import sys
 from settings import *
 import glob
 
+
 readme = os.path.join(plu, readme)
+
+lang = sys.argv[1:] or ['Python', 'Data Visualization']
+lang = ' '.join(lang)
+file = lang.lower().replace(' ', '_')
 
 
 def main():
     str = ''
 
-    str = buildSettings(str)
+    # str = buildSettings(str)
 
     # with open(fileSettings, 'w') as f:f.write(str)
 
-    # str = buildReadme('')
+    str = buildReadme('')
 
-    # with open(readme, 'w') as f: f.write(str)
-
+    with open(readme, 'w') as f: f.write(str)
+    # with open(readme, 'r') as f:print(f.read())
     # print(str)
 
 
@@ -27,9 +32,6 @@ def buildSettings(str):
         # os.remove(f)
         print(f)
 
-    lang = sys.argv[1:] or ['Python', 'Data Visualization']
-    lang = ' '.join(lang)
-    file = lang.lower().replace(' ', '_')
     answerNextLine = False
     with open(fileSettings, 'r') as f:
         for line in f:
@@ -42,26 +44,18 @@ def buildSettings(str):
                 answerNextLine = True
             if 'mdf =' in line:
                 line = f'mdf =\'{file}.md\'\n'
-            if re.match(r']\n', line):
-                # if line in '\n]\n':
-                line = f',\'{lang}\'\n]\n'
+
             str += line
     return str
 
 
 def buildReadme(str):
 
-    str = '## Pluralsight-quiz-questions\n\n<br><br>This repository does not pretend to give you all answers for [Pluralsight Skill questions](https://app.pluralsight.com), rather it is a starting guide to help you prepare for the skills quiz and to know what to expect.<br><br>\n\n'
-
-    str += '### Table of Contents\n\n'
-
-    for item in langs:
-        mdFile = item.lower().replace(' ', '_')
-
-        str += f'- [{item}]({mdFile}.md)\n'
-
-    str += '\n<br>\n\n### Going further\n\n- [Getting Started](https://github.com/tik9/tesseractToMarkdown) with Tesseract and Python\n\n- [More Skill tests not related to Pluralsight](https://github.com/tik9/further-skill-tests)'
-
+    with open(readme, 'r') as f:
+        for line in f:
+            if '<!---' in line:
+                line = f'- [{lang}]({file}.md)\n{line}'
+            str += line
     return str
 
 

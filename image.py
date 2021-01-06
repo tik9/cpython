@@ -8,11 +8,11 @@ from helper import *
 def main():
     str = ''
 
-    str = image(str,pics)
-    # str = mdFormat(str,prodMd)
+    # str = image(str,pics)
+    str = mdFormat(str,prodMd)
     print(str)
 
-    with open(prodMd, 'w') as f:f.write(str)
+    # with open(prodMd, 'w') as f:f.write(str)
     
 
 
@@ -43,7 +43,7 @@ def mdFormat(str,mdFile):
             if line.startswith('?') or '?' in line:
                 if line.startswith('?'):
                     line = line.replace('?', '')
-                line = f'\n\n#### {qcounter+1}. {line}'
+                line = f'\n\n#### {qcounter+1}. {line[3:]}'
 
                 answer = answers[qcounter]
                 qcounter += 1
@@ -53,7 +53,8 @@ def mdFormat(str,mdFile):
                 continue
 
             if '```' in line:
-                line, codepart = code(codepart, lang='python')
+                # line, codepart = code(codepart, lang='python')
+                line, codepart = code(codepart, lang=language)
             elif codepart or line.startswith('-'):
                 if line.startswith('-'):
                     line = line.replace('-', '')

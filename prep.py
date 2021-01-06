@@ -21,7 +21,7 @@ def main():
 def move():
     for file in listdir(pics):
         fullFileName = path.join(pics, file)
-        if does_string_match(file.lower()):
+        if re.match(rf'unbenannt\.{picType}\d{{splitter}}\.{picType}$', file.lower()):
             # unbenannt.png28.png
             # screen01.jpg26
             str = file.split('.')

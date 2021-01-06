@@ -3,14 +3,61 @@ from helper import *
 from itertools import islice
 import sys
 import os
+import re
 
 
 def main():
-    # random()
-    # str = check()
-    # print(str)
-    # with open(settings.mdFile, 'w') as f:f.write(str)
-    trandom()
+    str = ''
+    # str = prep(str)
+    # str = prep(str)
+    file,str = check()
+    print(str)
+    # with open(prodMd, 'w') as f:
+        # f.write(str)
+
+# re.sub(r'\n+', '\n',x)
+
+
+def prep(str):
+    # answers = ['a)', 'b)', 'c)', 'd)']
+    codepart = False
+    # with open(settings.mdDat, 'r') as f:
+    with open(prodMd, 'r') as f:
+        for line in f:
+
+            line = line.lstrip()
+
+            # if line.startswith('Q'):line = f'\n\n#### {line}'
+            # if any(line.startswith(answers) for answer in answers):
+            if line.startswith('-'):
+                chara = line.lstrip()[:2]
+                # line = line.replace(chara, '- [] ')
+                # print(line)
+            if line.startswith('👍'):
+                chara = line.lstrip()[:3]
+                # line = line.replace(chara, '- [x]')
+            if '####' in line:
+                line = f'\n\n{line}'
+            if '```' in line:
+                line, codepart = code(codepart, lang=language)
+
+            str += line
+        return str
+
+
+def rand(str):
+    # 👍
+    # excl = ['<br/>', r'^<[/]?pre>$']
+    with open(prodMd, 'r') as f:
+        for line in f:
+            # for ex in excl:
+            # print(ex, line)
+            if re.match(r'^<[/]?pre>$', line) or re.match('.*<br/>', line):
+                # print(line)
+                continue
+
+            str += line
+    return str
 
 
 def trandom():
@@ -51,54 +98,26 @@ def random():
 
 
 def check():
-    folder = os.path.join(homew, 'lt')
 
     excludeDir = ['.git', 'test']
     excludeFile = ['readme.md', 'contributing.md']
-    counter = 1
     contains = ['####', '- [ ]']
-    for root, dirs, files in os.walk(folder, topdown=True):
+    filelist=''
+    for root, dirs, files in os.walk(lt, topdown=True):
         dirs[:] = [d for d in dirs if d not in excludeDir]
 
         dirs.sort()
         for name in files:
             if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
                 file = os.path.join(root, name)
-                counter += 1
                 with open(file, 'r', encoding='UTF8') as f:
                     str = ''
                     str += list(islice(file, 10))
 
                     if not '####' in str:
-                        print(file)
-                        # prep2(file)
+                        filelist+=file
 
-    return str
-
-
-def prep2():
-    str = ''
-    counter = 1
-    answers = ['a)', 'b)', 'c)', 'd)']
-    codepart = False
-    # with open(settings.mdDat, 'r') as f:
-    with open(file, 'r') as f:
-        for line in f:
-            if line.startswith('Q'):
-                str += f'#### {line}'
-                continue
-            if any(answer in line for answer in answers):
-                chara = line.lstrip()[:2]
-                str += line.replace(chara, '- []')
-                # print(line)
-                continue
-            
-            if '```' in line:
-                str, codepart = code(str, codepart, lang='python')
-                continue
-
-            str += line
-        return str
+    return file,str
 
 
 if __name__ == "__main__":

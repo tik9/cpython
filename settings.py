@@ -17,12 +17,13 @@ user_code = 'Code/User'
 user = path.join(home, config, user_code)
 # user = path.join(home, 'AppData/Roaming', user_code)
 
-home = '/home/tk'
+home = path.dirname(path.dirname(__file__))
+
 custom = path.join(home, '.oh-my-zsh', 'custom')
 
 
-gitSpecialDirs = []
-# gitSpecialDirs = [custom, powershell, user]
+# gitSpecialDirs = []
+gitSpecialDirs = [custom, powershell]
 
 
 answers = list('224333113444123433')
@@ -40,25 +41,16 @@ picroot = 'screen01'
 
 example = path.join(path.dirname(fileSettings), 'example.md')
 mdf = 'python_data_visualization.md'
+mdf='django/django-quiz.md'
+mdf='AngularJS/angularjs-quiz.md'
 plu = path.join(home, 'pluralsight-skill-tests')
+lt = path.join(home, 'lt')
 prodMd = path.join(plu, mdf)
+
 readme = 'README.md'
 
-langs = [
-    'Angular',
-    'AngularJs',
-    'Aws Big Data',
-    'Aws Machine Learning',
-    'Building Websites',
-    'Building Web Apps with React',
-    'Java',
-    'Javascript',
-    'Mysql',
-    'Powershell',
-    'Python Core',
-    'Python Data Analysis',
-    'Python applied Data Mining', 'Python Web Scraping', 'Python Exploratory Data Analysis', 'Python Clean Data', 'Python Data Visualization'
-]
+language='python'
+language='javascript'
 
 
 def main():
