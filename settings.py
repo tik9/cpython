@@ -26,12 +26,12 @@ custom = path.join(home, '.oh-my-zsh', 'custom')
 gitSpecialDirs = [custom, powershell]
 
 
-answers = list('224333113444123433')
-# answers = ''.join(n for n in answers)
+ans_python_data_visual = list('224333113444123433')
+answers=list()
 
-picType = 'png'
-picType = 'jpg'
-fileSettings = __file__
+pic_type = 'png'
+pic_type = 'jpg'
+file_settings = __file__
 pic = 'pictures'
 pic = 'Bilder'
 pics = path.join(home, pic)
@@ -39,18 +39,18 @@ pics = home
 picroot = 'unbenannt'
 picroot = 'screen01'
 
-example = path.join(path.dirname(fileSettings), 'example.md')
-mdf = 'python_data_visualization.md'
-mdf='django/django-quiz.md'
-mdf='AngularJS/angularjs-quiz.md'
+example = path.join(path.dirname(file_settings), 'example.md')
+mdf ='python_data_in_interpreting.md'
+# mdf='nosql/nosql-quiz.md'
 plu = path.join(home, 'pluralsight-skill-tests')
-lt = path.join(home, 'lt')
+# lt = path.join(home, 'lt')
+prodMd = path.join(lt, mdf)
 prodMd = path.join(plu, mdf)
 
 readme = 'README.md'
 
 language='python'
-language='javascript'
+language='nosql'
 
 
 def main():

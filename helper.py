@@ -147,7 +147,7 @@ def gitFirstLevel():
     return slist
 
 
-def lineAnswer(line, answer, acount):
+def line_answer(line, answer, acount):
     if acount == answer:
         line = f'- [x] {line}'
     else:
@@ -155,7 +155,7 @@ def lineAnswer(line, answer, acount):
     return line
 
 
-def sortfiles(folder):
+def sort_files(folder):
     # entries = sorted((e for e in os.scandir(folder)),
     #  key=lambda f: f.name)
     entries = sorted((e for e in scandir(folder)

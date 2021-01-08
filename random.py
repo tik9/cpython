@@ -8,41 +8,63 @@ import re
 
 def main():
     str = ''
-    # str = prep(str)
-    # str = prep(str)
-    file,str = check()
+    str = prep(str)
+    # file, content = check()
     print(str)
-    # with open(prodMd, 'w') as f:
-        # f.write(str)
-
-# re.sub(r'\n+', '\n',x)
+    # print(file,content)
+    with open(prodMd, 'w') as f:
+        f.write(str)
 
 
 def prep(str):
     # answers = ['a)', 'b)', 'c)', 'd)']
+    answers = ['1.', '2.', '3.', '4.']
     codepart = False
     # with open(settings.mdDat, 'r') as f:
     with open(prodMd, 'r') as f:
         for line in f:
 
-            line = line.lstrip()
+            # line = line.lstrip()
 
             # if line.startswith('Q'):line = f'\n\n#### {line}'
-            # if any(line.startswith(answers) for answer in answers):
-            if line.startswith('-'):
-                chara = line.lstrip()[:2]
-                # line = line.replace(chara, '- [] ')
-                # print(line)
-            if line.startswith('👍'):
-                chara = line.lstrip()[:3]
-                # line = line.replace(chara, '- [x]')
-            if '####' in line:
-                line = f'\n\n{line}'
-            if '```' in line:
-                line, codepart = code(codepart, lang=language)
+            # if any(line.startswith(answer) for answer in answers):
+            #     # if line.startswith('-'):
+            #     chara = line.lstrip()[:3]
+            #     if 'Correct'.upper() in line:
+            #         line = line.replace(
+            #             chara, '- [x] ').replace(' <<<<<--CORRECT ', '')
+            #     else:
+            #         line = line.replace(chara, '- [] ')
+            # if 'Q16.' in line:break
+            if line.startswith('Q'):line = f'\n\n#### {line}'
+            # if '```' in line:line, codepart = code(codepart, lang=language)
 
             str += line
         return str
+
+
+def check():
+
+    excludeDir = ['.git', 'test']
+    excludeFile = ['readme.md', 'contributing.md']
+    contains = ['####', '- [ ]']
+    filelist = []
+    content = []
+    for root, dirs, files in os.walk(lt, topdown=True):
+        dirs[:] = [d for d in dirs if d not in excludeDir]
+
+        dirs.sort()
+        for name in files:
+            if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
+                file = os.path.join(root, name)
+                with open(file, 'r', encoding='UTF8') as f:
+                    str_list = list(islice(f, 5))
+                    # print(str_list)
+                    if not any('####' in s for s in str_list):
+                        content.append(str_list)
+                        filelist.append(file)
+
+    return filelist, content
 
 
 def rand(str):
@@ -95,29 +117,6 @@ def random():
                 continue
             str += line.replace('\n', '')
         return str
-
-
-def check():
-
-    excludeDir = ['.git', 'test']
-    excludeFile = ['readme.md', 'contributing.md']
-    contains = ['####', '- [ ]']
-    filelist=''
-    for root, dirs, files in os.walk(lt, topdown=True):
-        dirs[:] = [d for d in dirs if d not in excludeDir]
-
-        dirs.sort()
-        for name in files:
-            if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
-                file = os.path.join(root, name)
-                with open(file, 'r', encoding='UTF8') as f:
-                    str = ''
-                    str += list(islice(file, 10))
-
-                    if not '####' in str:
-                        filelist+=file
-
-    return file,str
 
 
 if __name__ == "__main__":

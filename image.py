@@ -8,8 +8,8 @@ from helper import *
 def main():
     str = ''
 
-    # str = image(str,pics)
-    str = mdFormat(str,prodMd)
+    str = image(str,pics)
+    # str = md_format(str,prodMd)
     print(str)
 
     # with open(prodMd, 'w') as f:f.write(str)
@@ -18,7 +18,7 @@ def main():
 
 def image(str,pics):
 
-    files = sortfiles(pics)
+    files = sort_files(pics)
     for file in files:
         if file.lower().endswith(f'.{picType}'):
             img = Image.open(file)
@@ -27,7 +27,7 @@ def image(str,pics):
     return str
 
 
-def mdFormat(str,mdFile):
+def md_format(str,mdFile):
 
     with open(mdFile, 'r') as f:
         qcounter = 0
@@ -43,7 +43,7 @@ def mdFormat(str,mdFile):
             if line.startswith('?') or '?' in line:
                 if line.startswith('?'):
                     line = line.replace('?', '')
-                line = f'\n\n#### {qcounter+1}. {line[3:]}'
+                line = f'\n\n#### {qcounter+1}. {line}'
 
                 answer = answers[qcounter]
                 qcounter += 1
@@ -53,7 +53,6 @@ def mdFormat(str,mdFile):
                 continue
 
             if '```' in line:
-                # line, codepart = code(codepart, lang='python')
                 line, codepart = code(codepart, lang=language)
             elif codepart or line.startswith('-'):
                 if line.startswith('-'):
@@ -61,7 +60,7 @@ def mdFormat(str,mdFile):
             else:                
                 acount += 1
 
-                line=lineAnswer(line,answer,acount)
+                line=line_answer(line,answer,acount)
                 
             str += line
     return str
