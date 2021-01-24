@@ -13,19 +13,7 @@ def main():
 
     # print(listA)
     # print(tail(prodMd), len(listA))
-    print(find())
-
-
-def find():
-    str = '</pre>'
-    # str = '[12]'
-    link = re.compile(r'\[([^\]]+)\]')
-    link = re.compile(r'<[/]?pre>')
-    # res = link.findall(str)
-
-    regex = re.match('<[/]?pre>', str)
-    # return regex is not None
-    return res
+    print(git_first_level())
 
 
 def countqa3():
@@ -133,9 +121,9 @@ def walklevel():
             del dirs[:]
 
 
-def gitFirstLevel():
+def git_first_level():
     slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'git']
+    excludedirs = ['.oh-my-zsh', 'doks', 'git','lt']
     # excludedirs = ['.oh-my-zsh', 'doks', 'lt','cv','further-skill-tests','ghpage','my-github-projects','git','ml','pluralsight-skill-tests']
 
     for root, dirs, files in walklevel():
@@ -174,9 +162,10 @@ def code(code, lang=None):
 
 
 def string_match(search,str):
-    # mat = re.match(rf'unbenannt\.png\d{{splitter}}\.png$', str)
-    # mat = re.match(f'^{picroot}\.{picType}\d{{1,2}}$', str)
-    mat = re.match(search, str)
+    # <[/]?pre>
+    # mat = re.findall(rf'unbenannt\.png\d{{splitter}}\.png$', str)
+    # mat = re.findall(f'^{picroot}\.{picType}\d{{1,2}}$', str)
+    mat = re.findall(search, str)
 
     return mat is not None
 

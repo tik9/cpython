@@ -8,11 +8,11 @@ from helper import *
 def main():
     str = ''
 
-    str = image(str,pics)
-    # str = md_format(str,prodMd)
+    # str = image(str,pics)
+    str = md_format(str,prod_md)
     print(str)
 
-    # with open(prodMd, 'w') as f:f.write(str)
+    # with open(prod_md, 'w') as f:f.write(str)
     
 
 
@@ -20,16 +20,16 @@ def image(str,pics):
 
     files = sort_files(pics)
     for file in files:
-        if file.lower().endswith(f'.{picType}'):
+        if file.lower().endswith(f'.{pic_type}'):
             img = Image.open(file)
             str += pytesseract.image_to_string(img)
             # print(file)
     return str
 
 
-def md_format(str,mdFile):
+def md_format(str,md_file):
 
-    with open(mdFile, 'r') as f:
+    with open(md_file, 'r') as f:
         qcounter = 0
         acount = 0
         codepart = False

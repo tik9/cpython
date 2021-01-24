@@ -17,9 +17,9 @@ def main():
 
     str = buildSettings(str)
 
-    with open(fileSettings, 'w') as f:f.write(str)
+    # with open(fileSettings, 'w') as f:f.write(str)
 
-    # str = buildReadme('')
+    str = buildReadme('')
 
     # with open(readme, 'w') as f: f.write(str)
     # with open(readme, 'r') as f:print(f.read())
@@ -27,10 +27,6 @@ def main():
 
 
 def buildSettings(str):
-    files = glob.glob(f'{pics}/*{picType}')
-    for f in files:
-        os.remove(f)
-        print(f)
 
     with open(fileSettings, 'r') as f:
         for line in f:
@@ -52,8 +48,8 @@ def buildReadme(str):
                 langs = True
                 line = f'{line}\n\nLanguage|Answers\n-|-'
 
-            if line.startswith('-') and langs:
-                line = line.replace('\n', '')[2:] + '|ok\n'
+            if line.startswith('[') and langs:
+                line = line[:-2] + '|18 answers\n'
 
             if '<!---' in line:
                 # line = f'- [{lang}]({file}.md)\n{line}'

@@ -9,6 +9,7 @@ class color:
     END = '\033[0m'
 
 
+
 home = str(Path.home())
 config = '.config'
 powershell = path.join(home, config, 'powershell')
@@ -21,9 +22,7 @@ home = path.dirname(path.dirname(__file__))
 
 custom = path.join(home, '.oh-my-zsh', 'custom')
 
-
-# gitSpecialDirs = []
-gitSpecialDirs = [custom, powershell]
+git_special_dirs = [custom, powershell]
 
 
 ans_python_data_visual = list('224333113444123433')
@@ -36,16 +35,13 @@ pic = 'pictures'
 pic = 'Bilder'
 pics = path.join(home, pic)
 pics = home
-picroot = 'unbenannt'
-picroot = 'screen01'
 
 example = path.join(path.dirname(file_settings), 'example.md')
-mdf ='python_data_in_interpreting.md'
-# mdf='nosql/nosql-quiz.md'
-plu = path.join(home, 'pluralsight-skill-tests')
-# lt = path.join(home, 'lt')
-prodMd = path.join(lt, mdf)
-prodMd = path.join(plu, mdf)
+mdf='outlook.md'
+mdf='skills.md'
+folder=['further-skill-tests','lt','pluralsight-skill-tests']
+pa = path.join(home, folder[0])
+prod_md = path.join(pa, mdf)
 
 readme = 'README.md'
 
@@ -54,7 +50,7 @@ language='nosql'
 
 
 def main():
-    print('answer', answers)
+    print('prod', prod_md)
     # subprocess.run(['ls', pics])
 
 
