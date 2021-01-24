@@ -8,12 +8,26 @@ import re
 
 def main():
     str = ''
-    str = prep(str)
+    str = rand(str)
     # file, content = check()
-    print(str)
-    # print(file,content)
-    with open(prodMd, 'w') as f:
-        f.write(str)
+    # print(str)
+    # print(file)
+    with open(prod_md, 'w') as f:f.write(str)
+
+
+def rand(str):
+    # 👍
+    # excl = ['<br/>', r'^<[/]?pre>$']
+    with open(prod_md, 'r') as f:
+        for line in f:
+            # m = re.search('Test (.?): Any language', line)
+            line = re.sub('^Test (.?): Any language',r'Q\1', line)
+            line = re.sub('^Test (\d{1,2}):',r'Q\1', line)
+            line=re.sub('(/20\))$',r'\1\n',line)
+                # print(m.group(1))
+
+            str += line
+    return str
 
 
 def prep(str):
@@ -24,9 +38,8 @@ def prep(str):
     with open(prodMd, 'r') as f:
         for line in f:
 
-            # line = line.lstrip()
+            line = line.lstrip()
 
-            # if line.startswith('Q'):line = f'\n\n#### {line}'
             # if any(line.startswith(answer) for answer in answers):
             #     # if line.startswith('-'):
             #     chara = line.lstrip()[:3]
@@ -36,7 +49,8 @@ def prep(str):
             #     else:
             #         line = line.replace(chara, '- [] ')
             # if 'Q16.' in line:break
-            if line.startswith('Q'):line = f'\n\n#### {line}'
+            if line.startswith('Q'):
+                line = f'\n\n#### {line}'
             # if '```' in line:line, codepart = code(codepart, lang=language)
 
             str += line
@@ -46,7 +60,8 @@ def prep(str):
 def check():
 
     excludeDir = ['.git', 'test']
-    excludeFile = ['readme.md', 'contributing.md']
+    excludeFile = ['readme.md', 'contributing.md',
+                   '_config.yml', '.prettierrc']
     contains = ['####', '- [ ]']
     filelist = []
     content = []
@@ -65,21 +80,6 @@ def check():
                         filelist.append(file)
 
     return filelist, content
-
-
-def rand(str):
-    # 👍
-    # excl = ['<br/>', r'^<[/]?pre>$']
-    with open(prodMd, 'r') as f:
-        for line in f:
-            # for ex in excl:
-            # print(ex, line)
-            if re.match(r'^<[/]?pre>$', line) or re.match('.*<br/>', line):
-                # print(line)
-                continue
-
-            str += line
-    return str
 
 
 def trandom():

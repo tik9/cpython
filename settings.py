@@ -4,6 +4,7 @@ import subprocess
 
 
 
+
 home = str(Path.home())
 config = '.config'
 powershell = path.join(home, config, 'powershell')
@@ -27,16 +28,13 @@ pic = 'pictures'
 pic = 'Bilder'
 pics = path.join(home, pic)
 pics = home
-picroot = 'unbenannt'
-picroot = 'screen01'
 
 example = path.join(path.dirname(file_settings), 'example.md')
-mdf ='python_data_in_interpreting.md'
-# mdf='nosql/nosql-quiz.md'
-plu = path.join(home, 'pluralsight-skill-tests')
-# lt = path.join(home, 'lt')
-# prodMd = path.join(lt, mdf)
-prodMd = path.join(plu, mdf)
+mdf='outlook.md'
+mdf='skills.md'
+folder=['further-skill-tests','lt','pluralsight-skill-tests']
+pa = path.join(home, folder[0])
+prod_md = path.join(pa, mdf)
 
 readme = 'README.md'
 
@@ -45,7 +43,7 @@ language='nosql'
 
 
 def main():
-    print('answer', answers)
+    print('prod', prod_md)
     # subprocess.run(['ls', pics])
 
 

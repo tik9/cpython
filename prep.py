@@ -1,21 +1,29 @@
 from settings import *
 from helper import *
-from os import path, listdir
+from os import path, listdir,remove
 import re
 import sys
 import shutil
+import glob
 
 
 def main():
 
-    move()
-    # check()
-    # str = qa()
+    # move()
+	dele()
     # with open(mdFile, 'a',encoding='UTF8') as f:f.write(str)
     # print(str)
 
     # with open(fname, 'w') as f:
     #     f.write(str)
+
+
+def dele():
+    files = glob.glob(f'{pics}/*{pic_type}')
+    for f in files:
+        remove(f)
+        print(f)
+
 
 
 def move():
