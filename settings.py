@@ -3,11 +3,6 @@ from os import path
 import subprocess
 
 
-class color:
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
-
 
 home = str(Path.home())
 config = '.config'
@@ -20,10 +15,6 @@ user = path.join(home, config, user_code)
 home = path.dirname(path.dirname(__file__))
 
 custom = path.join(home, '.oh-my-zsh', 'custom')
-
-
-# gitSpecialDirs = []
-gitSpecialDirs = [custom, powershell]
 
 
 ans_python_data_visual = list('224333113444123433')
@@ -44,7 +35,7 @@ mdf ='python_data_in_interpreting.md'
 # mdf='nosql/nosql-quiz.md'
 plu = path.join(home, 'pluralsight-skill-tests')
 # lt = path.join(home, 'lt')
-prodMd = path.join(lt, mdf)
+# prodMd = path.join(lt, mdf)
 prodMd = path.join(plu, mdf)
 
 readme = 'README.md'

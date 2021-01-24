@@ -133,20 +133,6 @@ def walklevel():
             del dirs[:]
 
 
-def gitFirstLevel():
-    slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'git']
-    # excludedirs = ['.oh-my-zsh', 'doks', 'lt','cv','further-skill-tests','ghpage','my-github-projects','git','ml','pluralsight-skill-tests']
-
-    for root, dirs, files in walklevel():
-
-        if '.git' in dirs:
-            if not(any(excl in root for excl in excludedirs)):
-                # print(color.BOLD+root+color.END)
-                slist.append(root)
-    return slist
-
-
 def line_answer(line, answer, acount):
     if acount == answer:
         line = f'- [x] {line}'
