@@ -26,16 +26,8 @@ def countqa3():
 
     #### Another question 2?
 
-    Another answer 2
-
-    #### Question 3?
-
-    Answer 1
-
-    Answer 2
-
-    The Answer 3'''
-
+    Another answer 2'''
+    
     pat = re.compile(r'^####.*$\n([\s\S]*?)(?=^####|\Z)', flags=re.M)
 
     [sum(bool(line.strip()) for line in m.group(1).splitlines())
@@ -87,40 +79,6 @@ def countqa(mdFile):
     return countATotal
 
 
-def tail2():
-    with open(example) as f:
-        print(f.readlines())
-    proc = subprocess.Popen(['tail', '-n', 1, example], stdout=subprocess.PIPE)
-    lines = proc.stdout.readlines()
-    return lines[:, -offset]
-
-
-def tail(file):
-    n = 1
-    with open(file) as f:
-        pos, lines = 2, []
-        while len(lines) <= n:
-            try:
-                f.seek(-pos, 2)
-            except IOError:
-                f.seek(0)
-                break
-            finally:
-                lines = list(f)
-            pos *= 2
-    return ''.join(lines[-n])
-
-
-def walklevel():
-    num_sep = home.count(path.sep)
-    for root, dirs, files in walk(home):
-        yield root, dirs, files
-        dirs.sort()
-        num_sep_this = root.count(path.sep)
-        if num_sep + 1 <= num_sep_this:
-            del dirs[:]
-
-
 def line_answer(line, answer, acount):
     if acount == answer:
         line = f'- [x] {line}'
@@ -157,7 +115,7 @@ def string_match(search,str):
 
 
 def needles(line):
-    needles = ['CO', 'O', '', '�', 'ï¿½', 'ï¿½)' 'oO', '©']
+    needles = ['Â© ','O ','© ','Â ','C) ','CO', '', '�', 'ï¿½', 'ï¿½)' 'oO', '©']
     nre = re.compile("|".join(map(re.escape, needles)))
     obj = []
     for needle in nre.finditer(line):

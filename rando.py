@@ -8,22 +8,20 @@ import re
 
 def main():
     str = ''
-    str = rand(str)
-    # file, content = check()
+    # str = rand(str)
+    file, content = check()
     # print(str)
-    # print(file)
-    with open(prod_md, 'w') as f:f.write(str)
+    print(file)
+    # with open(prod_md, 'w') as f:f.write(str)
 
 
 def rand(str):
-    # 👍
     # excl = ['<br/>', r'^<[/]?pre>$']
     with open(prod_md, 'r') as f:
         for line in f:
             # m = re.search('Test (.?): Any language', line)
-            line = re.sub('^Test (.?): Any language',r'Q\1', line)
+            line = re.sub('^Test (.?)',r'Q\1', line)
             line = re.sub('^Test (\d{1,2}):',r'Q\1', line)
-            line=re.sub('(/20\))$',r'\1\n',line)
                 # print(m.group(1))
 
             str += line
@@ -42,13 +40,10 @@ def prep(str):
 
             # if any(line.startswith(answer) for answer in answers):
             #     # if line.startswith('-'):
-            #     chara = line.lstrip()[:3]
             #     if 'Correct'.upper() in line:
             #         line = line.replace(
             #             chara, '- [x] ').replace(' <<<<<--CORRECT ', '')
-            #     else:
-            #         line = line.replace(chara, '- [] ')
-            # if 'Q16.' in line:break
+
             if line.startswith('Q'):
                 line = f'\n\n#### {line}'
             # if '```' in line:line, codepart = code(codepart, lang=language)
@@ -60,22 +55,20 @@ def prep(str):
 def check():
 
     excludeDir = ['.git', 'test']
-    excludeFile = ['readme.md', 'contributing.md',
-                   '_config.yml', '.prettierrc']
-    contains = ['####', '- [ ]']
+    excludeFile = ['readme.md', 'contributing.md']
     filelist = []
     content = []
-    for root, dirs, files in os.walk(lt, topdown=True):
+    for root, dirs, files in os.walk(pat, topdown=True):
         dirs[:] = [d for d in dirs if d not in excludeDir]
 
         dirs.sort()
         for name in files:
             if name.endswith('.md') and not any(exclude in name.lower() for exclude in excludeFile):
                 file = os.path.join(root, name)
-                with open(file, 'r', encoding='UTF8') as f:
-                    str_list = list(islice(f, 5))
+                with open(file, 'r') as f:
+                    str_list = list(islice(f, 15))
                     # print(str_list)
-                    if not any('####' in s for s in str_list):
+                    if not any('[ ]' in s for s in str_list):
                         content.append(str_list)
                         filelist.append(file)
 

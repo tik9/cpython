@@ -1,5 +1,5 @@
-from PIL import Image
-import pytesseract
+# from PIL import Image
+# import pytesseract
 import os
 from settings import *
 from helper import *
@@ -9,14 +9,13 @@ def main():
     str = ''
 
     # str = image(str,pics)
-    str = md_format(str,prod_md)
-    print(str)
+    str = md_format(str)
+    # print(str)
 
-    # with open(prod_md, 'w') as f:f.write(str)
-    
+    with open(prod_md, 'w') as f:f.write(str)
 
 
-def image(str,pics):
+def image(str, pics):
 
     files = sort_files(pics)
     for file in files:
@@ -27,9 +26,9 @@ def image(str,pics):
     return str
 
 
-def md_format(str,md_file):
+def md_format(str):
 
-    with open(md_file, 'r') as f:
+    with open(prod_md, 'r') as f:
         qcounter = 0
         acount = 0
         codepart = False
@@ -45,10 +44,12 @@ def md_format(str,md_file):
                     line = line.replace('?', '')
                 line = f'\n\n#### {qcounter+1}. {line}'
 
-                answer = answers[qcounter]
-                qcounter += 1
+                if answers:
+                    answer = answers[qcounter]
+                    acount = 0
                 
-                acount = 0
+                qcounter += 1
+
                 str += line
                 continue
 
@@ -57,11 +58,10 @@ def md_format(str,md_file):
             elif codepart or line.startswith('-'):
                 if line.startswith('-'):
                     line = line.replace('-', '')
-            else:                
+            else:
                 acount += 1
+                line = line_answer(line, answer, acount)
 
-                line=line_answer(line,answer,acount)
-                
             str += line
     return str
 
