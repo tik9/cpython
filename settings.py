@@ -21,7 +21,6 @@ pics = home_script
 
 example = path.join(path.dirname(file_settings), 'example.md')
 mdf = 'outlook/outlook-quiz.md'
-# mdf = 'skills.md'
 folder = ['further-skill-tests', 'lt', 'pluralsight-skill-tests']
 pat = path.join(home_script, folder[1])
 prod_md = path.join(pat, mdf)

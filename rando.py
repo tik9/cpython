@@ -8,11 +8,9 @@ import re
 
 def main():
     str = ''
-    # str = rand(str)
-    file, content = check()
-    # print(str)
-    print(file)
-    # with open(prod_md, 'w') as f:f.write(str)
+    str=prep(str)
+    print(str)
+    with open(prod_md, 'w') as f:f.write(str)
 
 
 def rand(str):
@@ -29,24 +27,11 @@ def rand(str):
 
 
 def prep(str):
-    # answers = ['a)', 'b)', 'c)', 'd)']
-    answers = ['1.', '2.', '3.', '4.']
-    codepart = False
-    # with open(settings.mdDat, 'r') as f:
-    with open(prodMd, 'r') as f:
+    with open(prod_md, 'r') as f:
         for line in f:
 
-            line = line.lstrip()
-
-            # if any(line.startswith(answer) for answer in answers):
-            #     # if line.startswith('-'):
-            #     if 'Correct'.upper() in line:
-            #         line = line.replace(
-            #             chara, '- [x] ').replace(' <<<<<--CORRECT ', '')
-
-            if line.startswith('Q'):
-                line = f'\n\n#### {line}'
-            # if '```' in line:line, codepart = code(codepart, lang=language)
+            if line.startswith('- ['):
+                line = line.replace('- []','- [ ]')
 
             str += line
         return str
@@ -68,7 +53,7 @@ def check():
                 with open(file, 'r') as f:
                     str_list = list(islice(f, 15))
                     # print(str_list)
-                    if not any('[ ]' in s for s in str_list):
+                    if not any('' in s for s in str_list):
                         content.append(str_list)
                         filelist.append(file)
 
@@ -77,13 +62,11 @@ def check():
 
 def trandom():
 
-    excludeFile = ['.git', 'camera roll', 'saved pictures']
+    excludeFile = ['.git', 'camera roll']
     for root, dirs, files in os.walk(pics):
         dirs[:] = [d for d in dirs if d.lower() not in excludeFile]
-        # print(dirs)
 
         if not any(exclude in root.lower() for exclude in excludeFile):
-            # print(root)
             pass
         for name in files:
             if name.endswith('.png') and not any(exclude in name.lower() for exclude in excludeFile):
@@ -102,12 +85,6 @@ def random():
             for m in needles(line):
                 line = line.replace(m.group(0), '')
 
-            if 'Answ' in line or 'Quest' in line:
-                continue
-
-            if line.startswith('-') or not line.strip():
-                str += line
-                continue
             str += line.replace('\n', '')
         return str
 

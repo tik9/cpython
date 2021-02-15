@@ -11,7 +11,6 @@ def main():
 
     # move()
 	dele()
-    # with open(mdFile, 'a',encoding='UTF8') as f:f.write(str)
     # print(str)
 
     # with open(fname, 'w') as f:
