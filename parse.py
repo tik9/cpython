@@ -27,13 +27,5 @@ def build1(str):
     return str
 
 
-def build2(str):
-    with open(file_, 'r') as f:
-        for line in f:
-            pass
-    str += line
-    return str
-
-
 if __name__ == "__main__":
     main()

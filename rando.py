@@ -60,7 +60,7 @@ def check():
     return filelist, content
 
 
-def trandom():
+def random():
 
     excludeFile = ['.git', 'camera roll']
     for root, dirs, files in os.walk(pics):
@@ -72,21 +72,6 @@ def trandom():
             if name.endswith('.png') and not any(exclude in name.lower() for exclude in excludeFile):
                 print(name)
 
-
-def random():
-    str = ''
-    counter = 1
-    with open(mdDat, 'r') as f:
-        for line in f:
-            counter += 1
-            # if '�' in line or '' in line:
-            #     line = line.replace('�', '').replace('', '')
-            # print('�')
-            for m in needles(line):
-                line = line.replace(m.group(0), '')
-
-            str += line.replace('\n', '')
-        return str
 
 
 if __name__ == "__main__":
