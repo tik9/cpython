@@ -9,24 +9,75 @@ from pathlib import Path
 import ntpath
 
 home_w = str(Path.home())
-pat='tik9.github.io.git/'
-navi='navigation.yml'
-nav='_data/'
-nav=path.join(home_w,pat,nav,navi)
-ext='js'
-ext='md'
+pathg='game/'
+pat=path.join(home_w,pathg)
+navig='navigation.yml'
+navi='_data/'
+nav=path.join(pat,navi,navig)
+js=path.join(pat,'assets')
+w='w'
+readme='readme'
+readme_up=readme.upper()
+r_md=path.join(pat,readme_up+'.md')
 
-js_ext='assets' if ext == 'js' else ''
-pat=path.join(home_w,pat,js_ext)
-    
+trunk=readme
+# trunk=w
 
+trunk_up= trunk.upper() if trunk == readme else trunk_up=trunk
+
+file_=path.join(pat,trunk_up+'.md')
+
+layou='default.html'
+layo='_layouts/'    
+lay=path.join(pat,layo,layou)
+
+ 
 def main():
-    file_=nav
-    # str_=renam()
-    str_,num=change_co(file_,7)
+    num=renam()
+    # html,num=renam('html',pat)
+    str_=change_co(num)
+
     print(str_)
-    # print(file_)
-    # with open(nav, 'w') as f:f.write(str_)
+
+    # with open(file_, 'w') as f:f.write(str_)
+
+def renam():
+    mat=''.join([f for f in listdir(js) if re.match(f'^{trunk}\d.js$',f)])
+    num=int(''.join(filter(str.isdigit, mat)))
+    # return num
+    orig=f'{trunk}{num}.js'
+
+    orig=path.join(js,orig)
+    
+    num+=1
+    
+    if num == 10: num=1
+    new=f'{trunk}{num}.js'
+    new=path.join(js,new)
+    # shutil.move(orig,new)
+    return num
+    
+def change_co(num):
+    # return num
+    str_=''
+    num1=num-1
+    with open(file_,'r') as f:
+        regex=re.compile('location\.href=\'w.\.html\'')
+        for line in f:
+            if '- name: w3 game' in line:
+                str_+= f'{line}  link: /w{num}.html\n'
+            elif f'/w{num1}.html' in line:
+                continue    
+            elif 'js: ' in line:
+                str_+= f'js: {trunk}{num}\n'
+
+            elif re.search(regex,line):
+                # print('match')
+                str_+=re.sub('\d',str(num),line)
+            else:
+                str_+=line
+        # str_+=str(num)
+    return str_
 
 
 def dele():
@@ -35,48 +86,6 @@ def dele():
         remove(f)
         print(f)
 
-
-def renam():
-    mat=''.join([f for f in listdir(pat) if re.match(f'^w\d.{ext}$',f)])
-    
-    num=int(''.join(filter(str.isdigit, mat)))
-    orig=f'w{num}.{ext}'
-
-    orig=path.join(pat,orig)
-    # return orig
-    
-    num+=1
-    new=f'w{num}.{ext}'
-    new=path.join(pat,new)
-    str_=change_co(orig)
-    # with open (orig,'r') as f:content=f.read()
-    str_=orig+new
-    
-    # return str_
-    # shutil.move(orig,new)
-    
-def change_co(file_,num=0):
-    fil=ntpath.basename(file_)
-    if fil !=navi:
-        num=int(''.join(filter(str.isdigit, fil)))
-    return fil,num
-
-    str_=''
-    js='js:'
-    with open(file_,'r') as f:
-        for line in f:
-            
-            if '- name: w3 game' in line:
-                str_+= f'{line}  link: /w{num}.html\n'
-            elif num_b and f'/w{num1}.html' in line:
-                continue    
-            elif num_b and js in line:
-                str_+= f'{js} w{num}\n'
-            else:
-                str_+=line
-    # with open(file_, 'w') as f:f.write(str_)
-
-    return str_
 
 def move():
     # for file in listdir(pics):
