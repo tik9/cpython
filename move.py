@@ -11,35 +11,30 @@ import ntpath
 home_w = str(Path.home())
 pathg='game/'
 pat=path.join(home_w,pathg)
-navig='navigation.yml'
-navi='_data/'
-nav=path.join(pat,navi,navig)
-js=path.join(pat,'assets')
-w='w'
-readme='readme'
-readme_up=readme.upper()
-r_md=path.join(pat,readme_up+'.md')
 
-trunk=readme
+js=path.join(pat,'assets')
+
+files=['w','readme','breakout']
+trunk=files[0]
 # trunk=w
 
-trunk_up= trunk.upper() if trunk == readme else trunk_up=trunk
+trunk_up=trunk.upper() if trunk == readme else trunk
+prod=False
+prod=True
 
-file_=path.join(pat,trunk_up+'.md')
-
-layou='default.html'
-layo='_layouts/'    
-lay=path.join(pat,layo,layou)
-
- 
 def main():
     num=renam()
-    # html,num=renam('html',pat)
-    str_=change_co(num)
-
+    file_md=path.join(pat,trunk_up+'.md')
+    
+    files=[]
+    for file_ in files:pass
+    
+    str_=change_co(file_md,num)
+    
     print(str_)
-
-    # with open(file_, 'w') as f:f.write(str_)
+    
+    if prod:
+        with open(file_md, 'w') as f:f.write(str_)
 
 def renam():
     mat=''.join([f for f in listdir(js) if re.match(f'^{trunk}\d.js$',f)])
@@ -54,26 +49,17 @@ def renam():
     if num == 10: num=1
     new=f'{trunk}{num}.js'
     new=path.join(js,new)
-    # shutil.move(orig,new)
+    if prod:shutil.move(orig,new)
     return num
     
-def change_co(num):
+def change_co(file_,num):
     # return num
     str_=''
-    num1=num-1
     with open(file_,'r') as f:
-        regex=re.compile('location\.href=\'w.\.html\'')
         for line in f:
-            if '- name: w3 game' in line:
-                str_+= f'{line}  link: /w{num}.html\n'
-            elif f'/w{num1}.html' in line:
-                continue    
-            elif 'js: ' in line:
+            if 'js: ' in line:
                 str_+= f'js: {trunk}{num}\n'
 
-            elif re.search(regex,line):
-                # print('match')
-                str_+=re.sub('\d',str(num),line)
             else:
                 str_+=line
         # str_+=str(num)

@@ -2,39 +2,58 @@ from settings import *
 from helper import *
 from itertools import islice
 import sys
-import os
 import re
+from bs4 import BeautifulSoup
+import requests
+from pathlib import Path
+from os import path
 
+home_ = str(Path.home())
+
+url='https://stackoverflow.com/jobs/447895/database-reliability-engineer-the-remote-company'
+
+page=requests.get(url)
+soup = BeautifulSoup(page.text, 'html.parser')
+
+job=soup.find(class_='fc-black-900')['title']
+company=soup.find(class_='fc-black-800 employer _up-and-out').getText()
+file_=path.join(home_,'tik9.github.io.git','_includes','briefkopf_moti.html')
 
 def main():
-    str = ''
-    str=prep(str)
-    print(str)
-    with open(prod_md, 'w') as f:f.write(str)
+    str_ = ''
+    str_=rand2(str_)
+    
+    print(str_)
+    # with open(file_),'w') as f: f.write(str_)
+    
+def rand2(str_):
+    sep='='
+    with open(file_,'r') as f:
+        for line in f:
+            if 'company' in line:
+                line=line.split(sep,1)[0]
+                str_+=f'{line} = \'{company}\'\n'
+            elif 'job' in line:
+                line=line.split(sep,1)[0]
+                str_+=f'{line} = \'{job}\'\n'
 
-
+            else:
+                str_+=line
+    
+    return str_
+    
+    
 def rand(str):
     # excl = ['<br/>', r'^<[/]?pre>$']
     with open(prod_md, 'r') as f:
         for line in f:
             # m = re.search('Test (.?): Any language', line)
             line = re.sub('^Test (.?)',r'Q\1', line)
-            line = re.sub('^Test (\d{1,2}):',r'Q\1', line)
                 # print(m.group(1))
 
             str += line
     return str
 
-
-def prep(str):
-    with open(prod_md, 'r') as f:
-        for line in f:
-
-            if line.startswith('- ['):
-                line = line.replace('- []','- [ ]')
-
-            str += line
-        return str
 
 
 def check():

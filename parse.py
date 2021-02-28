@@ -1,7 +1,6 @@
 import os
 
-
-home_w = str(Path.home())
+home_ = str(Path.home())
 
 print(home_w)
 
@@ -11,18 +10,17 @@ file_ = os.path.join(home_w,'tik9.github.io.git', '_data/navigation.yml')
 def main():
     str = ''
 
-    str = build1(str)
+    str = build(str)
 
     with open(file_, 'w') as f:f.write(str)
     # print(str)
 
 
-def build1(str):
-    newline='- name: foo\n  link: /.html'
+def build(str):
     with open(file_, 'r') as f:
         for line in f:
-            if 'Contact' in line:
-                str+= f'{newline}\n{line}'
+            if '' in line:
+                str+= f'{line}'
             str += line
     return str
 
