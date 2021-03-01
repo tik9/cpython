@@ -6,54 +6,89 @@ import re
 from bs4 import BeautifulSoup
 import requests
 from pathlib import Path
-from os import path
+from os import listdir, path
+from shutil import copy
+
 
 home_ = str(Path.home())
 
-url='https://stackoverflow.com/jobs/447895/database-reliability-engineer-the-remote-company'
+url = 'https://stackoverflow.com/jobs/508323/softwareentwickler-php-full-stack-entwickler-m-w-hahn-softwareentwicklung'
+# url='https://stackoverflow.com/jobs/504942/php-mysql-html-css-js-developers-retail-e-commerce-ventures-llc'
+# url='https://stackoverflow.com/jobs/447895/database-reliability-engineer-the-remote-company'
 
-page=requests.get(url)
+page = requests.get(url)
 soup = BeautifulSoup(page.text, 'html.parser')
 
-job=soup.find(class_='fc-black-900')['title']
-company=soup.find(class_='fc-black-800 employer _up-and-out').getText()
-file_=path.join(home_,'tik9.github.io.git','_includes','briefkopf_moti.html')
+company_class = 'fc-black-700'
+job_class = 'fc-black-900'
+
+company = soup.find('a', class_=company_class).getText()
+
+motivation = 'motivation'
+motivation = 'de_' + motivation
+
+pat = path.join(home_, 'downloads', 'PortableJekyll-master', 'bewerbung')
+file_job_company = path.join(pat, '_layouts', 'default.html')
+main_file = path.join(pat, motivation + '.md')
+
+company_file_name = company.lower().replace(' ', '_')
+
+new_file = path.join(pat, 'moti_' + company_file_name + '.md')
+
+download = path.join(path.dirname(__file__), 'download.txt')
+
+efy_lang = 'expect from you'
+efy_lang = 'mitbringen solltest'
+line_own = 'expect from me:'
+line_own = 'von mir erwarten'
+
 
 def main():
     str_ = ''
-    str_=rand2(str_)
-    
+    str_ = job_company(str_)
+    # str_ = job_description(str_)
     print(str_)
-    # with open(file_),'w') as f: f.write(str_)
-    
-def rand2(str_):
-    sep='='
-    with open(file_,'r') as f:
+
+    with open(file_job_company, 'w', encoding='utf-8') as f:
+        f.write(str_)
+    # with open(new_file, 'w', encoding='utf-8') as f:f.write(str_)
+
+
+def job_description(str_):
+    wwefy = soup.find_all(text=re.compile(efy_lang))[1].findNext('ul')
+    # with open(download, 'a',encoding='utf-8') as f:f.write(wwefy.text)
+    # print(main_file,new_file)
+
+    copy(main_file, new_file)
+
+    with open(new_file, 'r', encoding='utf-8') as f:
         for line in f:
-            if 'company' in line:
-                line=line.split(sep,1)[0]
-                str_+=f'{line} = \'{company}\'\n'
-            elif 'job' in line:
-                line=line.split(sep,1)[0]
-                str_+=f'{line} = \'{job}\'\n'
+            if line_own in line:
+                str_ += line + '\n'
+                for li in wwefy.find_all('li'):
+                    str_ += '- ' + li.text + '\n'
+            else:
+                str_ += line
+
+    return str_
+
+
+def job_company(str_):
+    sep = '='
+    job = soup.find('a', class_=job_class)['title']
+    with open(file_job_company, 'r', encoding='utf-8') as f:
+        for line in f:
+            if 'Id(\'company' in line:
+                line = line.split(sep, 1)[0]
+                str_ += f'{line} = \'{company}\'\n'
+            elif 'Id(\'job' in line:
+                line = line.split(sep, 1)[0]
+                str_ += f'{line} = \'{job}\'\n'
 
             else:
-                str_+=line
-    
+                str_ += line
+
     return str_
-    
-    
-def rand(str):
-    # excl = ['<br/>', r'^<[/]?pre>$']
-    with open(prod_md, 'r') as f:
-        for line in f:
-            # m = re.search('Test (.?): Any language', line)
-            line = re.sub('^Test (.?)',r'Q\1', line)
-                # print(m.group(1))
-
-            str += line
-    return str
-
 
 
 def check():
@@ -90,7 +125,6 @@ def random():
         for name in files:
             if name.endswith('.png') and not any(exclude in name.lower() for exclude in excludeFile):
                 print(name)
-
 
 
 if __name__ == "__main__":
