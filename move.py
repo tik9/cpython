@@ -9,25 +9,43 @@ from pathlib import Path
 import ntpath
 
 home_w = str(Path.home())
-pathg='game/'
-pat=path.join(home_w,pathg)
+path_='tik9.github.io.git'
+
+pat=path.join(home_w,path_)
 
 js=path.join(pat,'assets')
 
-files=['w','readme','breakout']
-trunk=files[0]
-# trunk=w
+files=['w','readme','breakout','gh','se','api','funct']
+trunk=files[6]
 
 trunk_up=trunk.upper() if trunk == readme else trunk
 prod=False
-prod=True
+# prod=True
+
+# line = """
+# cut into 1-inch florets (about 19cup)
+# 1cup
+# """
+
+# p = '\d+(?=cups?)'
+p='(?<=\<script src=assets/funct)\d(?=\.js>\</script>)'
+
+# line = 'abcd1abcd'
+
+line='<script src=assets/funct1.js></script>'
+
+# s=re.sub(p, r'\g<1>2\3', line)
+s=re.sub(p, lambda x: str(int(x.group(0))+1), line)
+# s=re.findall(p,line)
+
+print(s)
+
+sys.exit()
 
 def main():
     num=renam()
     file_md=path.join(pat,trunk_up+'.md')
-    
-    files=[]
-    for file_ in files:pass
+    file_md=path.join(pat,'_layouts/default.html')
     
     str_=change_co(file_md,num)
     
@@ -55,14 +73,17 @@ def renam():
 def change_co(file_,num):
     # return num
     str_=''
+    p_lay='(?<=\<script src=assets/funct)\d(?=\.js>\</script>)'
+    p_md='(?<=js: [md|gh])\d'
     with open(file_,'r') as f:
         for line in f:
             if 'js: ' in line:
                 str_+= f'js: {trunk}{num}\n'
+            elif re.findall(p_lay,line):
+                str_+=re.sub(p_lay, lambda x: str(int(x.group(0))+1), line)
 
             else:
                 str_+=line
-        # str_+=str(num)
     return str_
 
 
