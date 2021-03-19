@@ -12,42 +12,25 @@ home_w = str(Path.home())
 path_='tik9.github.io.git'
 
 pat=path.join(home_w,path_)
+ass='assets'
+js=path.join(pat,ass)
 
-js=path.join(pat,'assets')
-
-files=['w','readme','breakout','gh','se','api','funct']
-trunk=files[6]
+files=['readme','funct']
+trunk=files[0]
 
 trunk_up=trunk.upper() if trunk == readme else trunk
+lay_def='_layouts/default.html'
+
 prod=False
 # prod=True
 
-# line = """
-# cut into 1-inch florets (about 19cup)
-# 1cup
-# """
-
-# p = '\d+(?=cups?)'
-p='(?<=\<script src=assets/funct)\d(?=\.js>\</script>)'
-
-# line = 'abcd1abcd'
-
-line='<script src=assets/funct1.js></script>'
-
-# s=re.sub(p, r'\g<1>2\3', line)
-s=re.sub(p, lambda x: str(int(x.group(0))+1), line)
-# s=re.findall(p,line)
-
-print(s)
-
-sys.exit()
 
 def main():
-    num=renam()
-    file_md=path.join(pat,trunk_up+'.md')
-    file_md=path.join(pat,'_layouts/default.html')
+    # str_=renam()
+    # file_md=path.join(pat,trunk_up+'.md')
+    file_md=path.join(pat,lay_def)
     
-    str_=change_co(file_md,num)
+    str_=change_co(file_md)
     
     print(str_)
     
@@ -68,18 +51,20 @@ def renam():
     new=f'{trunk}{num}.js'
     new=path.join(js,new)
     if prod:shutil.move(orig,new)
-    return num
+    return orig+new
     
-def change_co(file_,num):
+def change_co(file_):
     # return num
     str_=''
-    p_lay='(?<=\<script src=assets/funct)\d(?=\.js>\</script>)'
+    p_lay=f'(?<=\<script src={ass}/{trunk})\d(?=\.js>\</script>)'
+    # p_lay='(?<=\<script src=assets/readme)\d(?=\.js>\</script>)'
     p_md='(?<=js: [md|gh])\d'
+    
     with open(file_,'r') as f:
         for line in f:
-            if 'js: ' in line:
-                str_+= f'js: {trunk}{num}\n'
-            elif re.findall(p_lay,line):
+            # if 'js: ' in line:
+                # str_+= f'js: {trunk}{num}\n'
+            if re.findall(p_lay,line):
                 str_+=re.sub(p_lay, lambda x: str(int(x.group(0))+1), line)
 
             else:
@@ -95,9 +80,9 @@ def dele():
 
 
 def move():
-    # for file in listdir(pics):
-        # fullFileName = path.join(pics, file)
-        # if re.match(rf'unbenannt\.png\d{{splitter}}\.png$', file.lower()):
+    for file in listdir(pics):
+        fullFileName = path.join(pics, file)
+        if re.match(rf'unbenannt\.png\d{{splitter}}\.png$', file.lower()):
             # unbenannt.png28.png
             str='w1.js'
             # str = str.split('.')
@@ -114,6 +99,22 @@ def move():
             shutil.move(fullFileName, file)
             print('file', file)
 
+def test_reg():
+    line = """
+    cut into 1-inch florets (about 19cup)
+    1cup
+    """
+
+    p = '\d+(?=cups?)'
+    p='(?<=\<script src=assets/funct)\d(?=\.js>\</script>)'
+
+    line=f'<script src={ass}/funct1.js></script>'
+
+    s=re.sub(p, '\g<1>2\3', line)
+    s=re.sub(p, lambda x: str(int(x.group(0))+1), line)
+    s=re.findall(p,line)
+
+    print(s)
 
 if __name__ == "__main__":
     main()
