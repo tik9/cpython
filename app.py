@@ -6,7 +6,7 @@ import re
 from bs4 import BeautifulSoup
 import requests
 from pathlib import Path
-from os import listdir, path
+from os import path
 from shutil import copy
 
 
@@ -47,8 +47,8 @@ def main():
     # str_ = job_description(str_)
     print(str_)
 
-    with open(file_job_company, 'w', encoding='utf-8') as f:
-        f.write(str_)
+    # with open(file_job_company, 'w', encoding='utf-8') as f:
+        # f.write(str_)
     # with open(new_file, 'w', encoding='utf-8') as f:f.write(str_)
 
 

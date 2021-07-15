@@ -1,15 +1,15 @@
 import os
+from pathlib import Path
 
-home_ = str(Path.home())
+home = str(Path.home())
 
-print(home_w)
+print(home)
 
-file_ = os.path.join(home_w,'tik9.github.io.git', '_data/navigation.yml')
+file_ = os.path.join(home,'')
 
 
 def main():
     str = ''
-
     str = build(str)
 
     with open(file_, 'w') as f:f.write(str)

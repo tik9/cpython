@@ -1,22 +1,28 @@
-## Python text parsing
 
-This repo serves for working on text/markdown files in python and for converting text images to text.&nbsp;
+### Goal of the repo
+Helper Functions like renaming files and scraping text from a website
+<br>
+
+### Steps to reach Goal
+1. tbd
+<br>
+
+### Tools used while making the site
+- Vscode
+- Python
+- BeautifulSoup
+
+<br>
 
 ### Contents
+- [Move files](move.py)
+- [Parse text from a website](app.py)
+- [Symlinking files](system.py)
 
-- [Make a markdown text formatted](image.py#L56)
-- Add text to a file
-&nbsp;
+<br>
 
-### Getting started
+#### Things I learn
 
-1. Prepare the [settings](settings.py)
-2. [Choose a function](image.py#L149)
-    - Start with e. g. image()
-    - Convert [images to text](image.py#L22) in image()
-3. See the [helper functions](helper.py) with Unittests
-&nbsp;
-
-### What is the repo used for
-- Pluralsight [Skill tests](https://github.com/tik9/pluralsight-skill-test)
-- text parsing in python
+ Tool        | About                                                                                             |
+ ----------- | ------------------------
+BeautifulSoup | get (html) text

@@ -1,7 +1,7 @@
 # https://stackoverflow.com/a/30990617/1705829
 
 import socket
-from os.path import dirname, isdir, join
+from os.path import isdir, join
 import os
 import shutil
 
@@ -15,7 +15,7 @@ def main():
 
 def get_ip_address():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
+    s.connect(('8.8.8.8', 80))
     return s.getsockname()
 
 
@@ -27,7 +27,6 @@ def copy_packages():
     # print (site_dir)
 
     for dist_dir in dist_dirs:
-        # print(dist_dir,'-----')
         if isdir(dist_dir):
             file_names = os.listdir(dist_dir)
 

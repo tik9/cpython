@@ -1,7 +1,0 @@
-## random downloads
-
-Du hast ein Studium der Informatik, Wirtschaftsinformatik, Mathematik oder eines ähnlichen Studiengangs abgeschlossen.
-Alternativ bringst Du eine abgeschlossene Ausbildung als Fachinformatiker mit entsprechender Berufserfahrung mit oder einen vergleichbaren Werdegang.
-Du hast fundierte Kenntnisse in PHP und JavaScript sowie im Umgang mit relationalen Datenbanken (bspw. MySQL, MSSQL, PostgreSQL)
-Idealerweise hattest Du auch bereits mit dem Fronend Framework Bootstrap und den dazugehörigen Sprachen CSS sowie HTML gearbeitet.
-Du bist ein absoluter Teamplayer, der mit Leidenschaft und Engagement seiner Arbeit nachgeht.
