@@ -10,9 +10,7 @@ file_ = os.path.join(home,'')
 
 def main():
     str = ''
-    str = build(str)
 
-    with open(file_, 'w') as f:f.write(str)
     # print(str)
 
 
