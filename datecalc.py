@@ -12,7 +12,7 @@ home = str(Path.home())
 def main():
     # test()
     allweek()
-    print(list(map(lambda x: x + 1, [1, 2, 3])))
+    # print(list(map(lambda x: x + 1, [1, 2, 3])))
 
 
 def allweek():
@@ -22,7 +22,7 @@ def allweek():
     # d += timedelta(days=6 - d.weekday())
     di = {}
     end = date(year + 1, 1, 10)
-    end = date(year , 10, 10)
+    end = date(year, 10, 10)
     while d < end:
         di.setdefault(d.strftime('%B'), []).append(str(d))
         # yield d
@@ -30,9 +30,10 @@ def allweek():
 
         d += timedelta(days=14)
     for k, v in di.items():
-        print(k, v,list(map(lambda x: x + timedelta(days=2),v)))
-        # for val in v:
-        # print(val)
+        print(k)
+        # list(map(lambda x: x + timedelta(days=2),v))
+        for val in v:
+            print(val, val+timedelta(days=2))
 
 
 def test():
