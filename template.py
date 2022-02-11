@@ -3,15 +3,21 @@ from pathlib import Path
 
 home = str(Path.home())
 
-print(home)
+# print(home)
 
-file_ = os.path.join(home, '')
+folder = os.path.join(home, 'tik9.github.io')
 
 
 def main():
     str = ''
-    str = special()
-    # print(str)
+    # str = special()
+    print(folder)
+    loop_folder(folder)
+
+
+def loop_folder(path):
+    for entry in os.scandir(path):
+        print(entry.path)
 
 
 def special(str):
