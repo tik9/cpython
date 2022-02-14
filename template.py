@@ -1,3 +1,6 @@
+from http import server
+from importlib.resources import path
+from mimetypes import suffix_map
 import os
 from pathlib import Path
 
@@ -5,26 +8,33 @@ home = str(Path.home())
 
 # print(home)
 
-folder = os.path.join(home, 'tik9.github.io')
+tik9 = os.path.join(home, 'tik9.github.io')
+assets = os.path.join(tik9, 'assets')
+file_ = ''
 
 
 def main():
-    str = ''
-    # str = special()
-    print(folder)
-    loop_folder(folder)
+    # print(loop_folder())
+    server = os.path.join(tik9, 'server.js')
+    suffix = '.ts'
+    p = Path(server)
+    
+    p.rename(Path(p.parent, p.stem + suffix))
 
 
-def loop_folder(path):
-    for entry in os.scandir(path):
-        print(entry.path)
+def loop_folder():
+    files = []
+    for entry in os.scandir(assets):
+        if entry.name.endswith('.js'):
+            p = Path(entry.name)
+
+            files.append(f"{p.stem}{p.suffix}")
+    return files
 
 
-def special(str):
+def content(str):
     with open(file_, 'r') as f:
         for line in f:
-            if '' in line:
-                str += f'{line}'
             str += line
     return str
 
