@@ -3,6 +3,7 @@ from importlib.resources import path
 from mimetypes import suffix_map
 import os
 from pathlib import Path
+import sys
 
 home = str(Path.home())
 
@@ -15,12 +16,8 @@ file_ = ''
 
 def main():
     # print(loop_folder())
-    server = os.path.join(tik9, 'server.js')
-    suffix = '.ts'
-    p = Path(server)
+    file_ = os.path.join(tik9, '.js')
     
-    p.rename(Path(p.parent, p.stem + suffix))
-
 
 def loop_folder():
     files = []
@@ -38,6 +35,11 @@ def content(str):
             str += line
     return str
 
+
+def version():
+    python_ver=sys.version_info
+    major=sys.version_info.major
+    minor=sys.version_info.minor
 
 if __name__ == "__main__":
     main()
