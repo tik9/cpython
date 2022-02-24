@@ -13,6 +13,7 @@ files = tik9
 # files = os.path.join(tik9, 'assets')
 # file_ = 'client.*'
 file_ = 'server.*'
+# file_ = 'radpidapi*'
 
 
 def main():
