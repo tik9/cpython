@@ -18,12 +18,12 @@ def main():
 
 
 def content_file():
-    new_elem=''
+    new_elem = ''
     with open(file_, 'r') as f:
-        str = ''
+        str_ = ''
         for line in f:
-            str += line
-    return str
+            str_ += line
+    return str_
 
 
 def loop_folder():
