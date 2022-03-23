@@ -28,7 +28,7 @@ def content_file():
 
 def loop_folder():
     files = []
-    for entry in os.scandir(assets):
+    for entry in os.scandir(''):
         if entry.name.endswith('.ext'):
             p = Path(entry.name)
 
