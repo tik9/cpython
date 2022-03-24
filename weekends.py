@@ -1,54 +1,64 @@
 from calendar import c
 import datetime
 import holidays
-from pprint import pp
 from dateutil import parser
 
 to_day = datetime.date.today()
 year = to_day.year
+holi_dic = holidays.Germany(years=year).items()
 
 
 def main():
-    # pp(fridays(10))
-    # pp(holi())
-    title = f"Ferientage, Kiga-Schließtage und Umgangswochenenden in {year} bis August\n"
+    title = f"Ferientage, Kiga-Schließtage und Umgangswochenenden in {year}\n\n"
     with open('file.txt', 'w') as f:
-        f.write(title)
-        for elem in plus_umgang():
-            # pass
-            print(elem)
-            # f.write(f"{elem}\n")
-    # pp(holiday_closingdays())
+        # f.write(title)
+        for k, v in create_dic():
+            date = k.strftime('%a %d.%m')
+            print(date, v)
+            # f.write(f"{date} {v}\n")
 
 
-def holiday_closingdays():
-    schliesstage = ['2022-5-13', '2022-5-27', '2022-6-17']
-    schliesstag_neu = []
+def create_dic():
+    schliesstage = ['2022-5-13', '2022-5-27',
+                    '2022-6-17', '2022-8-5', '2022-8-30']
+    umgang = ['2022-6-3', '2022-9-2', '2022-9-30']
+    holi_add = {'2022-6-16': 'Fronleichnam', '2022-11-1': 'Alllerheiligen'}
+    schliesstag_parse = []
     for elem in schliesstage:
-        day = parser.parse(elem).date()
-        # day = day.strftime('%a %d.%m.%Y')
-        schliesstag_neu.append(day)
-        # print(day)
-    holi_day = holidays.Germany(years=year).items()
-    schliesstag_dic = {el: 'Schließtag' for el in schliesstag_neu}
-    schliesstag_dic.update(holi_day)
+        schliesstag_parse.append(parser.parse(elem).date())
+    schliesstag_dic = {el: 'Schließtag Kiga' for el in schliesstag_parse}
 
+    umgang_parse = []
+    for elem in umgang:
+        parse_ele=parser.parse(elem).date()
+        umgang_parse.append(parse_ele)
+        # print(parse_ele)
+
+    umgang_dic = {el: 'Umgang' for el in umgang_parse}
+    schliesstag_dic.popitem()
+    # schliesstag_dic.update(holi_add)
+    schliesstag_dic.update(umgang_dic)
+    schliesstag_dic.update(holi_dic)
     return sorted(schliesstag_dic.items())
 
 
-def plus_umgang():
-    event = []
+def single_event():
+    fri_day = to_day
+
     counter = 2
-    for holiday_closing in holiday_closingdays:
-            fri_day = (friday()+datetime.timedelta(weeks=counter))
-            if fri_day < holiday_closing[0] and fri_day < datetime.date(2022, 8, 5):
-                new_friday = fri_day.strftime('%a %d.%m.%Y Umgangswochenende')
-                event.append(new_friday)
-            if holiday_closing[0] > to_day:
-                new_elem = f"{holiday_closing[0].strftime('%a %d.%m.%Y')} {holiday_closing[1]}"
-                event.append(new_elem)
-                counter += 2
-    return event
+    event = {}
+    for holiday_closing in holi_dic:
+        if holiday_closing[0] == datetime.date(2022, 5, 1):
+            continue
+        if holiday_closing[0] < datetime.date(2022, 10, 4) and holiday_closing[0] > to_day:
+            event[holiday_closing[0]] = holiday_closing[1]
+
+        fri_day = (next_friday(to_day)+datetime.timedelta(weeks=counter))
+        if fri_day > datetime.date(2022, 8, 11) and fri_day < datetime.date(2022, 8, 13):
+            counter += 1
+        counter += 2
+
+    return sorted(event.items())
 
 
 def holi():
@@ -59,23 +69,30 @@ def holi():
     return event
 
 
-def friday():
-    days_ahead = 4 - to_day.weekday()
+def next_friday(date):
+    days_ahead = 4 - date.weekday()
     if days_ahead <= 0:
         days_ahead += 7
-    return to_day + datetime.timedelta(days_ahead)
+    return date + datetime.timedelta(days_ahead)
 
 
 def fridays(count):
     fridays = []
     counter = 0
     for i in range(0, count, 2):
-        fri_day = (friday()+datetime.timedelta(weeks=i))
+        fri_day = (next_friday(to_day)+datetime.timedelta(weeks=i))
         new_friday = fri_day.strftime('%a %d.%m.%Y')
         if counter > 0:
             fridays.append(str(counter)+'. '+new_friday)
         counter += 1
     return fridays
+
+
+def friday_after_break():
+    end_kiga = datetime.date(2022, 8, 30)
+    next_end_kig = end_kiga+datetime.timedelta(1)
+    # pp(next_end_kig.strftime('%a %d.%m.%y'))
+    return next_friday(next_end_kig)
 
 
 if __name__ == '__main__':
