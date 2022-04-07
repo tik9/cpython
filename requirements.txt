@@ -1,2 +1,4 @@
 dateutils
 holidays
+requests
+fritzconnection

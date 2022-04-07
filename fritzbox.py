@@ -28,7 +28,7 @@ print(fc)
 
 def main():
     pp = pprint.PrettyPrinter(indent=2)
-    # keys = ['WANIPConnection', 'GetInfo']
+    keys = ['WANIPConnection', 'GetInfo']
     keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration', 'GetInfo', 'NewEnable']
     # result = div()
