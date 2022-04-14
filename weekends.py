@@ -5,23 +5,26 @@ from pprint import pp
 
 to_day = datetime.date.today()
 
-end = datetime.date(2022, 5, 15)
+end = datetime.date(2022, 5, 30)
 
-# example: my_we = true and will be this weekend: we_coming must be true
+inc_holidays = False
+wednes = True
 wednes = False
-we_coming = True
-we_coming = False
-my_we = False
-my_we = True
+coming_wednes = True
+coming_wednes = False
+type_1 = 'my'
+all_we = False
+all_we = True
 
 
 def main():
-    pp(date_to_string(holi_add_dic()))
+    res = date_to_string(holi_add_dic())
+    pp(res)
 
 
-def event(weeknr):
-    weekday = next_weekday(weeknr)
-    if not we_coming and weeknr == 4:
+def event(type, follow_week=1, weekday=5):
+    weekday = next_weekday(weekday)
+    if follow_week == 2:
         weekday = weekday+datetime.timedelta(days=7)
 
     counter = 0
@@ -31,39 +34,46 @@ def event(weeknr):
         weekday = weekday+datetime.timedelta(weeks=counter)
         if weekday.month == 8:
             continue
-        if weeknr == 4:
-            umgang = 'My WE'
-            if not my_we:
-                umgang = 'WE Umgang'
-        else:
-            umgang = 'Mi'
-        event[weekday] = umgang
+
+        event[weekday] = type
         counter = 2
 
     return event
 
 
 def holi_add_dic():
-    holi_add = {'2022-6-16': 'Fronleichnam',
-                '2022-11-1': 'Alllerheiligen', '2022-10-2': 'Geburtstag'}
-    holi_add_d = ['2022-5-26', '2022-6-16', '2022-10-3']
-    holi_add_d = {key: 'Zusatz' for key in holi_add_d}
-
-    holi_add.update(holi_add_d)
     holi_add_parse = {}
-    for k, v in holi_add.items():
-        date_ = parser.parse(k).date()
-        if date_ < end:
-            holi_add_parse[date_] = v
+    holi_add = {}
 
-    for elem in holidays.Germany(years=to_day.year).items():
-        if elem[0] > to_day and elem[0] < end:
-            holi_add_parse[elem[0]] = elem[1]
+    if inc_holidays:
+        holi_add = {
+            '2022-6-16': 'Fronleichnam',
+            '2022-11-1': 'Alllerheiligen', '2022-10-2': 'Geburtstag'}
 
-    holi_add_parse.update(event(4))
+        holi_add_d = ['2022-5-26', '2022-6-16', '2022-10-3']
+        holi_add_d = {key: 'Zusatz' for key in holi_add_d}
+        holi_add.update(holi_add_d)
+        for k, v in holi_add.items():
+            date_ = parser.parse(k).date()
+            if date_ < end:
+                holi_add_parse[date_] = v
 
-    if wednes == True:
-        holi_add_parse.update(event(2))
+        for elem in holidays.Germany(years=to_day.year).items():
+            if elem[0] > to_day and elem[0] < end:
+                holi_add_parse[elem[0]] = elem[1]
+
+    holi_add_parse.update(event(type_1))
+    if all_we:
+        if type_1 == 'my':
+            holi_add_parse.update(event('max', follow_week=2))
+        else:
+            holi_add_parse.update(event('my', follow_week=2))
+
+    if wednes:
+        if coming_wednes:
+            holi_add_parse.update(event('max', weekday=2))
+        else:
+            holi_add_parse.update(event('max', follow_week=2, weekday=2))
 
     return sorted(holi_add_parse.items())
 
@@ -81,8 +91,8 @@ def date_to_string(dict_date):
     return new_dict
 
 
-def next_weekday(weekday):
-    days_ahead = weekday - to_day.weekday()
+def next_weekday(weeknr):
+    days_ahead = weeknr - to_day.weekday()
     if days_ahead <= 0:
         days_ahead += 7
     return to_day + datetime.timedelta(days_ahead)
