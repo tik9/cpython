@@ -10,11 +10,11 @@ end = datetime.date(2022, 5, 30)
 inc_holidays = False
 wednes = True
 wednes = False
-coming_wednes = True
 coming_wednes = False
-type_1 = 'my'
-all_we = False
+coming_wednes = True
+type_1 = 'max'
 all_we = True
+all_we = False
 
 
 def main():

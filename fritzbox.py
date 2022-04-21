@@ -17,8 +17,8 @@ boxuser = 'fritz3220'
 
 ip = 'http://192.168.178.1'
 
-with open(join(script_folder, 'env'), 'r') as file_:
-    boxpw = file_.read()
+with open(join(script_folder, 'env_fritzbox'), 'r') as file_:
+    boxpw = file_.readline()
 if hostname == 't--pc':
     boxpw = boxpw[:-1]
 
