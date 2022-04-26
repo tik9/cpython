@@ -5,14 +5,17 @@ from pprint import pp
 
 to_day = datetime.date.today()
 
-end = datetime.date(2022, 5, 30)
+end = datetime.date(2022, 8, 30)
 
+inc_holidays = True
 inc_holidays = False
 wednes = True
 wednes = False
 coming_wednes = False
 coming_wednes = True
-type_1 = 'max'
+coming_weekend = False
+coming_weekend = True
+type_1 = 'my'
 all_we = True
 all_we = False
 
@@ -22,9 +25,9 @@ def main():
     pp(res)
 
 
-def event(type, follow_week=1, weekday=5):
+def event(type, coming_weekday=False, weekday=5):
     weekday = next_weekday(weekday)
-    if follow_week == 2:
+    if not coming_weekday:
         weekday = weekday+datetime.timedelta(days=7)
 
     counter = 0
@@ -46,34 +49,35 @@ def holi_add_dic():
     holi_add = {}
 
     if inc_holidays:
-        holi_add = {
-            '2022-6-16': 'Fronleichnam',
-            '2022-11-1': 'Alllerheiligen', '2022-10-2': 'Geburtstag'}
-
-        holi_add_d = ['2022-5-26', '2022-6-16', '2022-10-3']
-        holi_add_d = {key: 'Zusatz' for key in holi_add_d}
-        holi_add.update(holi_add_d)
-        for k, v in holi_add.items():
-            date_ = parser.parse(k).date()
-            if date_ < end:
-                holi_add_parse[date_] = v
-
         for elem in holidays.Germany(years=to_day.year).items():
             if elem[0] > to_day and elem[0] < end:
                 holi_add_parse[elem[0]] = elem[1]
 
-    holi_add_parse.update(event(type_1))
+        holi_add = {
+            '2022-6-16': 'Fronleichnam',
+            '2022-11-1': 'Alllerheiligen'
+        }
+
+    if type_1 == 'max':
+        holi_add_d = ['2022-5-26', '2022-6-16', '2022-10-3']
+        holi_add_d = {key: 'Zusatz' for key in holi_add_d}
+        holi_add.update(holi_add_d)
+
+    for k, v in holi_add.items():
+        date_ = parser.parse(k).date()
+        if date_ < end:
+            holi_add_parse[date_] = v
+
+    holi_add_parse.update(event(type_1, coming_weekday=coming_weekend))
     if all_we:
         if type_1 == 'my':
-            holi_add_parse.update(event('max', follow_week=2))
+            holi_add_parse.update(event('max',))
         else:
-            holi_add_parse.update(event('my', follow_week=2))
+            holi_add_parse.update(event('my'))
 
     if wednes:
-        if coming_wednes:
-            holi_add_parse.update(event('max', weekday=2))
-        else:
-            holi_add_parse.update(event('max', follow_week=2, weekday=2))
+        holi_add_parse.update(
+            event('max', coming_weekday=coming_wednes, weekday=2))
 
     return sorted(holi_add_parse.items())
 

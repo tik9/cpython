@@ -1,3 +1,5 @@
+import sys
+
 import json
 from unicodedata import name
 from pymongo import MongoClient
@@ -7,36 +9,55 @@ with open('env_mongo', 'r') as f:
 
 client = MongoClient(mongo_uri)
 db = client.website
+fun = 'find'
+args = sys.argv
+if args[1:]:
+    fun = args[1]
 coll = 'pages'
-doc = 'code'
-field = 'doc'
+if args[2:]:
+    coll = args[2]
 
-json_dat = '''
-{"doc": "",
-"title":"",
-"text":""
-}
-'''
+key = 'doc'
+if args[3:]:
+    key = args[3]
+value = 'index'
+if args[4:]:
+    value = args[4]
 
-json_dat = json.loads(json_dat)
+update_key = 'text'
+update_val = ''
+
+dat = {key: value,
+       "title": "",
+       update_key: update_val}
+
+json_dat = json.dumps(dat)
 
 
 def main():
-    # pprint(json_dat)
-    find_one()
+    # find_one()
     # find()
     # insert()
+    delete_one()
+    function = getattr(sys.modules[__name__], args[1])
+    function()
     pass
 
 
+def update():
+    query = {key: value}
+    print(1, coll, 2, update_key, 3, update_val)
+    values = {"$set": {update_key: update_val}}
+
+    res = db[coll].update_one(query, values)
+
+
 def find_one():
-    # res = getattr(db, coll)
-    res = db[coll].find_one({field: doc}, {'_id': 0})
+    res = db[coll].find_one({key: value}, {'_id': 0})
     pprint(res)
 
 
 def find():
-    res = getattr(db, coll)
     res = list(db[coll].find({}, {'_id': 0}))
     pprint(res)
 
@@ -45,5 +66,12 @@ def insert():
     db[coll].insert_one(json_dat)
 
 
+def delete_one():
+    fun = globals()[sys._getframe().f_code.co_name]
+
+    db[coll].delete_one({key: value})
+
+
 if __name__ == '__main__':
+    # globals()[args[1]]
     main()
