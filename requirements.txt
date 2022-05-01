@@ -1,5 +1,7 @@
 dateutils
-holidays
-requests
 fritzconnection
+holidays
 pymongo
+requests
+youtube_dl
+youtube-search-python

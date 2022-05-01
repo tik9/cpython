@@ -1,7 +1,5 @@
 import sys
-
 import json
-from unicodedata import name
 from pymongo import MongoClient
 from pprint import pprint
 with open('env_mongo', 'r') as f:
@@ -9,10 +7,8 @@ with open('env_mongo', 'r') as f:
 
 client = MongoClient(mongo_uri)
 db = client.website
-fun = 'find'
 args = sys.argv
-if args[1:]:
-    fun = args[1]
+
 coll = 'pages'
 if args[2:]:
     coll = args[2]
@@ -25,20 +21,25 @@ if args[4:]:
     value = args[4]
 
 update_key = 'text'
-update_val = ''
+update_val = 'This is a website for programmers or for in programming interested people! Browse through the menu and look at the source in Github further down.'
 
 dat = {key: value,
-       "title": "",
-       update_key: update_val}
+       "title": "Welcome to my site",
+       update_key: update_val
+       }
 
+# print(type(dat))
 json_dat = json.dumps(dat)
+# print(type(json_dat))
+json_dat = json.loads(json_dat)
+# print(type(json_dat))
 
 
 def main():
     # find_one()
     # find()
     # insert()
-    delete_one()
+    # delete_one()
     function = getattr(sys.modules[__name__], args[1])
     function()
     pass
@@ -67,11 +68,8 @@ def insert():
 
 
 def delete_one():
-    fun = globals()[sys._getframe().f_code.co_name]
-
     db[coll].delete_one({key: value})
 
 
 if __name__ == '__main__':
-    # globals()[args[1]]
     main()

@@ -1,14 +1,18 @@
-# from os import path
 from os.path import join
-import requests
-import re
 import pprint
 from os import path
 import socket
+import sys
 from fritzconnection import FritzConnection
 
-enable = True
-enable = False
+args = sys.argv
+change = False
+
+if args[1:]:
+    change = True
+# if args[2:]:
+    # enable = args[2]
+pp = pprint.PrettyPrinter(indent=2)
 
 hostname = socket.gethostname()
 script_folder = path.dirname(__file__)
@@ -23,17 +27,18 @@ if hostname == 't--pc':
     boxpw = boxpw[:-1]
 
 fc = FritzConnection(password=boxpw, user=boxuser)
-print(fc)
 
 
 def main():
-    pp = pprint.PrettyPrinter(indent=2)
     keys = ['WANIPConnection', 'GetInfo']
     keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration', 'GetInfo', 'NewEnable']
-    # result = div()
     result = fbc(keys)
-    pp.pprint(result)
+    # print(1, result)
+    if change:
+        result = div(not result)
+    result = fbc(keys)
+    print(3, result)
 
 
 def fbc(keys):
@@ -41,7 +46,8 @@ def fbc(keys):
     return state[keys[2]] if 0 <= 2 < len(keys) else state
 
 
-def div():
+def div(enable):
+    # print(2, enable)
     result = fc.call_action('WLANConfiguration', 'SetEnable', NewEnable=enable)
     return result
 

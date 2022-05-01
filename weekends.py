@@ -7,15 +7,13 @@ to_day = datetime.date.today()
 
 end = datetime.date(2022, 8, 30)
 
-inc_holidays = True
 inc_holidays = False
+inc_holidays = True
 wednes = True
 wednes = False
-coming_wednes = False
-coming_wednes = True
-coming_weekend = False
 coming_weekend = True
-type_1 = 'my'
+coming_weekend = False
+type_1 = 'max'
 all_we = True
 all_we = False
 
@@ -59,9 +57,9 @@ def holi_add_dic():
         }
 
     if type_1 == 'max':
-        holi_add_d = ['2022-5-26', '2022-6-16', '2022-10-3']
-        holi_add_d = {key: 'Zusatz' for key in holi_add_d}
-        holi_add.update(holi_add_d)
+        zusatz = ['2022-5-26', '2022-6-16', '2022-10-3']
+        zusatz = {key: 'Zusatz' for key in zusatz}
+        holi_add.update(zusatz)
 
     for k, v in holi_add.items():
         date_ = parser.parse(k).date()
@@ -77,7 +75,7 @@ def holi_add_dic():
 
     if wednes:
         holi_add_parse.update(
-            event('max', coming_weekday=coming_wednes, weekday=2))
+            event('max', coming_weekday=coming_weekend, weekday=2))
 
     return sorted(holi_add_parse.items())
 
