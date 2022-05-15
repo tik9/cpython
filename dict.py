@@ -2,12 +2,16 @@ import sys
 from CoreServices import DictionaryServices
 
 
+searchword = 'suspension'
+if sys.argv[1:]:
+    searchword = sys.argv[1]
+
+
 def main():
-    try:
-        searchword = sys.argv[1]
-    except IndexError:
-        print('enter term')
-        sys.exit()
+    dict()
+
+
+def dict():
     wordrange = (0, len(searchword))
     dictresult = DictionaryServices.DCSCopyTextDefinition(
         None, searchword, wordrange)

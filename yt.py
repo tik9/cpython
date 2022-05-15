@@ -1,15 +1,19 @@
 
 import youtube_dl
 from youtubesearchpython import VideosSearch
+import os
+import webbrowser
 
-search_v = 'paso de la luna'
-# vid = 'https://www.youtube.com/watch?v=NQ3YKiMZDxw'
+search_v = 'calma'
+# search_v = 'paso de la luna'
+# search_v = 'penny lane'
 
 
 def main():
     vid = search()
     dl(vid)
-    # print(result)
+    # print(vid)
+    # webbrowser.open(vid)
 
 
 def dl(vid):
@@ -26,7 +30,7 @@ def dl(vid):
 
 
 def search():
-    videosSearch = VideosSearch(search_v, limit=5)
+    videosSearch = VideosSearch(search_v, limit=1)
     return videosSearch.result()['result'][0]['link']
 
 
