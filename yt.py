@@ -4,16 +4,16 @@ from youtubesearchpython import VideosSearch
 import os
 import webbrowser
 
-search_v = 'calma'
-# search_v = 'paso de la luna'
+# search_v = 'calma'
+search_v = 'paso de la luna'
 # search_v = 'penny lane'
 
 
 def main():
     vid = search()
-    dl(vid)
+    # dl(vid)
     # print(vid)
-    # webbrowser.open(vid)
+    webbrowser.open(vid)
 
 
 def dl(vid):

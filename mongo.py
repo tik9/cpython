@@ -9,41 +9,43 @@ client = MongoClient(mongo_uri)
 db = client.website
 args = sys.argv
 
-coll = 'shop'
-if args[2:]:
-    coll = args[2]
+coll = 'tools'
+# coll = 'test'
+# if args[2:]:
+# coll = args[2]
 
-key = 'doc'
-if args[3:]:
-    key = args[3]
+key = 'name'
+val='python'
+update_key = 'description'
+update_val = 'For anything except web development, besides JS my favorite tool'
 
-value = 'index'
-if args[4:]:
-    value = args[4]
+# dat = {key: value, "title": "Welcome", update_key: update_val}
 
-update_key = 'text'
-update_val = 'This is.'
-
-dat = {key: value,
-       "title": "Welcome to",
-       update_key: update_val
-       }
-
-json_dat = json.dumps(dat)
-json_dat = json.loads(json_dat)
+# json_dat = json.dumps(dat)
+# json_dat = json.loads(json_dat)
 
 
 def main():
-    getattr(sys.modules[__name__], args[1])()
-    # rename_coll('ebay')
+
+    key = None
+    if args[2:]:
+        key = args[2]
+    value = None
+    if args[3:]:
+        value = args[3]
+
+    getattr(sys.modules[__name__], args[1])(key, value)
+    # rename_field('cat','category')
     pass
 
-def find_one():
+
+def find_one(key, value):
+    print(coll, key, value)
     res = db[coll].find_one({key: value}, {'_id': 0})
     pprint(res)
 
 
-def find():
+def find(*args):
     res = list(db[coll].find({}, {'_id': 0}))
     pprint(res)
 
@@ -52,25 +54,28 @@ def insert():
     db[coll].insert_one(json_dat)
 
 
-def list_coll():
+def list_coll(*args):
     pprint(db.list_collection_names())
 
 
-def remove_one():
-    db[coll].delete_one({key: value})
+def remove_one(key,val):
+    db[coll].delete_one({key: val})
 
-def rename_coll():
+
+def rename_coll(key):
     db[coll].rename(key)
 
-def rename_field():
-    db[coll].update_many({}, {"$rename": {"tool": "doc"}})
 
-def update():
-    query = {key: value}
-    print(1, coll, 2, update_key, 3, update_val)
+def rename_field(old, new):
+    db[coll].update_many({}, {"$rename": {old: new}})
+
+
+def update(*args):
+    query = {key: val}
     values = {"$set": {update_key: update_val}}
 
-    res = db[coll].update_one(query, values)
+    db[coll].update_one(query, values)
+
 
 if __name__ == '__main__':
     main()

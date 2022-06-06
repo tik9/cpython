@@ -6,7 +6,7 @@ import sys
 from fritzconnection import FritzConnection
 
 args = sys.argv
-change = False
+change = True
 
 if args[1:]:
     change = True
@@ -34,11 +34,10 @@ def main():
     keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration', 'GetInfo', 'NewEnable']
     result = fbc(keys)
-    # print(1, result)
     if change:
         result = div(not result)
     result = fbc(keys)
-    print(3, result)
+    print(1, result)
 
 
 def fbc(keys):
@@ -47,7 +46,6 @@ def fbc(keys):
 
 
 def div(enable):
-    # print(2, enable)
     result = fc.call_action('WLANConfiguration', 'SetEnable', NewEnable=enable)
     return result
 

@@ -7,8 +7,8 @@ to_day = datetime.date.today()
 
 end = datetime.date(2022, 8, 30)
 
-inc_holidays = False
 inc_holidays = True
+inc_holidays = False
 wednes = True
 wednes = False
 coming_weekend = True
