@@ -1,7 +1,6 @@
 
 import youtube_dl
 from youtubesearchpython import VideosSearch
-import os
 import webbrowser
 
 # search_v = 'calma'
@@ -16,6 +15,11 @@ def main():
     webbrowser.open(vid)
 
 
+def search():
+    videosSearch = VideosSearch(search_v, limit=1)
+    return videosSearch.result()['result'][0]['link']
+
+
 def dl(vid):
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -27,11 +31,6 @@ def dl(vid):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([vid])
-
-
-def search():
-    videosSearch = VideosSearch(search_v, limit=1)
-    return videosSearch.result()['result'][0]['link']
 
 
 if __name__ == '__main__':

@@ -9,20 +9,21 @@ client = MongoClient(mongo_uri)
 db = client.website
 args = sys.argv
 
+coll = 'pages'
 coll = 'tools'
 # coll = 'test'
 # if args[2:]:
 # coll = args[2]
 
 key = 'name'
-val='python'
+val = 'windows'
 update_key = 'description'
-update_val = 'For anything except web development, besides JS my favorite tool'
+update_val = 'I did some powershell with Active Directory members users and groups'
 
-# dat = {key: value, "title": "Welcome", update_key: update_val}
+dat = {key: val, "category": "web", update_key: update_val}
 
-# json_dat = json.dumps(dat)
-# json_dat = json.loads(json_dat)
+json_dat = json.dumps(dat)
+json_dat = json.loads(json_dat)
 
 
 def main():
@@ -50,7 +51,7 @@ def find(*args):
     pprint(res)
 
 
-def insert():
+def insert(*args):
     db[coll].insert_one(json_dat)
 
 
@@ -58,7 +59,7 @@ def list_coll(*args):
     pprint(db.list_collection_names())
 
 
-def remove_one(key,val):
+def remove_one(key, val):
     db[coll].delete_one({key: val})
 
 

@@ -2,7 +2,7 @@ import sys
 from CoreServices import DictionaryServices
 
 
-searchword = 'suspension'
+searchword = ''
 if sys.argv[1:]:
     searchword = sys.argv[1]
 
