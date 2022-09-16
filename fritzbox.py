@@ -1,32 +1,27 @@
 from os.path import join
-import pprint
 from os import path
 import socket
 import sys
 from fritzconnection import FritzConnection
 
 args = sys.argv
+change = False
 change = True
 
 if args[1:]:
-    change = True
-# if args[2:]:
-    # enable = args[2]
-pp = pprint.PrettyPrinter(indent=2)
-
-hostname = socket.gethostname()
-script_folder = path.dirname(__file__)
-
-boxuser = 'fritz3220'
+    change = args[1]
 
 ip = 'http://192.168.178.1'
 
-with open(join(script_folder, 'env_fritzbox'), 'r') as file_:
-    boxpw = file_.readline()
-if hostname == 't--pc':
+# f=open('filename')
+# lines=f.readlines()
+with open(join(path.dirname(__file__), '.env'), 'r') as file_:
+    boxpw = file_.readlines()[1].split('=')[1]
+    
+if socket.gethostname() == 't--pc':
     boxpw = boxpw[:-1]
 
-fc = FritzConnection(password=boxpw, user=boxuser)
+fc = FritzConnection(password=boxpw, user='fritz3220')
 
 
 def main():
@@ -34,10 +29,13 @@ def main():
     keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration', 'GetInfo', 'NewEnable']
     result = fbc(keys)
-    if change:
-        result = div(not result)
-    result = fbc(keys)
+
     print(1, result)
+    # div(change)
+    # print(2, result)
+    # div(not result)
+    # result = fbc(keys)
+    # print(3, result)
 
 
 def fbc(keys):

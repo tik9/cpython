@@ -2,32 +2,30 @@ import sys
 import json
 from pymongo import MongoClient
 from pprint import pprint
-with open('env_mongo', 'r') as f:
-    mongo_uri = f.readline()
+with open('.env', 'r') as f:
+    mongo_uri = f.readline().split('=')[1]
 
 client = MongoClient(mongo_uri)
 db = client.website
 args = sys.argv
 
-coll = 'pages'
-coll = 'tools'
+coll = 'sys'
 # coll = 'test'
 # if args[2:]:
 # coll = args[2]
 
 key = 'name'
-val = 'windows'
-update_key = 'description'
-update_val = 'I did some powershell with Active Directory members users and groups'
+val = ''
+update_key = ''
+update_val = ''
 
-dat = {key: val, "category": "web", update_key: update_val}
+dat = {key: val, '': '', update_key: update_val}
 
 json_dat = json.dumps(dat)
 json_dat = json.loads(json_dat)
 
 
 def main():
-
     key = None
     if args[2:]:
         key = args[2]

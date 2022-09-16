@@ -5,20 +5,20 @@ from pprint import pp
 
 to_day = datetime.date.today()
 
-end = datetime.date(2022, 9, 30)
+end = datetime.date(2022, 12, 14)
 
 inc_holidays = True
 inc_holidays = False
-wednes = True
-wednes = False
-coming_weekend = True
+type1 = 'my'
+type1 = 'max'
 coming_weekend = False
-type_1 = 'max'
+coming_weekend = True
 all_we = True
 all_we = False
 
 
 def main():
+    # pp (to_day.weekday())
     res = date_to_string(holi_add_dic())
     pp(res)
 
@@ -53,7 +53,7 @@ def holi_add_dic():
 
         holi_add = {'2022-11-1': 'Alllerheiligen'}
 
-    if type_1 == 'max':
+    if type1 == 'max':
         zusatz = ['2022-10-3']
         zusatz = {key: 'Zusatz' for key in zusatz}
         holi_add.update(zusatz)
@@ -63,16 +63,12 @@ def holi_add_dic():
         if date_ < end:
             holi_add_parse[date_] = v
 
-    holi_add_parse.update(event_(type_1, coming_weekday=coming_weekend))
+    holi_add_parse.update(event_(type1, coming_weekday=coming_weekend))
     if all_we:
-        if type_1 == 'my':
+        if type1 == 'my':
             holi_add_parse.update(event_('max',))
         else:
             holi_add_parse.update(event_('my'))
-
-    if wednes:
-        holi_add_parse.update(
-            event_('max', coming_weekday=coming_weekend, weekday=2))
 
     return sorted(holi_add_parse.items())
 

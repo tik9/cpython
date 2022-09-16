@@ -3,27 +3,27 @@ import os
 from os.path import join
 from pathlib import Path
 import shutil
-from pprint import pp
 import json
 
 home = str(Path.home())
 base_folder = os.path.dirname(os.path.dirname(__file__))
+# print(base_folder)
+folder = join(base_folder, 'fun', 'functions')
 
-tik = join(base_folder, 'tik')
-assets = join(tik, 'assets')
-public = join(tik, 'public')
-src = 'template'
-dst = 'code'
 js = '.js'
 ht = '.html'
-test = join(tik, 'test', 'test.json')
 
 
 def main():
-    # file_op()
-    copy(join(assets, src+js), join(assets, dst+js))
-    # insert()
+    file_op()
+    # copy(join(assets, src+js), join(assets, dst+js))
     pass
+
+
+def file_op():
+    for file in os.listdir(folder):
+        os.rename(join(folder, file), join(folder, file[:-3]+'.ts'))
+        # print(file[:-3]+'.ts')
 
 
 def copy(src, dst):
@@ -31,16 +31,16 @@ def copy(src, dst):
         shutil.copy(src, dst)
     except IOError:
         print('error')
-        with open(join(assets, dst), 'w') as f:
+        with open(join(public, dst), 'w') as f:
             f.write('console.log(1)\n')
 
 
 def json_():
-    with open(test, 'r') as f:
+    with open(public, 'r') as f:
         cont = json.loads(f.read())
         cont.append(dst)
         cont.sort()
-        with open(test, 'w') as f:
+        with open(public, 'w') as f:
             json.dump(cont, f, ensure_ascii=False, indent=4)
         # print(cont)
 
@@ -54,15 +54,9 @@ def insert():
     lines.append(dst)
 
     lines.sort()
-    pp(lines)
 
     # with open(client, 'w') as f:
     # for line in lines:f.write(line + "\n")
-
-
-def file_op():
-    for file_ in os.listdir(tik):
-        print(file_)
 
 
 if __name__ == "__main__":
