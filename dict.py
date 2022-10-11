@@ -1,6 +1,10 @@
-import sys
-from CoreServices import DictionaryServices
+'''translation from https://gist.github.com/lambdamusic/bdd56b25a5f547599f7f
+see my comment in the gist - all pyobc pip packages needed
+'''
 
+import sys
+# from CoreServices import DictionaryServices
+from DictionaryServices import DCSCopyTextDefinition
 
 searchword = ''
 if sys.argv[1:]:
@@ -8,13 +12,14 @@ if sys.argv[1:]:
 
 
 def main():
-    dict()
+    '''main'''
+    dicti()
 
 
-def dict():
+def dicti():
+    '''the translation'''
     wordrange = (0, len(searchword))
-    dictresult = DictionaryServices.DCSCopyTextDefinition(
-        None, searchword, wordrange)
+    dictresult = DCSCopyTextDefinition(None, searchword, wordrange)
     if not dictresult:
         print(searchword+" not found")
     else:

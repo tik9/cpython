@@ -1,40 +1,36 @@
+
 import datetime
+from pprint import pp
 import holidays
 from dateutil import parser
-from pprint import pp
 
 to_day = datetime.date.today()
-
 end = datetime.date(2022, 12, 14)
 
-inc_holidays = True
-inc_holidays = False
-type1 = 'my'
-type1 = 'max'
-coming_weekend = False
-coming_weekend = True
-all_we = True
-all_we = False
+holi = True
+holi = False
+TYP = 'max'
+TYP = 'my'
 
 
 def main():
+    '''main'''
     # pp (to_day.weekday())
     res = date_to_string(holi_add_dic())
     pp(res)
 
 
-def event_(type, coming_weekday=False, weekday=4):
-    weekday = next_weekday(weekday)
-    if not coming_weekday:
-        weekday = weekday+datetime.timedelta(days=7)
+def event_(type):
+    '''event'''
+    days_ahead = 4 - to_day.weekday()
+    if days_ahead <= 0:
+        days_ahead += 7
+    weekday= to_day + datetime.timedelta(days_ahead)
 
     counter = 0
     event = {}
     while weekday < end:
-
         weekday = weekday+datetime.timedelta(weeks=counter)
-        if weekday.month == 8:
-            continue
 
         event[weekday] = type
         counter = 2
@@ -43,17 +39,18 @@ def event_(type, coming_weekday=False, weekday=4):
 
 
 def holi_add_dic():
+    '''holidays add'''
     holi_add_parse = {}
     holi_add = {}
 
-    if inc_holidays:
+    if holi:
         for elem in holidays.Germany(years=to_day.year).items():
             if elem[0] > to_day and elem[0] < end:
                 holi_add_parse[elem[0]] = elem[1]
 
         holi_add = {'2022-11-1': 'Alllerheiligen'}
 
-    if type1 == 'max':
+    if TYP == 'max':
         zusatz = ['2022-10-3']
         zusatz = {key: 'Zusatz' for key in zusatz}
         holi_add.update(zusatz)
@@ -63,17 +60,13 @@ def holi_add_dic():
         if date_ < end:
             holi_add_parse[date_] = v
 
-    holi_add_parse.update(event_(type1, coming_weekday=coming_weekend))
-    if all_we:
-        if type1 == 'my':
-            holi_add_parse.update(event_('max',))
-        else:
-            holi_add_parse.update(event_('my'))
+    holi_add_parse.update(event_(TYP))
 
     return sorted(holi_add_parse.items())
 
 
 def date_to_string(dict_date):
+    '''to string converting'''
     str_d_format = '%a %d.%m.%Y'
 
     if isinstance(dict_date, datetime.date):
@@ -84,13 +77,6 @@ def date_to_string(dict_date):
         new_elem = k.strftime(str_d_format)
         new_dict[new_elem] = v
     return new_dict
-
-
-def next_weekday(weeknr):
-    days_ahead = weeknr - to_day.weekday()
-    if days_ahead <= 0:
-        days_ahead += 7
-    return to_day + datetime.timedelta(days_ahead)
 
 
 if __name__ == '__main__':
