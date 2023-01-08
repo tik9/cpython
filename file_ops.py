@@ -13,6 +13,7 @@ folder = join(base_folder, 'fun', 'functions')
 js = '.js'
 ht = '.html'
 
+public=''
 
 def main():
     file_op()
@@ -33,30 +34,6 @@ def copy(src, dst):
         print('error')
         with open(join(public, dst), 'w') as f:
             f.write('console.log(1)\n')
-
-
-def json_():
-    with open(public, 'r') as f:
-        cont = json.loads(f.read())
-        cont.append(dst)
-        cont.sort()
-        with open(public, 'w') as f:
-            json.dump(cont, f, ensure_ascii=False, indent=4)
-        # print(cont)
-
-
-def insert():
-    lines = []
-    with open('', 'r') as f:
-        for line in f:
-            lines.append(line)
-
-    lines.append(dst)
-
-    lines.sort()
-
-    # with open(client, 'w') as f:
-    # for line in lines:f.write(line + "\n")
 
 
 if __name__ == "__main__":
