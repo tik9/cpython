@@ -1,26 +1,28 @@
+'''Youtube viewer'''
 
+import webbrowser
 import youtube_dl
 from youtubesearchpython import VideosSearch
-import webbrowser
+from os.path import join, dirname
 
-# search_v = 'calma'
-search_v = 'paso de la luna'
-# search_v = 'penny lane'
+with open(join(dirname(__file__), 'vids'), 'r', encoding='utf-8') as vid:
+    last = vid.read().splitlines()[-1]
 
 
 def main():
+    '''main'''
     vid = search()
-    # dl(vid)
     # print(vid)
     webbrowser.open(vid)
 
 
 def search():
-    videosSearch = VideosSearch(search_v, limit=1)
-    return videosSearch.result()['result'][0]['link']
+    '''search'''
+    return VideosSearch(last, limit=1).result()['result'][0]['link']
 
 
-def dl(vid):
+def download(vid):
+    '''download YT vid'''
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{

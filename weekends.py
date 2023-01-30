@@ -66,6 +66,7 @@ def holidays_de():
 
     holi_add = {
         # '2023-01-27': 'test holi',
+'2023-04-03':'Kiga geschlossen',
         '2023-05-05': 'Betriebsausflug',
         '2023-05-19': 'Brückentag',
         '2023-06-09': 'Pfingstferien',
