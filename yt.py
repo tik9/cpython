@@ -1,9 +1,9 @@
 '''Youtube viewer'''
 
 import webbrowser
+from os.path import join, dirname
 import youtube_dl
 from youtubesearchpython import VideosSearch
-from os.path import join, dirname
 
 with open(join(dirname(__file__), 'vids'), 'r', encoding='utf-8') as vid:
     last = vid.read().splitlines()[-1]

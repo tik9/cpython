@@ -1,98 +1,73 @@
+'''Get every second weekend plus public german holidays and school off'''
 
-import datetime
+from datetime import date, timedelta
+from pprint import pp
 from dateutil import parser
 import holidays
-from pprint import pp
-import re
 
-to_day = datetime.date.today()
-end = datetime.date(2023, 7, 13)
-# end = datetime.date(2023, 1, 28)
-start = datetime.date(2023, 8, 25)
-# start = datetime.date(2023, 11, 20)
 
-holi = False
-holi = True
-typ = 'Max'
-typ = 'TK Umgangswochenende'
+start_summer_vac = date(2023, 8, 7)
+end_summer_vac = date(2023, 9, 11)
 
 
 def main():
     '''main'''
-    # pp (to_day.weekday())
-    res = date_to_string(holidays_de())
-    # res = remove_quotes(res)
-    pp(res)
+    for key, val in holidays_de():
+        print(key.strftime('%a %d.%m.%Y'), val)
+    # print((end_summer_vac-start_summer_vac).days)
 
 
-def remove_quotes(dic):
-    # d = {'company': 'Wendy\'s Stall'}
-    res = "{"+", ".join(["{}:{}".format(k, v) for k, v in dic.items()]) + "}"
-    return res
-
-
-def mytime():
-    '''event'''
-    days_ahead = 4 - to_day.weekday()
-    if days_ahead <= 0:
-        days_ahead += 7
-    friday = to_day + datetime.timedelta(days_ahead)
-
-    counter = 0
-    event = {}
-    in_between = False
-    while friday < end or friday > start and datetime.date(2023, 3, 10) < friday < datetime.date(2023, 12, 1):
-        friday = friday+datetime.timedelta(weeks=counter)
-        # print(friday>end)
-        event[friday] = typ
-        counter = 2
-        if friday > end and not in_between:
-            in_between = True
-            days_ahead = 4-start.weekday()
-            if days_ahead <= 0:
-                days_ahead += 7
-            friday = start + datetime.timedelta(days_ahead)
-
-    return event
+def days_to_friday(weekday):
+    '''days to friday from a given day'''
+    days_to_fr = 4 - weekday.weekday()
+    if days_to_fr <= 0:
+        days_to_fr += 7
+    return days_to_fr
 
 
 def holidays_de():
-    '''add german - aka "de" - public holidays and kindergarden holidays'''
+    '''german public holidays and kindergarden holidays'''
     holi_add_parse = {}
 
+    to_day = date.today()+timedelta(days=7)
     for elem in holidays.Germany(years=to_day.year).items():
-        if elem[0] < datetime.date(2023, 12, 25) and elem[0] > to_day:
-            holi_add_parse[elem[0]] = elem[1]
+
+        if elem[0] < date(2023, 12, 25) and elem[0] > to_day:
+            if elem[1] == 'Karfreitag':
+                holi_add_parse[elem[0]] = 'Karfreitag, TK Wochenende'
+            else:
+                holi_add_parse[elem[0]] = elem[1]
 
     holi_add = {
-        # '2023-01-27': 'test holi',
-'2023-04-03':'Kiga geschlossen',
-        '2023-05-05': 'Betriebsausflug',
-        '2023-05-19': 'Brückentag',
+        '2023-04-03': 'Kiga geschlossen',
+        '2023-05-05': 'Betriebsausflug, TK Wochenende',
+        '2023-05-19': 'Brückentag, TK Wochenende',
         '2023-06-09': 'Pfingstferien',
-        '2023-10-02': 'Mein Geburtstag',
-        '2023-11-1': 'Alllerheiligen'}
+        '2023-06-08': 'Fronleichnam',
+        '2023-10-02': 'TK Geburtstag',
+        '2023-10-30': 'Beginn Herbstferien',
+        '2023-11-03': 'Ende Herbstferien'
+    }
 
-    for k, v in holi_add.items():
-        date_ = parser.parse(k).date()
-        if date_ < end or date_ > start:
-            holi_add_parse[date_] = v
-    mytime2 = mytime()
-    mytime2.update(holi_add_parse)
-    # holi_add_parse.update(event_())
-    # pp(dict(holi_add_parse.items()))
-    # pp(mytime2)
-    return sorted(mytime2.items())
+    for key, val in holi_add.items():
+        holi_add_parse[parser.parse(key).date()] = val
 
+    friday = date(2023, 4, 7)
+    event = {}
+    while friday < start_summer_vac-timedelta(weeks=2):
+        friday = friday+timedelta(weeks=2)
+        event[friday] = 'TK Wochenende'
 
-def date_to_string(dict_date):
-    '''to string converting'''
-
-    new_dict = {}
-    for k, v in dict_date:
-        new_elem = k.strftime('%a %d.%m.%Y')
-        new_dict[new_elem] = v
-    return new_dict
+    counter = 7
+    while friday < date(2023, 12, 15):
+        friday = friday+timedelta(weeks=counter)
+        event[friday] = 'TK Wochenende'
+        counter = 2
+    event.update(holi_add_parse)
+    summer = {start_summer_vac: 'Beginn Sommerferien 35 Tage',
+              end_summer_vac: 'Ende Sommerferien'}
+    event.update(summer)
+    return sorted(event.items())
 
 
 if __name__ == '__main__':
