@@ -3,22 +3,21 @@ import sys
 
 home = str(Path.home())
 
-# print(home)
-
 
 def main():
-    content_ = content()
-    print(content_)
+    '''main'''
+    print(home)
+    print(version())
 
 
 def content():
-    pass
+    '''content'''
+    return 1
 
 
 def version():
-    python_ver = sys.version_info
-    major = sys.version_info.major
-    minor = sys.version_info.minor
+    '''version'''
+    return [sys.version_info, sys.version_info.major]
 
 
 if __name__ == "__main__":

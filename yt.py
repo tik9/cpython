@@ -1,11 +1,10 @@
-'''Youtube viewer'''
+'''Youtube viewer with videos coming from a video file list'''
 
 import webbrowser
-from os.path import join, dirname
 import youtube_dl
 from youtubesearchpython import VideosSearch
 
-with open(join(dirname(__file__), 'vids'), 'r', encoding='utf-8') as vid:
+with open('videolist', encoding='utf-8') as vid:
     last = vid.read().splitlines()[-1]
 
 
