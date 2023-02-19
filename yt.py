@@ -1,18 +1,21 @@
-'''Youtube viewer with videos coming from a video file list'''
+'''Youtube viewer with videos from a video file list'''
 
 import webbrowser
 import youtube_dl
 from youtubesearchpython import VideosSearch
+from pprint import pprint
 
 with open('videolist', encoding='utf-8') as vid:
-    last = vid.read().splitlines()[-1]
+    all_vids = vid.read().splitlines()
+    last = all_vids[-1]
 
 
 def main():
     '''main'''
-    vid = search()
-    # print(vid)
-    webbrowser.open(vid)
+    video = search()
+    download(video)
+    # pprint(sorted(all_vids))
+    # webbrowser.open(vid)
 
 
 def search():
@@ -21,7 +24,7 @@ def search():
 
 
 def download(vid):
-    '''download YT vid'''
+    '''download video'''
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
