@@ -7,7 +7,6 @@ from os.path import join, dirname
 import socket
 from fritzconnection import FritzConnection
 
-
 with open(join(dirname(__file__), '.env'), 'r', encoding='utf-8') as env:
     boxpw = env.readlines()[1].split('=')[1]
 
@@ -24,8 +23,8 @@ def main():
     keys = ['WLANConfiguration1', 'GetInfo', 'NewEnable']
     result = fc.call_action(keys[0], keys[1])
 
+    change(True)
     print(1, result)
-    # change(true)
 
 
 def change(enable):

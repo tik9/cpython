@@ -12,23 +12,26 @@ from dateutil import parser
 import holidays
 
 # b) individual
-JSON = 'dates_example.json'
-# JSON = 'dates.json'
+# JSON = 'dates_example.json'
+JSON = 'dates.json'
 
 dates = [
     {
-        date(2023, 8, 7): 'begin intensive training year 2023',
-        # date(2023, 8, 7): 'Beginn Sommerferien, Tage: ' + \
-        # str((date(2023, 9, 11)-date(2023, 8, 7)).days),
-        date(2023, 9, 11): 'end intensive training year 2023',
-        # date(2023, 9, 11): 'Ende Sommerferien'
+        # date(2023, 8, 7): 'begin intensive training year 2023',
+        date(2023, 8, 7): 'Beginn Sommerferien, Tage: ' + \
+        str((date(2023, 9, 11)-date(2023, 8, 7)).days),
+        # date(2023, 9, 11): 'end intensive training year 2023',
+        date(2023, 9, 11): 'Ende Sommerferien'
     },
     {
-        date(2023, 12, 23): 'Begin online training Python',
-        # date(2023, 12, 23): 'Beginn Winterferien, Tage: ' + \
-        # str((date(2024, 1, 7)-date(2023, 12, 23)).days),
-        date(2024, 1, 7): 'End online training Python'
-        # date(2024, 1, 7): 'Ende Winterferien'
+        # date(2023, 12, 23): 'Begin online training Python',
+        date(2023, 12, 23): 'Beginn Winterferien, Tage: ' + \
+        str((date(2024, 1, 7)-date(2023, 12, 23)).days),
+        # date(2024, 1, 7): 'End online training Python'
+        date(2024, 1, 7): 'Ende Winterferien'
+    }, {
+        date(2023, 10, 30): 'Beginn Herbstferien',
+        date(2023, 11, 3): 'Ende Herbstferien'
     }
 ]
 # dates.append({date(1, 1, 1): '',
@@ -36,8 +39,8 @@ dates = [
 
 
 # c) repetitive
-# NAME = 'TK Wochenende'
-NAME = 'gym'
+NAME = 'TK Wochenende'
+# NAME = 'gym'
 double_holiday = ['Karfreitag']
 PERIOD = 2
 SPECIAL_DAY = 4
@@ -51,8 +54,10 @@ end_period = date(2023, 12, 15)
 
 def main():
     '''main'''
+    res, total_days = holidays_de()
+    print('total', total_days)
 
-    for key, val in holidays_de():
+    for key, val in res:
         print(key.strftime('%a %d.%m.%Y'), val)
 
 
@@ -73,6 +78,7 @@ def holidays_de():
         if elem[1] in double_holiday:
             holiday_dict[elem[0]] += ' '+NAME
 
+    holi_add = {}
     with open(JSON, encoding='utf-8') as json_file:
         holi_add = json.load(json_file)
 
@@ -92,10 +98,10 @@ def holidays_de():
         counter = PERIOD
     event.update(holiday_dict)
 
-    for elem in dates:
-        event.update(elem)
+    # for elem in dates:
+    # event.update(elem)
 
-    return sorted(event.items())
+    return sorted(event.items()), len(event)
 
 
 if __name__ == '__main__':
