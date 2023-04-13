@@ -21,10 +21,11 @@ def main():
     # keys = ['WANIPConnection', 'GetInfo']
     # keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration1', 'GetInfo', 'NewEnable']
-    result = fc.call_action(keys[0], keys[1])
 
-    change(True)
-    print(1, result)
+    change(False)
+    # change(True)
+    result = fc.call_action(keys[0], keys[1])
+    print(result)
 
 
 def change(enable):

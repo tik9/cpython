@@ -19,32 +19,27 @@ dates = [
     {
         # date(2023, 8, 7): 'begin intensive training year 2023',
         date(2023, 8, 7): 'Beginn Sommerferien, Tage: ' + \
-        str((date(2023, 9, 11)-date(2023, 8, 7)).days),
+        str((date(2023, 8, 25)-date(2023, 8, 7)).days),
         # date(2023, 9, 11): 'end intensive training year 2023',
         date(2023, 9, 11): 'Ende Sommerferien'
     },
     {
-        # date(2023, 12, 23): 'Begin online training Python',
         date(2023, 12, 23): 'Beginn Winterferien, Tage: ' + \
-        str((date(2024, 1, 7)-date(2023, 12, 23)).days),
-        # date(2024, 1, 7): 'End online training Python'
+        str((date(2024, 1, 6)-date(2023, 12, 30)).days),
         date(2024, 1, 7): 'Ende Winterferien'
     }, {
         date(2023, 10, 30): 'Beginn Herbstferien',
         date(2023, 11, 3): 'Ende Herbstferien'
     }
 ]
-# dates.append({date(1, 1, 1): '',
-#  date(1, 1, 2): ''})
-
 
 # c) repetitive
 NAME = 'TK Wochenende'
 # NAME = 'gym'
-double_holiday = ['Karfreitag']
 PERIOD = 2
 SPECIAL_DAY = 4
 TIMEDELTA = 7
+# TIMEDELTA = 0
 
 # period start on friday
 start_period = date(2023, 4, 7)
@@ -54,11 +49,10 @@ end_period = date(2023, 12, 15)
 
 def main():
     '''main'''
-    res, total_days = holidays_de()
-    print('total', total_days)
-
-    for key, val in res:
-        print(key.strftime('%a %d.%m.%Y'), val)
+    with open('dates.txt', 'w') as f:
+        f.write(f'Umgang 2023\n\n')
+        for key, val in holidays_de():
+            f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n")
 
 
 def days_to_special(weekday):
@@ -75,8 +69,6 @@ def holidays_de():
 
     for elem in holidays.Germany(years=date.today().year).items():
         holiday_dict[elem[0]] = elem[1]
-        if elem[1] in double_holiday:
-            holiday_dict[elem[0]] += ' '+NAME
 
     holi_add = {}
     with open(JSON, encoding='utf-8') as json_file:
@@ -98,10 +90,10 @@ def holidays_de():
         counter = PERIOD
     event.update(holiday_dict)
 
-    # for elem in dates:
-    # event.update(elem)
+    for elem in dates:
+        event.update(elem)
 
-    return sorted(event.items()), len(event)
+    return sorted(event.items())
 
 
 if __name__ == '__main__':

@@ -13,9 +13,9 @@ with open('videolist', encoding='utf-8') as vid:
 def main():
     '''main'''
     video = search()
-    download(video)
+    # download(video)
     # pprint(sorted(all_vids))
-    # webbrowser.open(vid)
+    webbrowser.open(video)
 
 
 def search():
