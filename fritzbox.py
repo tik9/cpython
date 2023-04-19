@@ -1,14 +1,19 @@
 """
 fritzconnection.readthedocs.io/en/1.11.0/sources/getting_started.html
-To use the TR-064 interface of the Fritz!Box, the settings for Allow access for applications and Transmit status information over UPnP in the Home Network -> Network -> Network Settings menu have to be activated.
+To use the TR-064 interface of the Fritz!Box:
+Allow access for applications and Transmit status information over UPnP in Home Network -> Network -> Network Settings
 """
 
 from os.path import join, dirname
 import socket
 from fritzconnection import FritzConnection
+import time
+import os
+from dotenv import load_dotenv
 
-with open(join(dirname(__file__), '.env'), 'r', encoding='utf-8') as env:
-    boxpw = env.readlines()[1].split('=')[1]
+load_dotenv()
+
+boxpw = os.getenv('fb')
 
 if socket.gethostname() == 't--pc':
     boxpw = boxpw[:-1]
@@ -22,10 +27,10 @@ def main():
     # keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration1', 'GetInfo', 'NewEnable']
 
-    change(False)
-    # change(True)
     result = fc.call_action(keys[0], keys[1])
-    print(result)
+    # change(not result['NewEnable'])
+    # time.sleep(2)
+    print(result['NewEnable'])
 
 
 def change(enable):

@@ -1,11 +1,14 @@
-import sys
+
+from dotenv import load_dotenv
 import json
+import os
+import sys
 from pymongo import MongoClient
 from pprint import pprint
-with open('.env', 'r') as f:
-    mongo_uri = f.readline().split('=')[1]
 
-client = MongoClient(mongo_uri)
+load_dotenv()
+
+client = MongoClient(os.getenv('mongo'))
 db = client.website
 args = sys.argv
 
