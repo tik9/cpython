@@ -1,7 +1,9 @@
 dateutils
 fritzconnection
 holidays
+openai
 pymongo
 requests
+streamlit
 youtube_dl
 youtube-search-python

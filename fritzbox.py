@@ -28,7 +28,7 @@ def main():
     keys = ['WLANConfiguration1', 'GetInfo', 'NewEnable']
 
     result = fc.call_action(keys[0], keys[1])
-    # change(not result['NewEnable'])
+    change(not result['NewEnable'])
     # time.sleep(2)
     print(result['NewEnable'])
 

@@ -6,8 +6,9 @@ c) Repetitive, "periodical" dates
   '''
 
 from datetime import date, timedelta
-import json
 from dateutil import parser
+import holidays
+import json
 
 # b) individual
 # JSON = 'dates_example.json'
@@ -32,42 +33,47 @@ holidays_school = [
 # c) repetitive
 NAME = 'Abholung TK'
 PERIOD = 2
+# either this friday or next
+fr_delta = 7
+# 0=monday, 4=friday
 SPECIAL_DAY = 4
 summer_weeks = 9
-weekend_exclusion = date(2023, 5, 19)
+weekend_already_set = date(2023, 5, 19)
 # TIMEDELTA = 0
 
 # period start on friday
-start_period = date(2023, 4, 7)
+# start_period = date(2023, 4, 7)
+
 interval_period = date(2023, 7, 20)
 end_period = date(2023, 12, 15)
-freetext = 'Die Mittwochstermine bleiben bestehen. Sollte keine "Rückgabe TK" nach einer Abholung genannt sein, ist die Rückgabe der darauffolgende Sonntag 18 Uhr.'
+freetext = 'Rückgabe ggf. darauffolgende Sonntag 18 Uhr.'
 
 
 def main():
     '''main'''
-    with open('dates.txt', 'w') as f:
-        f.write(f'Folgende Perioden wurden für mich gesetzt\n\n')
-        for key, val in holidays_de():
-            f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n\n")
-        f.write(freetext)
+    # print(days_to_fr())
+    # holidays_de()
+    public_holi()
 
 
-def days_to_special(weekday):
+def public_holi():
+    for elem in holidays.Germany(years=date.today().year).items():
+        if elem[0] > date(2023, 4, 10):
+            print(f'{elem[0]}: {elem[1]}')
+
+
+def days_to_fr():
     '''days to special day from a given day'''
-    days_to_fr = SPECIAL_DAY - weekday.weekday()
-    if days_to_fr <= 0:
-        days_to_fr += 7
-    return days_to_fr
+    days_to_fr_ = date.today().weekday()-SPECIAL_DAY
+    # print(days_to_fr)
+    if days_to_fr_ <= 0:
+        days_to_fr_ = SPECIAL_DAY-date.today().weekday()
+    return days_to_fr_
 
 
 def holidays_de():
     '''german public holidays and further holidays'''
     holiday_dict = {}
-
-    # for elem in holidays.Germany(years=date.today().year).items():
-    # if elem[0] > date(2023, 4, 10):
-    # holiday_dict[elem[0]] = elem[1]
 
     holi_add = {}
     with open(JSON, encoding='utf-8') as json_file:
@@ -76,11 +82,11 @@ def holidays_de():
     for key, val in holi_add.items():
         holiday_dict[parser.parse(key).date()] = val
 
-    weekday = start_period
+    weekday = date.today()+timedelta(days_to_fr())+timedelta(fr_delta)
     event = {}
     while weekday < interval_period-timedelta(weeks=PERIOD):
         weekday = weekday+timedelta(weeks=PERIOD)
-        if weekday != weekend_exclusion:
+        if weekday != weekend_already_set:
             event[weekday] = NAME
     counter = summer_weeks
     while weekday < end_period:
@@ -89,7 +95,11 @@ def holidays_de():
         counter = PERIOD
     event.update(holiday_dict)
 
-    return sorted(event.items())
+    with open('dates.txt', 'w') as f:
+        f.write(f'Perioden\n\n')
+        for key, val in sorted(event.items()):
+            f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n\n")
+        f.write(freetext)
 
 
 if __name__ == '__main__':

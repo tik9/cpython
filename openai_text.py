@@ -1,32 +1,46 @@
 '''
-open ai api test
+open ai api
 '''
 
+from dotenv import load_dotenv
 import openai
 import os
-from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
 openai.api_key = os.getenv('openai')
 
-# Set the model and prompt
-model_engine = "text-davinci-003"
-with open(os.path.splitext(__file__)[0]) as file:
-    all = file.read().splitlines()
-    last = all[-1]
 
-print(1, last)
-max_tokens = 1024
+def main():
+    st.write('Welcome to')
+    user_input = st.text_input("Describe your LinkedIn post: ")
+    if st.button('generate post'):
+        st.write(get_answer(user_input))
 
-completion = openai.Completion.create(
-    engine=model_engine,
-    prompt=last,
-    max_tokens=max_tokens,
-    temperature=0.5,
-    top_p=1,
-    frequency_penalty=0,
-    presence_penalty=0
-)
 
-print(completion.choices[0].text)
+def get_answer(post):
+    '''Set the model and prompt'''
+
+    model_engine = "text-davinci-003"
+    # with open(os.path.splitext(__file__)[0]) as file:
+    # all = file.read().splitlines()
+    # last = all[-1]
+
+    max_tokens = 1024
+
+    completion = openai.Completion.create(
+        engine=model_engine,
+        prompt=f'write a post about {post}',
+        max_tokens=max_tokens,
+        temperature=0.5,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+
+    return completion.choices[0].text
+
+
+if __name__ == '__main__':
+    main()
