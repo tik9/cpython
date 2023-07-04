@@ -9,29 +9,11 @@ from datetime import date, timedelta
 from dateutil import parser
 import holidays
 import json
+from prettytable import PrettyTable
 
-# b) individual
-# JSON = 'dates_example.json'
-JSON = 'dates.json'
-
-pentecost = date(2023, 6, 9)
-
-holidays_school = [
-    {
-        date(2023, 7, 31): 'Beginn Sommerferien',
-        date(2023, 9, 11): 'Ende Sommerferien'
-    },
-    {
-        date(2023, 12, 23): 'Beginn Winterferien',
-        date(2024, 1, 7): 'Ende Winterferien'
-    }, {
-        date(2023, 10, 30): 'Beginn Herbstferien',
-        date(2023, 11, 3): 'Ende Herbstferien'
-    }
-]
 
 # c) repetitive
-NAME = 'Abholung TK'
+NAME = 'Abholung'
 PERIOD = 2
 # either this friday or next
 fr_delta = 7
@@ -46,14 +28,59 @@ weekend_already_set = date(2023, 5, 19)
 
 interval_period = date(2023, 7, 20)
 end_period = date(2023, 12, 15)
-freetext = 'Rückgabe ggf. darauffolgende Sonntag 18 Uhr.'
+freetext = 'End of dates'
 
 
 def main():
     '''main'''
+    pretty()
     # print(days_to_fr())
     # holidays_de()
-    public_holi()
+    # public_holi()
+
+
+def pretty():
+    '''use pretty table'''
+    available, vals = values()
+    mytab = PrettyTable(['Name', 'Wert (in €)'])
+    mytab.align['Name'] = 'l'
+    mytab.align['Wert (in €)'] = 'l'
+    with open('key_val.txt', 'w') as output:
+        output.write(f'verfügbares mtl. EK: {str(available)}\n\n')
+        for key, val in vals.items():
+            mytab.add_row([key.capitalize(), str(val)])
+        print(mytab)
+
+        output.write(str(mytab))
+
+
+def pretty_test():
+    '''test pretty table'''
+    x = PrettyTable(["City name", "Area"])
+    x.align["City name"] = "l"  # Left align city names
+    # One space between column edges and contents (default)
+    x.padding_width = 1
+    x.add_row(["Adelaide", 1295])
+    x.add_row(["Brisbane", 5905])
+    print(x)
+    with open('key_val.txt', 'w') as out:
+        out.write(str(x))
+
+
+def values():
+    '''get values from json'''
+    vals = {}
+    file = 'key_val.json'
+    file = 'key_val_example.json'
+
+    with open(file) as json_file:
+        vals = json.load(json_file)
+        available = 1
+        if file == 'key_val.json':
+            available = vals['netto Ek']-vals['Unterhalt'] - vals['nebenkosten'] - \
+                vals['versicherungen'] - vals['sonstige Kosten'] - \
+                vals['lebenshaltungskosten']
+    return available, vals
 
 
 def public_holi():
@@ -72,11 +99,11 @@ def days_to_fr():
 
 
 def holidays_de():
-    '''german public holidays and further holidays'''
+    '''german holidays'''
     holiday_dict = {}
 
     holi_add = {}
-    with open(JSON, encoding='utf-8') as json_file:
+    with open('dates.json', encoding='utf-8') as json_file:
         holi_add = json.load(json_file)
 
     for key, val in holi_add.items():
@@ -96,7 +123,7 @@ def holidays_de():
     event.update(holiday_dict)
 
     with open('dates.txt', 'w') as f:
-        f.write(f'Perioden\n\n')
+        f.write(f'Header\n\n')
         for key, val in sorted(event.items()):
             f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n\n")
         f.write(freetext)

@@ -3,6 +3,7 @@ fritzconnection
 holidays
 openai
 pymongo
+python-dotenv
 requests
 streamlit
 youtube_dl
