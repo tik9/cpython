@@ -19,12 +19,12 @@ def main():
     # keys = ['DeviceInfo', 'GetInfo']
     keys = ['WLANConfiguration1', 'GetInfo', 'NewEnable']
 
-    result = fc.call_action(keys[0], keys[1])
-    print(result['NewEnable'])
-    fc.call_action('WLANConfiguration', 'SetEnable',
-                   NewEnable=not result['NewEnable'])
-    result = fc.call_action(keys[0], keys[1])
-    print(result['NewEnable'])
+    print(fc.call_action(keys[0], keys[1])[keys[2]])
+
+    fc.call_action(keys[0], 'SetEnable', NewEnable=not (
+        fc.call_action(keys[0], keys[1]))[keys[2]])
+
+    print(fc.call_action(keys[0], keys[1])[keys[2]])
 
 
 if __name__ == '__main__':

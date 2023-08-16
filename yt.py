@@ -11,15 +11,9 @@ with open('ytlist') as file:
 
 def main():
     '''main'''
-    video = search()
-    # download(video)
     # pprint(sorted(all_vids))
-    webbrowser.open(video)
 
-
-def search():
-    '''search'''
-    return VideosSearch(last, limit=1).result()['result'][0]['link']
+    webbrowser.open(VideosSearch(last, limit=1).result()['result'][0]['link'])
 
 
 def download(vid):
