@@ -1,18 +1,24 @@
 from pathlib import Path
 import sys
+import os
+import time
 
 home = str(Path.home())
 
 
 def main():
     '''main'''
-    print(home)
-    print(version())
+    
+    # t=Timer(10, os.system(),'say "ok"')
+    # Timer(3, print,"ok").start()
+    time.sleep(45*60)
+    os.system('say "ok"')
 
+    # Timer(2, os.system('say "ok"')).start()
+    # print('\a')
 
-def content():
-    '''content'''
-    return 1
+    # print(home)
+    # print(version())
 
 
 def version():

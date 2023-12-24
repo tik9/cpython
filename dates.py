@@ -6,6 +6,7 @@ c) Repetitive, "periodical" dates
   '''
 
 from datetime import date, timedelta
+import dateutil.parser as parser
 import holidays
 import json
 from prettytable import PrettyTable
@@ -18,8 +19,8 @@ PERIOD = 2
 SPECIAL_DAY = 4
 
 end_period = date(2024, 1, 15)
+freetext_start = 'start1'
 freetext_end = 'End'
-freetext_start = 'start'
 
 
 def main():
@@ -32,27 +33,26 @@ def main():
 
 def holidays_de():
     '''weekends, my friday 16.6.'''
-    # holiday_dict = {}
+    holiday_dict = {}
     # holi_add = {}
-    # with open('dates.json', encoding='utf-8') as json_file:
-    # holi_add = json.load(json_file)
-
-    # for key, val in holi_add.items():
-    # holiday_dict[parser.parse(key).date()] = val
+    with open('dates.json') as json_file:
+        for key, val in json.load(json_file).items():
+            holiday_dict[parser.parse(key).date()] = val
 
     event = {}
-    # event.update(holiday_dict)
-    date_ = date(2023, 6, 2)
+    event.update(holiday_dict)
+    date_ = date(2023, 7, 14)
 
     while date_ < end_period:
         date_ = date_ + timedelta(weeks=PERIOD)
-        event[date_] = NAME
+        if date_.month != 8 and date_ not in [date(2023, 9, 8), date(2023, 11, 3), date(2023, 12, 29)]:
+            event[date_] = NAME
 
     with open('dates.txt', 'w') as f:
         f.write(f'{freetext_start}\n\n')
         for key, val in sorted(event.items()):
             f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n")
-        f.write(freetext_end)
+        f.write(f'\n{freetext_end}')
 
 
 def pretty():
