@@ -5,10 +5,11 @@ import os,sys
 import time
 
 iterations=2
-mins=2
+mins=1
+secs=5
+
 
 def progressbar(it):
-    out=sys.stdout
     count = len(it)
     size=60
     start = time.time()
@@ -18,16 +19,28 @@ def progressbar(it):
         mins,sec = divmod(((time.time() - start) / j) * (count - j), 60)
         time_str = int(mins)
         
-        print(f"[{u'█'*x}{('.'*(size-x))}] {j}/{count} Still {time_str} min", end='\r', file=out, flush=True)
+        print(f"[{u'█'*x}{('.'*(size-x))}] {j}/{count} Still {time_str} min")
+        # os.system(f'say "still {time_str} minutes"')
+        os.system(f'say "hallo"')
         
     for i, item in enumerate(it):
         yield item
         show(i+1)
-    print("\n", flush=True, file=out)
+    print("\n")
 
 
 for i in progressbar(range(iterations)):
-    time.sleep(mins*60)
-    os.system(f'say "{i*mins} minutes passed"')
+    time.sleep(mins*secs)
 
-os.system(f'say "{iterations*mins} minutes passed"')
+
+def another_progress():
+        toolbar_width = 10
+
+        sys.stdout.write("[%s]" % (" " * toolbar_width))
+        sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+
+        for i in range(toolbar_width):
+            time.sleep(1) 
+            sys.stdout.write("-")
+
+        sys.stdout.write("]\n")

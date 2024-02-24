@@ -9,16 +9,17 @@ home = str(Path.home())
 def main():
     '''main'''
     
-    # t=Timer(10, os.system(),'say "ok"')
-    # Timer(3, print,"ok").start()
-    time.sleep(45*60)
-    os.system('say "ok"')
-
-    # Timer(2, os.system('say "ok"')).start()
-    # print('\a')
-
+    print(a(1))
     # print(home)
     # print(version())
+
+def a(m, n):
+    
+    v=1
+    for i in range(0,n):
+        v *= m - i
+    
+    return v
 
 
 def version():
