@@ -6,10 +6,6 @@ c) Repetitive, "periodical" dates
   '''
 
 from datetime import date, timedelta
-import dateutil.parser as parser
-import holidays
-import json
-from prettytable import PrettyTable
 
 
 # c) repetitive
@@ -18,9 +14,8 @@ PERIOD = 2
 # 0=monday, 4=friday
 SPECIAL_DAY = 4
 
-end_period = date(2024, 2, 15)
-freetext_start = ''
-freetext_end = ''
+end_period = date(2024, 12, 10)
+freetext_start = 'Wochenende'
 
 
 def main():
@@ -32,7 +27,9 @@ def main():
 
 
 def holidays_de():
-    '''weekends, my friday 16.6.'''
+    '''weekends'''
+
+    start_period = date(2024, 10, 18)
     holiday_dict = {}
     # holi_add = {}
     # with open('dates.json') as json_file:
@@ -41,19 +38,17 @@ def holidays_de():
 
     event = {}
     event.update(holiday_dict)
-    date_ = date(2023, 12, 29)
 
-    while date_ < end_period:
-        date_ = date_ + timedelta(weeks=PERIOD)
-        if date_ not in [date(2023, 12, 29)]:
-            event[date_] = NAME
+    while start_period < end_period:
+        start_period = start_period + timedelta(weeks=PERIOD)
+        event[start_period] = NAME
 
     with open('dates.txt', 'w') as f:
         f.write(f'{freetext_start}\n\n')
         for key, val in sorted(event.items()):
             print(key,val)
-            f.write(f"{key.strftime('%a %d.%m.%Y')} {val}\n")
-        f.write(f'\n{freetext_end}')
+            date_day=key.strftime('%a %d.%m.%Y')
+            f.write(f"{date_day} {val}\n")
 
 
 def pretty():
@@ -70,34 +65,6 @@ def pretty():
             print(key+' ' + str(val) + '\n')
         output.write(str(mytab))
         print(sum)
-
-
-def pretty_test():
-    '''test pretty table'''
-    header = ["City name", "Area"]
-    x = PrettyTable(header)
-    x.align["City name"] = "l"  # Left align city names
-    # One space between column edges and contents (default)
-    x.padding_width = 1
-    rows = [["Adelaide the city", 1295], ["Brisbane", 5905]]
-    with open('key_val.txt', 'w') as out:
-        for elem in rows:
-            x.add_row(elem)
-            print(elem[0], elem[1])
-        print(x)
-        out.write(str(x))
-
-
-def values():
-    '''get values from json'''
-    vals = {}
-    file = 'key_val_example.json'
-    file = 'income.json'
-    file = 'funeral.json'
-
-    with open(file) as json_file:
-        vals = json.load(json_file)
-    return vals
 
 
 def public_holi():

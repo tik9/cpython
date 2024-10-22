@@ -5,8 +5,8 @@ import os,sys
 import time
 
 iterations=2
-mins=1
-secs=5
+mins=15
+secs=60
 
 
 def progressbar(it):
@@ -31,16 +31,3 @@ def progressbar(it):
 
 for i in progressbar(range(iterations)):
     time.sleep(mins*secs)
-
-
-def another_progress():
-        toolbar_width = 10
-
-        sys.stdout.write("[%s]" % (" " * toolbar_width))
-        sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
-
-        for i in range(toolbar_width):
-            time.sleep(1) 
-            sys.stdout.write("-")
-
-        sys.stdout.write("]\n")
