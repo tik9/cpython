@@ -1,22 +1,22 @@
 from pathlib import Path
 import sys
-import os
-import time
 
 home = str(Path.home())
 
 
 def main():
     '''main'''
-    
-    print(a(1))
+    print(a(3,2))
+    print(a(4,3))
     # print(home)
     # print(version())
+
 
 def a(m, n):
     
     v=1
     for i in range(0,n):
+        print(v)
         v *= m - i
     
     return v

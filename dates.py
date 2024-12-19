@@ -14,7 +14,7 @@ PERIOD = 2
 # 0=monday, 4=friday
 SPECIAL_DAY = 4
 
-end_period = date(2024, 12, 10)
+end_period = date(2025, 2, 7)
 freetext_start = 'Wochenende'
 
 
@@ -29,7 +29,7 @@ def main():
 def holidays_de():
     '''weekends'''
 
-    start_period = date(2024, 10, 18)
+    start_period = date(2024, 12, 27)
     holiday_dict = {}
     # holi_add = {}
     # with open('dates.json') as json_file:
@@ -43,12 +43,8 @@ def holidays_de():
         start_period = start_period + timedelta(weeks=PERIOD)
         event[start_period] = NAME
 
-    with open('dates.txt', 'w') as f:
-        f.write(f'{freetext_start}\n\n')
-        for key, val in sorted(event.items()):
-            print(key,val)
-            date_day=key.strftime('%a %d.%m.%Y')
-            f.write(f"{date_day} {val}\n")
+    for key, val in sorted(event.items()):
+        print(key.strftime('%a %d.%m.%Y'),val)
 
 
 def pretty():
@@ -65,12 +61,6 @@ def pretty():
             print(key+' ' + str(val) + '\n')
         output.write(str(mytab))
         print(sum)
-
-
-def public_holi():
-    for elem in holidays.Germany(years=date.today().year).items():
-        if elem[0] > date(2023, 4, 10):
-            print(f'{elem[0]}: {elem[1]}')
 
 
 def days_to_fr():
