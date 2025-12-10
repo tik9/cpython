@@ -1,13 +1,8 @@
 '''Youtube viewer with videos from a video file list'''
 
 from pathlib import Path
-import webbrowser
-from youtubesearchpython import VideosSearch
-import pprint
 from pytube import YouTube
 import os
-from youtube_transcript_api import YouTubeTranscriptApi
-import json
 
 home=str(Path.home())
 

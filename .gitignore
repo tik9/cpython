@@ -1,7 +1,5 @@
 .env
 .vscode
-dates.txt
-funeral.json
-income.json
 venv
 ytlist
+income.json

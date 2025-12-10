@@ -6,24 +6,38 @@ home = str(Path.home())
 
 def main():
     '''main'''
-    isPrime()
+    # fib(2)
+    isPrime(4,8)
     # palindrome()
-    # mat=mat_rev_short()
+    # mat_rev()
     # one_by_one(4)
     # print(home)
     # print(version())
 
-def isPrime():
-    '''input: number, e.g. 4
-    output: check if number is prime (yes) or not (no), here 'no'
+def fib(nr):
+    '''input: nr, e.g. 5
+    output: fibonacci numbers until nr, e.g. 01123
     '''
-    nr=7
-    nrSquare=int(nr**0.5)
-    for i in range(2,nrSquare+1):
-        if nr%i==0:
-            print('no')
-            return
-    print('yes')
+    x1=0
+    x2=1
+    print(x1,x2, end=' ')
+    for i in range(nr-2):
+        x3=x1+x2
+        x1=x2
+        x2=x3
+        print(x3,end=' ')
+
+def isPrime(nr1,nr2):
+    '''input: 2 numbers, e.g. 4 and 6
+    output: check if numbers between two numbers are prime (yes) or not (no), here 'no'
+    '''
+    for nr in range(nr1,nr2+1):
+        nrSquare=int(nr**0.5)
+        for i in range(2,nrSquare+1):
+            if nr%i==0:
+                print(str(nr)+' no prime')
+                break
+            print(str(nr)+' = prime')
 
 
 def palindrome():
@@ -51,14 +65,13 @@ def mat_rev_short():
 
 def mat_rev():
     '''Given: a)input: 
-    123
-    456
-    789
+    12
+    45
+    
     b)size, here: 2
     output: change last column to first row, second last to second etc.
-    369
-    258
-    147
+    25
+    14
     '''
 
     input=[[1,2,3],[4,5,6],[7,8,9]]
@@ -67,15 +80,13 @@ def mat_rev():
     for i in range(size -1,-1,-1):
         inner=[]
         for j in range(0,size):
-            last=input[j][i]
-            inner.append(last)
+            inner.append(input[j][i])
         output.append(inner)
     
     for i in range(0,size):
         for j in range(0,size):
             print(output[i][j],end=' ')
         print()
-
     return output
 
 def one_by_one(x):

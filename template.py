@@ -6,7 +6,6 @@ home = str(Path.home())
 
 def main():
     '''main'''
-    print(a(3,2))
     print(a(4,3))
     # print(home)
     # print(version())
