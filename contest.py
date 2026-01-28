@@ -1,22 +1,20 @@
-from pathlib import Path
-import sys
-
-home = str(Path.home())
-
 
 def main():
     '''main'''
+    numbers = [3, 1, 4]
+
+    # fizz_buzz(15)
     # fib(2)
-    isPrime(4,8)
+    # isPrime(4,8)
     # palindrome()
     # mat_rev()
     # one_by_one(4)
-    # print(home)
-    # print(version())
+    two_sum_indices(nums=numbers,target=3)
+
 
 def fib(nr):
     '''input: nr, e.g. 5
-    output: fibonacci numbers until nr, e.g. 01123
+    output: fibonacci numbers until nr, e.g. 01123 for nr=5
     '''
     x1=0
     x2=1
@@ -26,6 +24,26 @@ def fib(nr):
         x1=x2
         x2=x3
         print(x3,end=' ')
+
+def find_max(numbers):
+    '''find max in list'''
+    max_value = numbers[0]
+    for num in numbers:
+        if num > max_value:
+            max_value = num
+    return max_value
+
+def fizz_buzz(n):
+    '''fizz buzz'''
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            print("FizzBuzz")
+        elif i % 3 == 0:
+            print("Fizz")
+        elif i % 5 == 0:
+            print("Buzz")
+        else:
+            print(i)
 
 def isPrime(nr1,nr2):
     '''input: 2 numbers, e.g. 4 and 6
@@ -54,15 +72,6 @@ def palindrome():
         lenStr-=1
     print('yes')
 
-
-def mat_rev_short():
-    input_matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    size = len(input_matrix)  # Größe dynamisch ermitteln
-    output_matrix = [[input_matrix[j][i] for j in range(size)] for i in range(size - 1, -1, -1)]
-
-    for row in output_matrix:
-        print(*row) # Verwendung von * zum entpacken der Liste für print
-
 def mat_rev():
     '''Given: a)input: 
     12
@@ -73,7 +82,6 @@ def mat_rev():
     25
     14
     '''
-
     input=[[1,2,3],[4,5,6],[7,8,9]]
     output=[]
     size=3
@@ -106,12 +114,24 @@ def one_by_one(x):
             print(i*j,end=' ')
         print()
 
-    # return 'ok'
+def two_sum_indices(nums, target):
+    """
+    Indices of two numbers in list that add up to target
+    Args: list of integers, target sum
+    Returns: list with indices [index1, index2] of two numbers or None
+    """
+    # Key: number, Value: index
+    num_map = {}
 
-def version():
-    '''version'''
-    return [sys.version_info, sys.version_info.major]
+    for index, num in enumerate(nums):
+        complement = target - num
 
+        if complement in num_map:
+            print([num_map[complement], index])
+        
+        num_map[num] = index
 
-if __name__ == "__main__":
+    print(None)
+
+if __name__ == '__main__':
     main()
